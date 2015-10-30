@@ -20,16 +20,24 @@ public class Controlador {
 	
 	}
 	
+	public void reset(){
+		
+		this.integral = 0;
+		this.derivada = 0;
+		this.proporcional = 0;
+		this.erroAnterior = 0;
+	}
+	
 	public void acaoP(double erro){
 		this.proporcional = KP*erro;
 	}
 	
 	public void acaoI(double erro){
-		if(!windUP)
+		//if(!windUP)
 			this.integral = this.integral + KI*erro*0.1;
-		else{
-			this.integral = this.integral + KI*erro*0.1 + 0.1*(1/(Tt)*(this.controleAnteriorSaturado - this.controleNaoSaturado));
-		}	
+		//else{
+			//this.integral = this.integral + KI*erro*0.1 + 0.1*(1/(Tt)*(this.controleAnteriorSaturado - this.controleNaoSaturado));
+		//}	
 	}
 	
 	public void acaoD(double erro){
@@ -40,14 +48,24 @@ public class Controlador {
 	}
 	
 	double calcularAcao(double erro, double PV){
-		if(PV != 0){
+		if(PV == 0){
 			acaoP(erro); acaoI(erro); acaoD(erro);
+			System.out.println("Derivada: ");
+			System.out.println(getDerivada());
+			System.out.println("erro: ");
+			System.out.println(erro);
+			System.out.println("erro ant: ");
+			System.out.println(erroAnterior);
+			
 		}
 		else{
 			acaoP(erro); acaoI(erro); acaoD(PV);
+			System.out.println(getDerivada());
 		}
 			
 		return (getProporcional() + getIntegral() + getDerivada());
+		
+		
 	}
 
 	public double getKI() {
