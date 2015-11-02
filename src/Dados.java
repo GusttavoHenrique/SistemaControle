@@ -30,7 +30,7 @@ public class Dados {
 
 	private boolean picoAbs;
 	
-	private double l1, l21, l22;
+	private double l1, l2;
 	
 	private double parteReP1, parteImP1;
 	
@@ -531,20 +531,12 @@ public class Dados {
 		this.l1 = l1;
 	}
 
-	public double getL21() {
-		return l21;
+	public double getL2() {
+		return l2;
 	}
 
-	public void setL21(double l21) {
-		this.l21 = l21;
-	}
-
-	public double getL22() {
-		return l22;
-	}
-
-	public void setL22(double l22) {
-		this.l22 = l22;
+	public void setL2(double l2) {
+		this.l2 = l2;
 	}
 
 	public double getParteReP1() {

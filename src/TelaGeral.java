@@ -6,9 +6,19 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
 
-
+@SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
+	
+	private double A[][] = {{-0.00656, 0.0000}, {0.00656, -0.00656}};
+	private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
+	private double C[] = {0.0000, 1.0000};
+	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
+	private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
+	private double InvV[][] = {{1.0000, 152.4390}, {1.0000, 0.0000}};
+	private double TranspInvV[][] = {{1.0000, 1.0000}, {152.4390, 0.0000}};
+	
 	public TelaGeral(){
+	
 	}
 	
 	/**
@@ -38,18 +48,40 @@ public class TelaGeral extends JFrame{
 		return tiposControle;
 	}
 	
-	protected void calculaMatrizL(JTextField textFieldReP1, JTextField textFieldImP1, JTextField textFieldReP2, 
-			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL21, JTextField textFieldL22) {
-//		textFieldL1.setText("" + Double.parseDouble(textFieldReP1.getText())*2);
-//		textFieldL21.setText("" + Double.parseDouble(textFieldReP2.getText())*2);
-//		
-//		double valor = Double.parseDouble(textFieldReP1.getText()) + Double.parseDouble(textFieldReP2.getText());
-//		textFieldL22.setText("" + valor);
+	protected double[][] calculaMatrizL(JTextField textFieldReP1, JTextField textFieldImP1, JTextField textFieldReP2, 
+			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL2) {
+		
+		double[][] matrizL = {{0,0}, {0,0}};
+		
+		double[] polos = {Double.parseDouble(textFieldReP1.getText()), Double.parseDouble(textFieldImP1.getText()),
+				Double.parseDouble(textFieldReP2.getText()), Double.parseDouble(textFieldImP2.getText())};
+
+		double[][] ql = calculaQl(polos);
+		
+		for(int i = 0; i < 2; i++){
+			for(int j = 0; j < 2; j++){
+				matrizL[i][j] = ql[i][j]*TranspInvV[i][j];
+			}
+		}
+				
+		return matrizL;
 	}
 	
 	protected void calculaPolos(JTextField textFieldReP1, JTextField textFieldImP1, JTextField textFieldReP2, 
-			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL21, JTextField textFieldL22) {
+			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL2) {
 		
+	}
+	
+	protected double[][] calculaQl(double[] polos) {
+		double realP1 = polos[0], imaginarioP1 = polos[1];		
+		double realP2 = polos[2], imaginarioP2 = polos[3];
+		
+		double[][] matrizQl = {{0,0}, {0,0}};
+		
+//		AElevadoADois + 
+		
+		
+		return matrizQl;
 	}
 
 	protected String conectarDesconectar(JButton botao, JFrame frame){

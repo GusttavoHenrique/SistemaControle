@@ -41,6 +41,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 
+@SuppressWarnings("serial")
 public class Tela extends TelaGeral{
 	private JFrame frame;
 	
@@ -102,11 +103,10 @@ public class Tela extends TelaGeral{
 	private Dados dados;
 	private JPanel panelObsEstados;
 	private JTextField textFieldL1;
-	private JTextField textFieldL21;
+	private JTextField textFieldL2;
 	private JLabel label_2;
 	private JLabel lblMatrizL;
 	private JLabel label_1;
-	private JTextField textFieldL22;
 	private JLabel lblP1;
 	private JLabel lblP2;
 	private JTextField textFieldReP1;
@@ -521,8 +521,7 @@ public class Tela extends TelaGeral{
 		dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
 		
 		dados.setL1(Double.parseDouble(textFieldL1.getText()));
-		dados.setL21(Double.parseDouble(textFieldL21.getText()));
-		dados.setL22(Double.parseDouble(textFieldL22.getText()));
+		dados.setL2(Double.parseDouble(textFieldL2.getText()));
 	}
 	
 	private boolean validaPoupulaTudoNaDados(){
@@ -855,14 +854,14 @@ public class Tela extends TelaGeral{
 		panelObsEstados.setLayout(null);
 		
 		textFieldL1 = new JTextField();
-		textFieldL1.setBounds(245, 25, 46, 16);
+		textFieldL1.setBounds(245, 35, 46, 16);
 		panelObsEstados.add(textFieldL1);
 		textFieldL1.setColumns(10);
 		
-		textFieldL21 = new JTextField();
-		textFieldL21.setBounds(245, 47, 46, 16);
-		panelObsEstados.add(textFieldL21);
-		textFieldL21.setColumns(10);
+		textFieldL2 = new JTextField();
+		textFieldL2.setBounds(245, 65, 46, 16);
+		panelObsEstados.add(textFieldL2);
+		textFieldL2.setColumns(10);
 		
 		label_2 = new JLabel("[");
 		label_2.setForeground(Color.GRAY);
@@ -880,11 +879,6 @@ public class Tela extends TelaGeral{
 		label_1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
 		label_1.setBounds(290, -12, 35, 138);
 		panelObsEstados.add(label_1);
-		
-		textFieldL22 = new JTextField();
-		textFieldL22.setColumns(10);
-		textFieldL22.setBounds(245, 69, 46, 16);
-		panelObsEstados.add(textFieldL22);
 		
 		lblP1 = new JLabel("P1 = ");
 		lblP1.setBounds(10, 33, 28, 14);
@@ -943,10 +937,10 @@ public class Tela extends TelaGeral{
 				if(!textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("") 
 						&& !textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
 					
-					calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL21, textFieldL22);
-				}else if(!textFieldL1.getText().equals("") && !textFieldL21.getText().equals("")){
+					calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL2);
+				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
-					calculaPolos(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL21, textFieldL22);					
+					calculaPolos(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL2);					
 				}else{
 					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
 				}
