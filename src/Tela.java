@@ -48,7 +48,7 @@ public class Tela extends TelaGeral{
 	
 	private JLayeredPane panelGrafico1, panelGrafico2;
 	
-	private JPanel panelGraficos, panelOpcoesEntrada, panelTipoMalha, panelDadosSinal, panelParamsControladorMestre, panelParamsControladorEscravo, panelBombas;
+	private JPanel panelGraficos, abaOpcoesEntrada, panelTipoMalha, panelDadosSinal, panelParamsControladorMestre, panelParamsControladorEscravo, panelBombas;
 	
 	public JLabel IPServidor, Porta;
 	
@@ -100,6 +100,24 @@ public class Tela extends TelaGeral{
 	
 	private Tanque thread;
 	private Dados dados;
+	private JPanel panelObsEstados;
+	private JTextField textFieldL1;
+	private JTextField textFieldL21;
+	private JLabel label_2;
+	private JLabel lblMatrizL;
+	private JLabel label_1;
+	private JTextField textFieldL22;
+	private JLabel lblP1;
+	private JLabel lblP2;
+	private JTextField textFieldReP1;
+	private JTextField textFieldReP2;
+	private JTextField textFieldImP1;
+	private JTextField textFieldImP2;
+	private JLabel lblMais1;
+	private JLabel lblMais2;
+	private JLabel lblI1;
+	private JLabel lblI2;
+	private JLabel lblNewLabel_1;
 	
 	/**
 	 * Launch the application.
@@ -136,9 +154,7 @@ public class Tela extends TelaGeral{
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		dados = new Dados();
-		
+	private void initialize() {	
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.getContentPane().setLocation(0, -113);
@@ -146,18 +162,20 @@ public class Tela extends TelaGeral{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		dados = new Dados();
+		
 		inicializarMenu();
 		frame.getContentPane().add(menuBar);
 		
 		inicializarPainelDadosServidor();
 		frame.getContentPane().add(panelDadosServidor);
 		
-		inicializarBotões();
-		
 		inicializarPainelOpcoesEntrada();
 		
 		inicializarPainelGraficos();
 		frame.getContentPane().add(panelGraficos);
+		
+		inicializarBotões();
 		
 		inicializarPaineisParametrosSinal();
 		
@@ -178,7 +196,7 @@ public class Tela extends TelaGeral{
 		//Cria menu configuração de conexão
 		JMenuItem mntmConfigurarConexao = new JMenuItem("Configurar");
 		mntmConfigurarConexao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) {	
 				criaPaneilDadosControle();
 			}
 		});
@@ -232,52 +250,52 @@ public class Tela extends TelaGeral{
 		//Inicializando Painel Painel de exibição dos Valores
 		panelValores = new JPanel();
 		panelValores.setBorder(new TitledBorder(null, "Valores Atuais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelValores.setBounds(347, 633, 793, 68);
+		panelValores.setBounds(562, 633, 578, 68);
 		frame.getContentPane().add(panelValores);
 		panelValores.setLayout(null);
 		
 		JLabel lblTr = new JLabel("Tr:");
 		lblTr.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTr.setBounds(31, 26, 24, 36);
+		lblTr.setBounds(10, 21, 24, 36);
 		panelValores.add(lblTr);
 		
 		labelTr = new JLabel();
 		labelTr.setBackground(Color.WHITE);
-		labelTr.setBounds(59, 26, 101, 36);
+		labelTr.setBounds(38, 21, 101, 36);
 		panelValores.add(labelTr);
 		
 		JLabel lblMp = new JLabel("Mp:");
 		lblMp.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblMp.setBounds(437, 26, 30, 36);
+		lblMp.setBounds(291, 21, 30, 36);
 		panelValores.add(lblMp);
 		
 		labelMp = new JLabel();
 		labelMp.setBackground(Color.WHITE);
-		labelMp.setBounds(471, 26, 101, 36);
+		labelMp.setBounds(325, 21, 101, 36);
 		panelValores.add(labelMp);
 		
 		JLabel lblTp = new JLabel("Tp:");
 		lblTp.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTp.setBounds(194, 26, 28, 36);
+		lblTp.setBounds(149, 21, 28, 36);
 		panelValores.add(lblTp);
 		
 		labelTp = new JLabel();
-		labelTp.setBounds(225, 26, 101, 36);
+		labelTp.setBounds(180, 21, 101, 36);
 		panelValores.add(labelTp);
 		
 		JLabel lblTs = new JLabel("Ts:");
 		lblTs.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTs.setBounds(606, 26, 28, 36);
+		lblTs.setBounds(436, 21, 28, 36);
 		panelValores.add(lblTs);
 		
 		labelTs = new JLabel();
-		labelTs.setBounds(637, 26, 101, 36);
+		labelTs.setBounds(467, 21, 101, 36);
 		panelValores.add(labelTs);		
 	}	
 	
 	private void inicializarPainelDadosServidor(){
 		panelDadosServidor = new JPanel();
-		panelDadosServidor.setBounds(10, 33, 327, 73);
+		panelDadosServidor.setBounds(10, 22, 327, 73);
 		panelDadosServidor.setBorder(new TitledBorder(null, "Dados do Servidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelDadosServidor.setLayout(null);
 		
@@ -363,22 +381,9 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarBotões(){
 		botaoAtualizar = new JButton("Atualizar");
-		botaoAtualizar.setBounds(47, 530, 101, 23);
+		botaoAtualizar.setBounds(391, 635, 101, 23);
 		botaoAtualizar.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1439269378_gtk-refresh.png")));		
 		botaoAtualizar.setEnabled(false);
-		
-		btnReset = new JButton("Reset");
-		btnReset.setBounds(159, 530, 101, 23);
-		btnReset.setEnabled(false);
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//onda_limpa_tanque = "Degrau";
-				//amplitude_limpa_tanque = 0;
-				
-				thread.limparTela();
-				dados.setTanque_Seco(false);
-			}
-		});
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) { 
 				dados = new Dados();					
@@ -393,6 +398,9 @@ public class Tela extends TelaGeral{
 					
 					// Seta os dados parâmetros desejados para a resposta na classe dados					
 					populaParamsRespostaNaDados();
+					
+					// Seta os parâmetros do observador de estados na classe dados
+					populaParamsObservadorEstadosNaDados();
 					
 					/*thread.graficoAltura.limparFilaDeErroMesmo();
 					thread.graficoAltura.limparFilaDeNivelDois();
@@ -427,6 +435,21 @@ public class Tela extends TelaGeral{
 				}
 			}
 		});
+		frame.getContentPane().add(botaoAtualizar);
+		
+		btnReset = new JButton("Reset");
+		btnReset.setBounds(391, 670, 101, 23);
+		btnReset.setEnabled(false);
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//onda_limpa_tanque = "Degrau";
+				//amplitude_limpa_tanque = 0;
+				
+				thread.limparTela();
+				dados.setTanque_Seco(false);
+			}
+		});
+		frame.getContentPane().add(btnReset);
 	}
 	
 	private void populaTipoControleNaDados(){
@@ -489,6 +512,19 @@ public class Tela extends TelaGeral{
 			dados.setFaixa10(true);	
 		}
 	}
+	
+	private void populaParamsObservadorEstadosNaDados(){
+		dados.setParteReP1(Double.parseDouble(textFieldReP1.getText()));
+		dados.setParteImP1(Double.parseDouble(textFieldImP1.getText()));
+		
+		dados.setParteReP2(Double.parseDouble(textFieldReP2.getText()));
+		dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
+		
+		dados.setL1(Double.parseDouble(textFieldL1.getText()));
+		dados.setL21(Double.parseDouble(textFieldL21.getText()));
+		dados.setL22(Double.parseDouble(textFieldL22.getText()));
+	}
+	
 	private boolean validaPoupulaTudoNaDados(){
 		boolean sucesso = false;
 		
@@ -770,38 +806,38 @@ public class Tela extends TelaGeral{
 	
 	private void inicializePainelOpcoesTanque(){
 		panelBombas = new JPanel();
-		panelBombas.setBounds(161, 4, 153, 82);
+		panelBombas.setBounds(161, 4, 153, 51);
 		panelBombas.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Opções de Tanque", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 		panelBombas.setLayout(null);
 		
 		rdbtnTanque1 = new JRadioButton("Tanque 1");
 		rdbtnTanque1.setEnabled(false);
-		rdbtnTanque1.setBounds(45, 24, 71, 18);
+		rdbtnTanque1.setBounds(6, 24, 71, 18);
 		panelBombas.add(rdbtnTanque1);
 		
 		rdbtnTanque2 = new JRadioButton("Tanque 2");
 		rdbtnTanque2.setEnabled(false);
-		rdbtnTanque2.setBounds(45, 45, 71, 18);
+		rdbtnTanque2.setBounds(79, 24, 71, 18);
 		panelBombas.add(rdbtnTanque2);
 	}
 	
 	private void inicializarPainelOpcoesEntrada(){
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(10, 105, 327, 595);
+		abas.setBounds(10, 96, 327, 605);
 		frame.getContentPane().add(abas);
 		
-		panelOpcoesEntrada = new JPanel();
-		abas.addTab("Opções de Entrada", null, panelOpcoesEntrada, null);
-		panelOpcoesEntrada.setLayout(null);
+		abaOpcoesEntrada = new JPanel();
+		abas.addTab("Opções de Entrada", null, abaOpcoesEntrada, null);
+		abaOpcoesEntrada.setLayout(null);
 		
 		inicializePainelOpcoesTanque();
-		panelOpcoesEntrada.add(panelBombas);
+		abaOpcoesEntrada.add(panelBombas);
 				
 		inicializarPainelTiposMalha();
-		panelOpcoesEntrada.add(panelTipoMalha);
+		abaOpcoesEntrada.add(panelTipoMalha);
 		
 		inicializarPainelDadosSinal();
-		panelOpcoesEntrada.add(panelDadosSinal);
+		abaOpcoesEntrada.add(panelDadosSinal);
 		
 		inicializarPainelParamsControlador();
 		
@@ -811,17 +847,126 @@ public class Tela extends TelaGeral{
 		label.setToolTipText("Para Atualizar os parametros, basta clicar nos campos.");
 		label.setBounds(282, 11, 24, 26);
 		panelParamsControladorEscravo.add(label);	
+		
+		panelObsEstados = new JPanel();
+		panelObsEstados.setBorder(new TitledBorder(null, "Observador de Estados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panelObsEstados.setBounds(5, 474, 314, 100);
+		abaOpcoesEntrada.add(panelObsEstados);
+		panelObsEstados.setLayout(null);
+		
+		textFieldL1 = new JTextField();
+		textFieldL1.setBounds(245, 25, 46, 16);
+		panelObsEstados.add(textFieldL1);
+		textFieldL1.setColumns(10);
+		
+		textFieldL21 = new JTextField();
+		textFieldL21.setBounds(245, 47, 46, 16);
+		panelObsEstados.add(textFieldL21);
+		textFieldL21.setColumns(10);
+		
+		label_2 = new JLabel("[");
+		label_2.setForeground(Color.GRAY);
+		label_2.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		label_2.setBounds(221, -12, 35, 138);
+		panelObsEstados.add(label_2);
+		
+		lblMatrizL = new JLabel("L = ");
+		lblMatrizL.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMatrizL.setBounds(208, 50, 23, 14);
+		panelObsEstados.add(lblMatrizL);
+		
+		label_1 = new JLabel("]");
+		label_1.setForeground(Color.GRAY);
+		label_1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		label_1.setBounds(290, -12, 35, 138);
+		panelObsEstados.add(label_1);
+		
+		textFieldL22 = new JTextField();
+		textFieldL22.setColumns(10);
+		textFieldL22.setBounds(245, 69, 46, 16);
+		panelObsEstados.add(textFieldL22);
+		
+		lblP1 = new JLabel("P1 = ");
+		lblP1.setBounds(10, 33, 28, 14);
+		panelObsEstados.add(lblP1);
+		
+		lblP2 = new JLabel("P2 = ");
+		lblP2.setBounds(10, 60, 28, 14);
+		panelObsEstados.add(lblP2);
+		
+		textFieldReP1 = new JTextField();
+		textFieldReP1.setToolTipText("Parte real do polo 1");
+		textFieldReP1.setBounds(36, 32, 46, 16);
+		panelObsEstados.add(textFieldReP1);
+		textFieldReP1.setColumns(10);
+		
+		textFieldReP2 = new JTextField();
+		textFieldReP2.setToolTipText("Parte real do polo 2");
+		textFieldReP2.setColumns(10);
+		textFieldReP2.setBounds(36, 59, 46, 16);
+		panelObsEstados.add(textFieldReP2);
+		
+		textFieldImP1 = new JTextField();
+		textFieldImP1.setToolTipText("Parte imagin\u00E1ria do polo 1");
+		textFieldImP1.setColumns(10);
+		textFieldImP1.setBounds(99, 32, 46, 16);
+		panelObsEstados.add(textFieldImP1);
+		
+		textFieldImP2 = new JTextField();
+		textFieldImP2.setToolTipText("Parte imagin\u00E1ria do polo 2");
+		textFieldImP2.setColumns(10);
+		textFieldImP2.setBounds(99, 59, 46, 16);
+		panelObsEstados.add(textFieldImP2);
+		
+		lblMais1 = new JLabel("+");
+		lblMais1.setBounds(86, 33, 13, 15);
+		panelObsEstados.add(lblMais1);
+		
+		lblMais2 = new JLabel("+");
+		lblMais2.setBounds(86, 60, 13, 15);
+		panelObsEstados.add(lblMais2);
+		
+		lblI1 = new JLabel("i");
+		lblI1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblI1.setBounds(150, 33, 13, 15);
+		panelObsEstados.add(lblI1);
+		
+		lblI2 = new JLabel("i");
+		lblI2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblI2.setBounds(150, 60, 13, 15);
+		panelObsEstados.add(lblI2);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(!textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("") 
+						&& !textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
+					
+					calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL21, textFieldL22);
+				}else if(!textFieldL1.getText().equals("") && !textFieldL21.getText().equals("")){
+					
+					calculaPolos(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL21, textFieldL22);					
+				}else{
+					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
+				}
+			}
+		});
+		lblNewLabel_1.setToolTipText("Clique para atualizar os par\u00E2metros");
+		lblNewLabel_1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
+		lblNewLabel_1.setBounds(165, 40, 30, 30);
+		panelObsEstados.add(lblNewLabel_1);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarComboTipoOnda(){
 		JLabel lblTipoOnda = new JLabel("Tipo de Onda:");
-		lblTipoOnda.setBounds(47, 90, 78, 18);
-		panelOpcoesEntrada.add(lblTipoOnda);
+		lblTipoOnda.setBounds(47, 57, 78, 18);
+		abaOpcoesEntrada.add(lblTipoOnda);
 		
 		comboTipoOnda = new JComboBox(getItensComboTiposOnda());
 		comboTipoOnda.setEnabled(false);
-		comboTipoOnda.setBounds(126, 90, 151, 18);
+		comboTipoOnda.setBounds(126, 57, 151, 18);
 		comboTipoOnda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboTipoOnda.getSelectedItem().equals("Selecione")){
@@ -895,8 +1040,8 @@ public class Tela extends TelaGeral{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarComboTipoControle(){
 		JLabel lblTipoDeControle = new JLabel("Tipo de Controle:");
-		lblTipoDeControle.setBounds(46, 220, 91, 18);
-		panelOpcoesEntrada.add(lblTipoDeControle);
+		lblTipoDeControle.setBounds(46, 180, 91, 18);
+		abaOpcoesEntrada.add(lblTipoDeControle);
 		
 		comboTipoControle = new JComboBox(getItensComboTiposControle());
 		comboTipoControle.addActionListener(new ActionListener() {
@@ -931,18 +1076,18 @@ public class Tela extends TelaGeral{
 			}
 		});
 		comboTipoControle.setEnabled(false);
-		comboTipoControle.setBounds(147, 220, 151, 18);
+		comboTipoControle.setBounds(147, 180, 151, 18);
 	}
 		
 	private void inicializarPainelTiposMalha(){
 		panelTipoMalha = new JPanel();
-		panelTipoMalha.setBounds(5, 4, 153, 82);
+		panelTipoMalha.setBounds(5, 4, 153, 51);
 		panelTipoMalha.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tipo de Malha", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 		panelTipoMalha.setLayout(null);	
 				
 		rdbtnAberta = new JRadioButton("Aberta");
 		rdbtnAberta.setEnabled(false);
-		rdbtnAberta.setBounds(37, 24, 67, 18);		
+		rdbtnAberta.setBounds(6, 24, 67, 18);		
 		rdbtnAberta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnFechada.setSelected(false);
@@ -964,7 +1109,7 @@ public class Tela extends TelaGeral{
 		
 		rdbtnFechada = new JRadioButton("Fechada");
 		rdbtnFechada.setEnabled(false);
-		rdbtnFechada.setBounds(37, 45, 68, 18);		
+		rdbtnFechada.setBounds(79, 24, 68, 18);		
 		rdbtnFechada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnAberta.setSelected(false);
@@ -978,7 +1123,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelDadosSinal(){
 		panelDadosSinal = new JPanel();
-		panelDadosSinal.setBounds(5, 116, 314, 97);		
+		panelDadosSinal.setBounds(5, 80, 314, 97);		
 		panelDadosSinal.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Sinal", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.GRAY));
 		panelDadosSinal.setLayout(null);
 		
@@ -1036,18 +1181,18 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelParamsControlador(){
 		panelParamsControladorMestre = new JPanel();
-		panelParamsControladorMestre.setBounds(5, 250, 314, 134);
+		panelParamsControladorMestre.setBounds(5, 204, 314, 134);
 		panelParamsControladorMestre.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Controlador Mestre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 128, 128)));
 		panelParamsControladorMestre.setLayout(null);
 		inicializarPainelParamsMestre();
-		panelOpcoesEntrada.add(panelParamsControladorMestre);
+		abaOpcoesEntrada.add(panelParamsControladorMestre);
 	
 		panelParamsControladorEscravo = new JPanel();
 		panelParamsControladorEscravo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Controlador Escravo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 128, 128)));
-		panelParamsControladorEscravo.setBounds(5, 385, 314, 134);
+		panelParamsControladorEscravo.setBounds(5, 340, 314, 134);
 		panelParamsControladorEscravo.setLayout(null);
 		inicializarPainelParamsEscravo();
-		panelOpcoesEntrada.add(panelParamsControladorEscravo);
+		abaOpcoesEntrada.add(panelParamsControladorEscravo);
 		
 	}
 	
@@ -1145,7 +1290,7 @@ public class Tela extends TelaGeral{
 						labelTaltMestre, labelTaliMestre, labelTaldMestre);
 			}
 		});
-		labelChamaConfiguracaoMestre.setToolTipText("Para Atualizar os parametros, basta clicar nos campos.");
+		labelChamaConfiguracaoMestre.setToolTipText("Clique para atualizar os par\u00E2metros");
 		labelChamaConfiguracaoMestre.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1444113669_Pinion.png")));
 		labelChamaConfiguracaoMestre.setBounds(274, 11, 32, 32);
 		panelParamsControladorMestre.add(labelChamaConfiguracaoMestre);
@@ -1251,7 +1396,7 @@ public class Tela extends TelaGeral{
 						labelTaltEscravo, labelTaliEscravo, labelTaldEscravo);
 			}
 		});
-		labelChamaConfiguracaoEscravo.setToolTipText("Para Atualizar os parametros, basta clicar nos campos.");
+		labelChamaConfiguracaoEscravo.setToolTipText("Clique para atualizar os par\u00E2metros");
 		labelChamaConfiguracaoEscravo.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1444113669_Pinion.png")));
 		labelChamaConfiguracaoEscravo.setBounds(274, 11, 32, 32);
 		panelParamsControladorEscravo.add(labelChamaConfiguracaoEscravo);
@@ -1266,8 +1411,9 @@ public class Tela extends TelaGeral{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void criaPaneilDadosControle(){
 		JTextField ip = new JTextField();
+		ip.setBounds(100, 170, 140, 160);
 		ip.setText(IPServidor.getText());
-		 
+		
 		JTextField porta = new JTextFieldAlterado();
 		porta.setText(Porta.getText());
 		 
@@ -1281,7 +1427,7 @@ public class Tela extends TelaGeral{
 		escrita.setSelectedItem(Tela.this.escrita.getText().equals("") ? "Selecione" : Integer.parseInt(Tela.this.escrita.getText()));
 		 
 		Object[] message = {"IP do Servidor:", ip, "Porta:", porta, "Leitura 1:", leitura1, "Leitura 2:", leitura2, "Escrita:", escrita}; 
-		int option = JOptionPane.showConfirmDialog(null, message, "Dados de Conexão", JOptionPane.OK_CANCEL_OPTION); 
+		int option = JOptionPane.showConfirmDialog(null, message, "Dados de Conexão", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE); 
 		 
 		if (option == JOptionPane.OK_OPTION) { 
 			IPServidor.setText(ip.getText());
@@ -1453,19 +1599,15 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarOutrosComponentesPainelPrincipal(){
 		inicializarComboTipoOnda();
-		panelOpcoesEntrada.add(comboTipoOnda);
+		abaOpcoesEntrada.add(comboTipoOnda);
 		
 		inicializarComboTipoControle();
-		panelOpcoesEntrada.add(comboTipoControle);
-		
-		inicializarBotões();
-		panelOpcoesEntrada.add(botaoAtualizar);
-		panelOpcoesEntrada.add(btnReset);
+		abaOpcoesEntrada.add(comboTipoControle);
 	}
 	
 	private void inicializarPainelGraficos(){
 		panelGraficos = new JPanel();
-		panelGraficos.setBounds(347, 33, 793, 600);
+		panelGraficos.setBounds(347, 22, 793, 600);
 		panelGraficos.setBorder(new TitledBorder(null, "Gr\u00E1ficos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelGraficos.setLayout(null);
 		

@@ -4,10 +4,10 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JTextField;
 
 
-public class TelaGeral {
-
+public class TelaGeral extends JFrame{
 	public TelaGeral(){
 	}
 	
@@ -36,6 +36,20 @@ public class TelaGeral {
 		String[] tiposControle = {"Selecione", "Simples", "Cascata", "Sem Controle"};
 		
 		return tiposControle;
+	}
+	
+	protected void calculaMatrizL(JTextField textFieldReP1, JTextField textFieldImP1, JTextField textFieldReP2, 
+			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL21, JTextField textFieldL22) {
+//		textFieldL1.setText("" + Double.parseDouble(textFieldReP1.getText())*2);
+//		textFieldL21.setText("" + Double.parseDouble(textFieldReP2.getText())*2);
+//		
+//		double valor = Double.parseDouble(textFieldReP1.getText()) + Double.parseDouble(textFieldReP2.getText());
+//		textFieldL22.setText("" + valor);
+	}
+	
+	protected void calculaPolos(JTextField textFieldReP1, JTextField textFieldImP1, JTextField textFieldReP2, 
+			JTextField textFieldImP2, JTextField textFieldL1, JTextField textFieldL21, JTextField textFieldL22) {
+		
 	}
 
 	protected String conectarDesconectar(JButton botao, JFrame frame){

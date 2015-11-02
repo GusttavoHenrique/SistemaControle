@@ -1,52 +1,40 @@
 import javax.swing.JLabel;
 
 public class Dados {
-
-	private double Amplitude;
-	private double amplitudeMinima;
-	private double periodo;
-	private double periodoMinino;
-	private double offset;
-	private double tempoDePico;
-	private double tempoDeSubida;
-	private double sobreSinalMax;
-	private double settleTempo;
-	
-	private int pinoDeLeitura1;
-	private int pinoDeLeitura2;
-	private int pinoDeEscrita;
+	private int pinoDeLeitura1, pinoDeLeitura2, pinoDeEscrita;
+	private double Amplitude, amplitudeMinima, periodo, periodoMinino, offset;	
 	
 	private String tipoSinal;
 	private String tipoMalha;
 	private String tipoDeControle;
-	private String tipoDeControlador;
-	private String tipoDeControladorEscravo;
+	private String tipoDeControlador, tipoDeControladorEscravo;
+	
+	private double tempoDePico, tempoDeSubida, sobreSinalMax, settleTempo;
 	
 	private boolean windUP, windUpEscravo, tensao, tensaoSat, nivel1, nivel2, setPoint, proporcional, integral, derivativo, erroMesmo;
 	private boolean faixa2, faixa5, faixa7, faixa10, tanque1, tanque2;
 	private boolean proporcional_c2, integral_c2, derivativo_c2, sinalCascata, Erro_c1, tanque_Seco = true;
 	
-	private double KP;
-	private double KI;
-	private double KD;	
-	private double Tt;
-	
-	private double KpEscravo;
-	private double KiEscravo;
-	private double KdEscravo;	
-	private double TtEscravo;
+	private double KP, KI, KD, Tt;	
+	private double KpEscravo, KiEscravo, KdEscravo, TtEscravo;
 	
 	private double PV;
 	private double PV_two;
 	private double VP;
-	
 	
 	private double duracao;
 	
 	private JLabel tPico, tSubida, tAcomoda, nivelPico;
 
 	private double fatSup = 1, fatInf = 0; 
+
 	private boolean picoAbs;
+	
+	private double l1, l21, l22;
+	
+	private double parteReP1, parteImP1;
+	
+	private double parteReP2, parteImP2;
 	
 	public Dados(){
 	}
@@ -535,4 +523,59 @@ public class Dados {
 		this.tanque_Seco = tanque_Seco;
 	}
 
+	public double getL1() {
+		return l1;
+	}
+
+	public void setL1(double l1) {
+		this.l1 = l1;
+	}
+
+	public double getL21() {
+		return l21;
+	}
+
+	public void setL21(double l21) {
+		this.l21 = l21;
+	}
+
+	public double getL22() {
+		return l22;
+	}
+
+	public void setL22(double l22) {
+		this.l22 = l22;
+	}
+
+	public double getParteReP1() {
+		return parteReP1;
+	}
+
+	public void setParteReP1(double parteReP1) {
+		this.parteReP1 = parteReP1;
+	}
+
+	public double getParteImP1() {
+		return parteImP1;
+	}
+
+	public void setParteImP1(double parteImP1) {
+		this.parteImP1 = parteImP1;
+	}
+
+	public double getParteReP2() {
+		return parteReP2;
+	}
+
+	public void setParteReP2(double parteReP2) {
+		this.parteReP2 = parteReP2;
+	}
+
+	public double getParteImP2() {
+		return parteImP2;
+	}
+
+	public void setParteImP2(double parteImP2) {
+		this.parteImP2 = parteImP2;
+	}
 }
