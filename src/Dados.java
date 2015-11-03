@@ -16,7 +16,7 @@ public class Dados {
 	private boolean proporcional_c2, integral_c2, derivativo_c2, sinalCascata, Erro_c1, tanque_Seco = true;
 	
 	private boolean observando = false;
-	private boolean nvlUmEstimado, nvlDoisEstimado, erroEstimacao;
+	private boolean nvlUmEstimado, nvlDoisEstimado, erroEstimacaoUm, erroEstimacaoDois;
 	
 	private double KP, KI, KD, Tt;	
 	private double KpEscravo, KiEscravo, KdEscravo, TtEscravo;
@@ -598,11 +598,20 @@ public class Dados {
 		this.nvlDoisEstimado = nvlDoisEstimado;
 	}
 
-	public boolean isErroEstimacao() {
-		return erroEstimacao;
+
+	public boolean isErroEstimacaoUm() {
+		return erroEstimacaoUm;
 	}
 
-	public void setErroEstimacao(boolean erroEstimacao) {
-		this.erroEstimacao = erroEstimacao;
+	public void setErroEstimacaoUm(boolean erroEstimacaoUm) {
+		this.erroEstimacaoUm = erroEstimacaoUm;
+	}
+
+	public boolean isErroEstimacaoDois() {
+		return erroEstimacaoDois;
+	}
+
+	public void setErroEstimacaoDois(boolean erooEstimacaoDois) {
+		this.erroEstimacaoDois = erooEstimacaoDois;
 	}
 }

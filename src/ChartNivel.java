@@ -244,12 +244,20 @@ public class ChartNivel {
         graph.getXYPlot().setRenderer(renderer);
         
         renderer.setSeriesShapesVisible(7, false);
-		if(dados.isNvlDoisEstimado())
+		if(dados.isErroEstimacaoUm())
 			renderer.setSeriesLinesVisible(7, true);
 		else{renderer.setSeriesLinesVisible(7, false);}
 		renderer.setSeriesPaint(7, Color.MAGENTA);
 		
         graph.getXYPlot().setRenderer(renderer);
+        
+        renderer.setSeriesShapesVisible(8, false);
+      		if(dados.isErroEstimacaoDois())
+      			renderer.setSeriesLinesVisible(8, true);
+      		else{renderer.setSeriesLinesVisible(8, false);}
+      		renderer.setSeriesPaint(8, Color.YELLOW);
+      		
+              graph.getXYPlot().setRenderer(renderer);
         
         
         
