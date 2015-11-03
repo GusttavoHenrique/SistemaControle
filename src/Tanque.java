@@ -132,7 +132,7 @@ public class Tanque extends Thread{
 		//setServer("10.13.99.69", 20081);
 		//test();
 
-		getConexao();
+		//getConexao();
 		
 		while(true){
 
@@ -163,13 +163,19 @@ public class Tanque extends Thread{
 					
 				//}
 				
-				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+				//dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+				//dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
-				nivel_tanque_um = 6.25*dados.getPV();
-				nivel_tanque_dois = 6.25*dados.getPV_two();
+				//nivel_tanque_um = 6.25*dados.getPV();
+				//nivel_tanque_dois = 6.25*dados.getPV_two();
 					
-									
+				nivel_tanque_um = 1 - Math.exp(-(sinal.getTempo()- 0.1))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
+				nivel_tanque_dois = 1 - Math.exp(-(sinal.getTempo()- 0.1))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
+				
+				
+				//nivel_tanque_um = 6.25*nivel_tanque_um;
+			//	nivel_tanque_dois = 6.25*nivel_tanque_dois;
+				
 				System.out.println(nivel_tanque_um);
 				
 				if(dados.isTanque1()){
@@ -394,7 +400,7 @@ public class Tanque extends Thread{
 						
 					}
 					
-					if(dados.isObservando()){
+				//	if(dados.isObservando()){
 						
 						observador.vp = dados.getVP();
 						observador.calcularObservador();
@@ -414,7 +420,7 @@ public class Tanque extends Thread{
 						grafico_nivel.atualizar_fila_nvl_dois_estimado(pto_nvl_dois_estimado);
 						
 						
-						Ponto pto_nvl_um_erro = new Ponto();
+						/*Ponto pto_nvl_um_erro = new Ponto();
 						pto_nvl_um_erro.setY(nivel_tanque_um - observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_erro.setX(sinal.getTempo() - 0.1);
 						
@@ -425,10 +431,10 @@ public class Tanque extends Thread{
 						pto_nvl_dois_erro.setY(nivel_tanque_dois - observador.x_chapeu_anterior[1][0]);
 						pto_nvl_dois_erro.setX(sinal.getTempo() - 0.1);
 						
-						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_estimado);
+						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_estimado);*/
 					}
 					
-				}
+			//	}
 				
 				grafico_nivel.atualizarGrafico();
 				grafico_controle.atualizarGrafico();
@@ -437,10 +443,10 @@ public class Tanque extends Thread{
 				
 				//para calculo de windUP
 			
-				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
+			} catch (/*QuanserClientException |*/ InterruptedException e) {e.printStackTrace();}
 		}
 	}
 

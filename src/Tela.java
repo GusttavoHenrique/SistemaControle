@@ -514,11 +514,11 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void populaParamsObservadorEstadosNaDados(){
-		dados.setParteReP1(Double.parseDouble(textFieldReP1.getText()));
-		dados.setParteImP1(Double.parseDouble(textFieldImP1.getText()));
+	//	dados.setParteReP1(Double.parseDouble(textFieldReP1.getText()));
+	//	dados.setParteImP1(Double.parseDouble(textFieldImP1.getText()));
 		
-		dados.setParteReP2(Double.parseDouble(textFieldReP2.getText()));
-		dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
+	//	dados.setParteReP2(Double.parseDouble(textFieldReP2.getText()));
+	//	dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
 		
 		dados.setL1(Double.parseDouble(textFieldL1.getText()));
 		dados.setL2(Double.parseDouble(textFieldL2.getText()));

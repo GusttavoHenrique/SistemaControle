@@ -4,7 +4,7 @@ public class Observador {
 
 	double A[][] = new double[2][2];
 	double B[][] = new double[2][1];
-	double C[][] = {{0}, {1}};
+	double C[][] = {{0, 1}};
 	double Y[][] = new double[1][1];
 	double Y_chapeu[][] = {{0}};
 	double L[][] = new double[2][1];
@@ -16,6 +16,11 @@ public class Observador {
 	double x_erro_estimacao_anterior[][] = {{0}, {0}};
 	double x_k_mais_um[][] = new double[2][1];
 	double x_k[][] = {{0}, {0}};
+	
+	double teste[][] = {{2, 0}, {0, 2}};
+	Matrix matrix = new Matrix(teste);
+	
+	
 	
 	Matrix G_matrix = new Matrix(G);
 	Matrix H_matrix = new Matrix(H);
@@ -56,7 +61,7 @@ public class Observador {
 		
 		/*Dinâmica do observador*/
 		
-		this.x_chapeu = this.x_chapeu_anterior_matrix.times(G_matrix).
+		this.x_chapeu = (G_matrix).times(this.x_chapeu_anterior_matrix).
 				plus(L_matrix.times((Y_matrix.minus(Y_chapeu_matrix)))).
 				plus(H_matrix).times(vp).getArray();
 		this.Y_chapeu = C_matrix.times(x_chapeu_anterior_matrix).getArray();
