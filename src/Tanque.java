@@ -394,10 +394,11 @@ public class Tanque extends Thread{
 						
 					}
 					
-					//if(dados.isObservando()){
+					if(dados.isObservando()){
 						
 						
-					//}
+						
+					}
 					
 				}
 				

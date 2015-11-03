@@ -15,6 +15,9 @@ public class Dados {
 	private boolean faixa2, faixa5, faixa7, faixa10, tanque1, tanque2;
 	private boolean proporcional_c2, integral_c2, derivativo_c2, sinalCascata, Erro_c1, tanque_Seco = true;
 	
+	private boolean observando = false;
+	private boolean nvlUmEstimado, nvlDoisEstimado, erroEstimacao;
+	
 	private double KP, KI, KD, Tt;	
 	private double KpEscravo, KiEscravo, KdEscravo, TtEscravo;
 	
@@ -569,5 +572,37 @@ public class Dados {
 
 	public void setParteImP2(double parteImP2) {
 		this.parteImP2 = parteImP2;
+	}
+
+	public boolean isObservando() {
+		return observando;
+	}
+
+	public void setObservando(boolean observando) {
+		this.observando = observando;
+	}
+
+	public boolean isNvlUmEstimado() {
+		return nvlUmEstimado;
+	}
+
+	public void setNvlUmEstimado(boolean nvlUmEstimado) {
+		this.nvlUmEstimado = nvlUmEstimado;
+	}
+
+	public boolean isNvlDoisEstimado() {
+		return nvlDoisEstimado;
+	}
+
+	public void setNvlDoisEstimado(boolean nvlDoisEstimado) {
+		this.nvlDoisEstimado = nvlDoisEstimado;
+	}
+
+	public boolean isErroEstimacao() {
+		return erroEstimacao;
+	}
+
+	public void setErroEstimacao(boolean erroEstimacao) {
+		this.erroEstimacao = erroEstimacao;
 	}
 }
