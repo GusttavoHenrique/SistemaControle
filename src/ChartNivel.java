@@ -251,6 +251,7 @@ public class ChartNivel {
 		
         graph.getXYPlot().setRenderer(renderer);
         
+        //erro dois.
         renderer.setSeriesShapesVisible(8, false);
       		if(dados.isErroEstimacaoDois())
       			renderer.setSeriesLinesVisible(8, true);
