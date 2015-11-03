@@ -396,30 +396,33 @@ public class Tanque extends Thread{
 					
 					if(dados.isObservando()){
 						
+						observador.vp = dados.getVP();
 						observador.calcularObservador();
 						
+						
+						
 						Ponto pto_nvl_um_estimado = new Ponto();
-						pto_nvl_um_estimado.setY(observador.x_chapeu[0][0]);
+						pto_nvl_um_estimado.setY(observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_estimado.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_nvl_um_estimado(pto_nvl_um_estimado);
 						
 						Ponto pto_nvl_dois_estimado = new Ponto();
-						pto_nvl_dois_estimado.setY(observador.x_chapeu[0][1]);
+						pto_nvl_dois_estimado.setY(observador.x_chapeu_anterior[1][0]);
 						pto_nvl_dois_estimado.setX(sinal.getTempo() - 0.1);
 						
-						grafico_nivel.atualizar_fila_nvl_um_estimado(pto_nvl_dois_estimado);
+						grafico_nivel.atualizar_fila_nvl_dois_estimado(pto_nvl_dois_estimado);
 						
 						
 						Ponto pto_nvl_um_erro = new Ponto();
-						pto_nvl_um_erro.setY(nivel_tanque_um - observador.x_chapeu[0][0]);
+						pto_nvl_um_erro.setY(nivel_tanque_um - observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_erro.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_estimacao_um(pto_nvl_um_estimado);
 						
 						
 						Ponto pto_nvl_dois_erro = new Ponto();
-						pto_nvl_dois_erro.setY(nivel_tanque_dois - observador.x_chapeu[0][0]);
+						pto_nvl_dois_erro.setY(nivel_tanque_dois - observador.x_chapeu_anterior[1][0]);
 						pto_nvl_dois_erro.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_estimado);
