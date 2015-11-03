@@ -11,6 +11,7 @@ public class Tanque extends Thread{
 	QuanserClient quanserclient;
 	Controlador controladorUm;
 	Controlador controladorDois;
+	Observador  observador;
 
 	private double vp_sat;
 	public double nivel_tanque_um;
@@ -393,6 +394,11 @@ public class Tanque extends Thread{
 						
 					}
 					
+					//if(dados.isObservando()){
+						
+						
+					//}
+					
 				}
 				
 				grafico_nivel.atualizarGrafico();
@@ -443,7 +449,11 @@ public class Tanque extends Thread{
 		
 		controladorDois = new Controlador(dados.getKpEscravo(), dados.getKiEscravo(),
 				dados.getKdEscravo(), dados.getTt(), dados.isWindUpEscravo()); 
-	}
+	
+	
+		observador = new Observador(dados.getL1(), dados.getL2());
+	
+	}	
 	
 	public void setDadosGrafico(Dados dados) {
 		this.grafico_controle.dados = dados;
