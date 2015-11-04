@@ -40,6 +40,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 @SuppressWarnings("serial")
 public class Tela extends TelaGeral{
@@ -104,20 +106,28 @@ public class Tela extends TelaGeral{
 	private JPanel panelObsEstados;
 	private JTextField textFieldL1;
 	private JTextField textFieldL2;
-	private JLabel label_2;
+	private JLabel lblColchete1;
 	private JLabel lblMatrizL;
-	private JLabel label_1;
+	private JLabel lblColchete2;
 	private JLabel lblP1;
 	private JLabel lblP2;
 	private JTextField textFieldReP1;
 	private JTextField textFieldReP2;
 	private JTextField textFieldImP1;
 	private JTextField textFieldImP2;
-	private JLabel lblMais1;
-	private JLabel lblMais2;
+	private JLabel lblMais;
+	private JLabel lblMenos;
 	private JLabel lblI1;
 	private JLabel lblI2;
 	private JLabel lblNewLabel_1;
+	
+	private JCheckBox acionarObservadorEstados;
+	private JCheckBox chckbxNivel1Estimado;
+	private JCheckBox chckbxNivel2Estimado;
+	private JCheckBox chckbxErroEstNivel1;
+	private JCheckBox chckbxErroEstNivel2;
+	
+	private JLabel lblExibirCheckSinalGrafico1, lblExibirCheckSinalGrafico2; 
 	
 	/**
 	 * Launch the application.
@@ -469,12 +479,16 @@ public class Tela extends TelaGeral{
 		dados.setSetPoint(chckbxSetPoint.isSelected());
 		dados.setErroMesmo(chckbxErro.isSelected());
 		
-		//dados.setErro(chckbxControle.isSelected());
 		dados.setProporcional(chckbxP.isSelected());
 		dados.setIntegral(chckbxI.isSelected());
 		dados.setDerivativo(chckbxD.isSelected());
 		dados.setNivel1(chckbxNivTanque1.isSelected());
 		dados.setNivel2(chckbxNivTanque2.isSelected());
+		
+		dados.setNvlUmEstimado(chckbxNivel1Estimado.isSelected());
+		dados.setNvlDoisEstimado(chckbxNivel2Estimado.isSelected());
+		dados.setErroEstimacaoUm(chckbxErroEstNivel1.isSelected());
+		dados.setErroEstimacaoDois(chckbxErroEstNivel2.isSelected());
 		
 		dados.setProporcional_c2(chckbxAoP.isSelected());
 		dados.setIntegral_c2(chckbxAcoI.isSelected());
@@ -863,71 +877,95 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(textFieldL2);
 		textFieldL2.setColumns(10);
 		
-		label_2 = new JLabel("[");
-		label_2.setForeground(Color.GRAY);
-		label_2.setFont(new Font("Calibri Light", Font.PLAIN, 85));
-		label_2.setBounds(221, -12, 35, 138);
-		panelObsEstados.add(label_2);
+		lblColchete1 = new JLabel("[");
+		lblColchete1.setForeground(Color.GRAY);
+		lblColchete1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		lblColchete1.setBounds(221, -12, 35, 138);
+		panelObsEstados.add(lblColchete1);
 		
 		lblMatrizL = new JLabel("L = ");
 		lblMatrizL.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblMatrizL.setBounds(208, 50, 23, 14);
 		panelObsEstados.add(lblMatrizL);
 		
-		label_1 = new JLabel("]");
-		label_1.setForeground(Color.GRAY);
-		label_1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
-		label_1.setBounds(290, -12, 35, 138);
-		panelObsEstados.add(label_1);
+		lblColchete2 = new JLabel("]");
+		lblColchete2.setForeground(Color.GRAY);
+		lblColchete2.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		lblColchete2.setBounds(290, -12, 35, 138);
+		panelObsEstados.add(lblColchete2);
 		
 		lblP1 = new JLabel("P1 = ");
-		lblP1.setBounds(10, 33, 28, 14);
+		lblP1.setBounds(10, 50, 28, 14);
 		panelObsEstados.add(lblP1);
 		
 		lblP2 = new JLabel("P2 = ");
-		lblP2.setBounds(10, 60, 28, 14);
+		lblP2.setBounds(10, 70, 28, 14);
 		panelObsEstados.add(lblP2);
 		
 		textFieldReP1 = new JTextField();
+		textFieldReP1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldReP2.setText(textFieldReP1.getText());
+			}
+		});
 		textFieldReP1.setToolTipText("Parte real do polo 1");
-		textFieldReP1.setBounds(36, 32, 46, 16);
+		textFieldReP1.setBounds(36, 48, 46, 16);
 		panelObsEstados.add(textFieldReP1);
 		textFieldReP1.setColumns(10);
 		
 		textFieldReP2 = new JTextField();
+		textFieldReP2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldReP1.setText(textFieldReP2.getText());
+			}
+		});
 		textFieldReP2.setToolTipText("Parte real do polo 2");
 		textFieldReP2.setColumns(10);
-		textFieldReP2.setBounds(36, 59, 46, 16);
+		textFieldReP2.setBounds(36, 68, 46, 16);
 		panelObsEstados.add(textFieldReP2);
 		
 		textFieldImP1 = new JTextField();
+		textFieldImP1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldImP2.setText(textFieldImP1.getText());
+			}
+		});
 		textFieldImP1.setToolTipText("Parte imagin\u00E1ria do polo 1");
 		textFieldImP1.setColumns(10);
-		textFieldImP1.setBounds(99, 32, 46, 16);
+		textFieldImP1.setBounds(99, 48, 46, 16);
 		panelObsEstados.add(textFieldImP1);
 		
 		textFieldImP2 = new JTextField();
+		textFieldImP2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				textFieldImP1.setText(textFieldImP2.getText());
+			}
+		});
 		textFieldImP2.setToolTipText("Parte imagin\u00E1ria do polo 2");
 		textFieldImP2.setColumns(10);
-		textFieldImP2.setBounds(99, 59, 46, 16);
+		textFieldImP2.setBounds(99, 68, 46, 16);
 		panelObsEstados.add(textFieldImP2);
 		
-		lblMais1 = new JLabel("+");
-		lblMais1.setBounds(86, 33, 13, 15);
-		panelObsEstados.add(lblMais1);
+		lblMais = new JLabel("+");
+		lblMais.setBounds(86, 49, 13, 15);
+		panelObsEstados.add(lblMais);
 		
-		lblMais2 = new JLabel("+");
-		lblMais2.setBounds(86, 60, 13, 15);
-		panelObsEstados.add(lblMais2);
+		lblMenos = new JLabel("-");
+		lblMenos.setBounds(88, 69, 13, 15);
+		panelObsEstados.add(lblMenos);
 		
 		lblI1 = new JLabel("i");
 		lblI1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblI1.setBounds(150, 33, 13, 15);
+		lblI1.setBounds(150, 49, 13, 15);
 		panelObsEstados.add(lblI1);
 		
 		lblI2 = new JLabel("i");
 		lblI2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblI2.setBounds(150, 60, 13, 15);
+		lblI2.setBounds(150, 69, 13, 15);
 		panelObsEstados.add(lblI2);
 		
 		lblNewLabel_1 = new JLabel("");
@@ -937,10 +975,10 @@ public class Tela extends TelaGeral{
 				if(!textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("") 
 						&& !textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
 					
-					calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL2);
+					calculaMatrizL(textFieldReP1, textFieldImP1);
 				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
-					calculaPolos(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2, textFieldL1, textFieldL2);					
+					calculaPolos(textFieldL1, textFieldL2);					
 				}else{
 					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
 				}
@@ -948,8 +986,45 @@ public class Tela extends TelaGeral{
 		});
 		lblNewLabel_1.setToolTipText("Clique para atualizar os par\u00E2metros");
 		lblNewLabel_1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
-		lblNewLabel_1.setBounds(165, 40, 30, 30);
+		lblNewLabel_1.setBounds(165, 50, 30, 30);
 		panelObsEstados.add(lblNewLabel_1);
+		
+		acionarObservadorEstados = new JCheckBox("Acionar Observador de Estados");
+		acionarObservadorEstados.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(acionarObservadorEstados.isSelected()){
+					textFieldReP1.setEnabled(true);
+					textFieldReP2.setEnabled(true);
+					
+					textFieldImP1.setEnabled(true);
+					textFieldImP2.setEnabled(true);
+					
+					textFieldL1.setEnabled(true);
+					textFieldL2.setEnabled(true);
+				}else{
+					textFieldReP1.setEnabled(false);
+					textFieldReP1.setText("");
+					
+					textFieldReP2.setEnabled(false);
+					textFieldReP2.setText("");
+					
+					textFieldImP1.setEnabled(false);
+					textFieldImP1.setText("");
+					
+					textFieldImP2.setEnabled(false);
+					textFieldImP2.setText("");
+					
+					textFieldL1.setEnabled(false);
+					textFieldL1.setText("");
+					
+					textFieldL2.setEnabled(false);
+					textFieldL2.setText("");
+				}
+			}
+		});
+		acionarObservadorEstados.setBounds(10, 17, 185, 23);
+		panelObsEstados.add(acionarObservadorEstados);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1651,6 +1726,11 @@ public class Tela extends TelaGeral{
 			chckbxErro.setEnabled(true);
 			chckbxErroMestre.setEnabled(true);
 			
+			chckbxNivel1Estimado.setEnabled(true);			
+			chckbxNivel2Estimado.setEnabled(true);
+			chckbxErroEstNivel1.setEnabled(true);
+			chckbxErroEstNivel2.setEnabled(true);
+						
 			chckbxP.setEnabled(true);
 			chckbxD.setEnabled(true);
 			chckbxI.setEnabled(true);
@@ -1721,12 +1801,77 @@ public class Tela extends TelaGeral{
 			porcentagem.setSelected(false);
 			absoluto.setSelected(false);
 			
+			chckbxP.setEnabled(false);
+			chckbxP.setVisible(false);
+			chckbxP.setSelected(false);
+			
+			chckbxD.setEnabled(false);
+			chckbxD.setVisible(false);
+			chckbxD.setSelected(false);
+			
+			chckbxI.setEnabled(false);
+			chckbxI.setVisible(false);
+			chckbxI.setSelected(false);
+			
+			chckbxAoP.setEnabled(false);
+			chckbxAoP.setVisible(false);
+			chckbxAoP.setSelected(false);
+			
+			chckbxAoD.setEnabled(false);
+			chckbxAoD.setVisible(false);
+			chckbxAoD.setSelected(false);
+			
+			chckbxAcoI.setEnabled(false);
+			chckbxAcoI.setVisible(false);
+			chckbxAcoI.setSelected(false);
+			
+			chckbxControleMestre.setEnabled(false);
+			chckbxControleMestre.setVisible(false);
+			chckbxControleMestre.setSelected(false);
+			
 			chckbxTensCalc.setEnabled(false);
+			chckbxTensCalc.setVisible(false);
+			chckbxTensCalc.setSelected(false);
+			
 			chckbxTensaoSat.setEnabled(false);
+			chckbxTensaoSat.setVisible(false);
+			chckbxTensaoSat.setSelected(false);
+			
 			chckbxNivTanque1.setEnabled(false);
+			chckbxNivTanque1.setVisible(false);
+			chckbxNivTanque1.setSelected(false);
+			
 			chckbxNivTanque2.setEnabled(false);
+			chckbxNivTanque2.setVisible(false);
+			chckbxNivTanque2.setSelected(false);
+			
+			chckbxErroMestre.setEnabled(false);
+			chckbxErroMestre.setVisible(false);
+			chckbxErroMestre.setSelected(false);
+			
 			chckbxSetPoint.setEnabled(false);
+			chckbxSetPoint.setVisible(false);
+			chckbxSetPoint.setSelected(false);
+			
 			chckbxErro.setEnabled(false);
+			chckbxErro.setVisible(false);
+			chckbxErro.setSelected(false);
+			
+			chckbxNivel1Estimado.setEnabled(false);
+			chckbxNivel1Estimado.setVisible(false);
+			chckbxNivel1Estimado.setSelected(false);
+			
+			chckbxNivel2Estimado.setEnabled(false);
+			chckbxNivel2Estimado.setVisible(false);
+			chckbxNivel2Estimado.setSelected(false);
+			
+			chckbxErroEstNivel1.setEnabled(false);
+			chckbxErroEstNivel1.setVisible(false);
+			chckbxErroEstNivel1.setSelected(false);
+			
+			chckbxErroEstNivel2.setEnabled(false);
+			chckbxErroEstNivel2.setVisible(false);
+			chckbxErroEstNivel2.setSelected(false);
 			
 			lblAmplitude.setText("Amplitude:");
 			lblPeriodo.setText("Período:");
@@ -1741,6 +1886,27 @@ public class Tela extends TelaGeral{
 			
 			desabilitarParamsControladorMestre(true, true);
 			desabilitarParamsControladorEscravo(true, true);
+			
+			textFieldReP1.setEnabled(false);
+			textFieldReP1.setText("");
+			
+			textFieldReP2.setEnabled(false);
+			textFieldReP2.setText("");
+			
+			textFieldImP1.setEnabled(false);
+			textFieldImP1.setText("");
+			
+			textFieldImP2.setEnabled(false);
+			textFieldImP2.setText("");
+			
+			textFieldL1.setEnabled(false);
+			textFieldL1.setText("");
+			
+			textFieldL2.setEnabled(false);
+			textFieldL2.setText("");
+			
+			lblExibirCheckSinalGrafico1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));
+			lblExibirCheckSinalGrafico2.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));
 		}
 	}
 	
@@ -1753,6 +1919,12 @@ public class Tela extends TelaGeral{
 		chckbxTensaoSat.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxTensaoSat.setForeground(new Color(255, 0, 0));
 		chckbxTensaoSat.setToolTipText("Sinal da Tens\u00E3o Saturada");
+		chckbxTensaoSat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setTensaoSat(chckbxTensaoSat.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
 		panelGraficos.add(chckbxTensaoSat);
 		
 		chckbxTensCalc = new JCheckBox("Tens\u00E3o Calc.");
@@ -1763,20 +1935,14 @@ public class Tela extends TelaGeral{
 		chckbxTensCalc.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxTensCalc.setForeground(new Color(0, 0, 205));
 		chckbxTensCalc.setToolTipText("Sinal da Tens\u00E3o Calculada");
+		chckbxTensCalc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dados.setTensao(chckbxTensCalc.isSelected());
+				thread.setDadosGrafico(dados);}
+		});
 		panelGraficos.add(chckbxTensCalc);
 		
-		//novos pos mudanca de chk box para esse grafico do grafico de baixo
-		
-	/*	chckbxControle = new JCheckBox("Controle");
-		chckbxControle.setBounds(619, 121, 102, 13);
-		chckbxControle.setBackground(Color.WHITE);
-		chckbxControle.setVisible(false);
-		chckbxControle.setEnabled(false);
-		chckbxControle.setToolTipText("Sinal de Controle");
-		chckbxControle.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxControle.setForeground(Color.CYAN);
-		panelGraficos.add(chckbxControle);*/
-		
+		//novos pos mudanca de chk box para esse grafico do grafico de baixo		
 		chckbxP = new JCheckBox("Ação P");
 		chckbxP.setEnabled(false);
 		chckbxP.setBounds(670, 137, 102, 13);
@@ -1786,6 +1952,12 @@ public class Tela extends TelaGeral{
 		chckbxP.setToolTipText("Sinal da ação Proporcional");
 		chckbxP.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxP.setForeground(new Color(255, 165, 0));
+		chckbxP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setProporcional(chckbxP.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});		
 		panelGraficos.add(chckbxP);
 		
 		chckbxI = new JCheckBox("Ação I");
@@ -1797,6 +1969,12 @@ public class Tela extends TelaGeral{
 		chckbxI.setToolTipText("Sinal da ação Integrativa");
 		chckbxI.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxI.setForeground(Color.MAGENTA);
+		chckbxI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setIntegral(chckbxI.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});		
 		panelGraficos.add(chckbxI);
 		
 		chckbxD = new JCheckBox("Ação D");
@@ -1808,22 +1986,13 @@ public class Tela extends TelaGeral{
 		chckbxD.setToolTipText("Sinal da ação Derivativa");
 		chckbxD.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxD.setForeground(Color.GRAY);
+		chckbxD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setDerivativo(chckbxD.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
 		panelGraficos.add(chckbxD);
-		
-		chckbxAoD = new JCheckBox("A\u00E7\u00E3o D - Mestre");
-		chckbxAoD.setEnabled(false);
-		chckbxAoD.setVisible(false);
-		chckbxAoD.setForeground(new Color(50, 205, 50));
-		chckbxAoD.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAoD.setBounds(670, 121, 97, 13);
-		panelGraficos.add(chckbxAoD);
-		
-		chckbxAcoI = new JCheckBox("Ac\u00E3o I - Mestre");
-		chckbxAcoI.setEnabled(false);
-		chckbxAcoI.setVisible(false);
-		chckbxAcoI.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAcoI.setBounds(670, 105, 97, 13);
-		panelGraficos.add(chckbxAcoI);
 		
 		chckbxAoP = new JCheckBox("A\u00E7\u00E3o P - Mestre");
 		chckbxAoP.setEnabled(false);
@@ -1831,7 +2000,40 @@ public class Tela extends TelaGeral{
 		chckbxAoP.setForeground(new Color(0, 191, 255));
 		chckbxAoP.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxAoP.setBounds(670, 89, 97, 13);
+		chckbxAoP.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setProporcional_c2(chckbxAoP.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});		
 		panelGraficos.add(chckbxAoP);
+		
+		chckbxAcoI = new JCheckBox("Ac\u00E3o I - Mestre");
+		chckbxAcoI.setEnabled(false);
+		chckbxAcoI.setVisible(false);
+		chckbxAcoI.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxAcoI.setBounds(670, 105, 97, 13);
+		chckbxAcoI.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setIntegral_c2(chckbxAcoI.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});		
+		panelGraficos.add(chckbxAcoI);
+		
+		chckbxAoD = new JCheckBox("A\u00E7\u00E3o D - Mestre");
+		chckbxAoD.setEnabled(false);
+		chckbxAoD.setVisible(false);
+		chckbxAoD.setForeground(new Color(50, 205, 50));
+		chckbxAoD.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxAoD.setBounds(670, 121, 97, 13);
+		chckbxAoD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setDerivativo_c2(chckbxAoD.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxAoD);
 		
 		chckbxControleMestre = new JCheckBox("Controle Mestre");
 		chckbxControleMestre.setEnabled(false);
@@ -1839,87 +2041,18 @@ public class Tela extends TelaGeral{
 		chckbxControleMestre.setForeground(Color.PINK);
 		chckbxControleMestre.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxControleMestre.setBounds(670, 73, 97, 13);
-		panelGraficos.add(chckbxControleMestre);
-		
-		
-		
-		chckbxTensCalc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dados.setTensao(chckbxTensCalc.isSelected());
-				thread.setDadosGrafico(dados);}
-		});
-		chckbxTensaoSat.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setTensaoSat(chckbxTensaoSat.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
-		//novos pos mudança
-		
-		chckbxP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setProporcional(chckbxP.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});		
-		chckbxI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setIntegral(chckbxI.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});		
-		chckbxD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setDerivativo(chckbxD.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
-		//cascata
-		
-		
-		chckbxAoP.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setProporcional_c2(chckbxAoP.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});		
-		chckbxAcoI.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setIntegral_c2(chckbxAcoI.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});		
-		chckbxAoD.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setDerivativo_c2(chckbxAoD.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
 		chckbxControleMestre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setSinalCascata(chckbxControleMestre.isSelected());
 				thread.setDadosGrafico(dados);
 			}
 		});
+		panelGraficos.add(chckbxControleMestre);		
 	}
 	
-	private void inicializaCheckSinaisGrafico2(){
-		
-		chckbxNivTanque2 = new JCheckBox("N\u00EDvel do Tanque 2");
-		chckbxNivTanque2.setBounds(670, 525, 102, 13);
-		chckbxNivTanque2.setBackground(SystemColor.menu);
-		chckbxNivTanque2.setVisible(false);
-		chckbxNivTanque2.setEnabled(false);
-		chckbxNivTanque2.setToolTipText("Sinal de N\u00EDvel do Tanque 2");
-		chckbxNivTanque2.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxNivTanque2.setForeground(new Color(0, 0, 205));
-		panelGraficos.add(chckbxNivTanque2);
-		
+	private void inicializaCheckSinaisGrafico2(){				
 		chckbxNivTanque1 = new JCheckBox("N\u00EDvel do Tanque 1");
-		chckbxNivTanque1.setBounds(670, 508, 102, 13);
+		chckbxNivTanque1.setBounds(670, 451, 102, 13);
 		chckbxNivTanque1.setBackground(SystemColor.menu);
 		chckbxNivTanque1.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckbxNivTanque1.setVisible(false);
@@ -1927,26 +2060,60 @@ public class Tela extends TelaGeral{
 		chckbxNivTanque1.setToolTipText("Sinal de N\u00EDvel do Tanque 1");
 		chckbxNivTanque1.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxNivTanque1.setForeground(Color.BLACK);
+		chckbxNivTanque1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setNivel1(chckbxNivTanque1.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
 		panelGraficos.add(chckbxNivTanque1);
 		
+		chckbxNivTanque2 = new JCheckBox("N\u00EDvel do Tanque 2");
+		chckbxNivTanque2.setBounds(670, 468, 102, 13);
+		chckbxNivTanque2.setBackground(SystemColor.menu);
+		chckbxNivTanque2.setVisible(false);
+		chckbxNivTanque2.setEnabled(false);
+		chckbxNivTanque2.setToolTipText("Sinal de N\u00EDvel do Tanque 2");
+		chckbxNivTanque2.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxNivTanque2.setForeground(new Color(0, 0, 205));
+		chckbxNivTanque2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setNivel2(chckbxNivTanque2.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxNivTanque2);
+		
 		chckbxErro = new JCheckBox("Erro");
-		chckbxErro.setBounds(670, 492, 102, 13);
+		chckbxErro.setBounds(670, 435, 102, 13);
 		chckbxErro.setBackground(SystemColor.menu);
 		chckbxErro.setVisible(false);
 		chckbxErro.setEnabled(false);
 		chckbxErro.setToolTipText("ERRO");
 		chckbxErro.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxErro.setForeground(Color.PINK);
+		chckbxErro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setErroMesmo(chckbxErro.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
 		panelGraficos.add(chckbxErro);
 		
 		chckbxSetPoint = new JCheckBox("Set-Point");
-		chckbxSetPoint.setBounds(670, 476, 102, 13);		
+		chckbxSetPoint.setBounds(670, 419, 102, 13);		
 		chckbxSetPoint.setBackground(SystemColor.menu);
 		chckbxSetPoint.setVisible(false);
 		chckbxSetPoint.setEnabled(false);
 		chckbxSetPoint.setToolTipText("Sinal do Set-Point");
 		chckbxSetPoint.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxSetPoint.setForeground(Color.RED);
+		chckbxSetPoint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dados.setSetPoint(chckbxSetPoint.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
 		panelGraficos.add(chckbxSetPoint);
 		
 		chckbxErroMestre = new JCheckBox("Erro Mestre");
@@ -1954,49 +2121,75 @@ public class Tela extends TelaGeral{
 		chckbxErroMestre.setVisible(false);
 		chckbxErroMestre.setForeground(new Color(255, 165, 0));
 		chckbxErroMestre.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxErroMestre.setBounds(670, 459, 102, 13);
-		panelGraficos.add(chckbxErroMestre);
-		
-		
-		
-		chckbxNivTanque1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setNivel1(chckbxNivTanque1.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		chckbxNivTanque2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setNivel2(chckbxNivTanque2.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
-		chckbxErro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setErroMesmo(chckbxErro.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
-		chckbxSetPoint.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				dados.setSetPoint(chckbxSetPoint.isSelected());
-				thread.setDadosGrafico(dados);
-			}
-		});
-		
+		chckbxErroMestre.setBounds(670, 402, 102, 13);
 		chckbxErroMestre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setErro_c1(chckbxErroMestre.isSelected());
 				thread.setDadosGrafico(dados);
 			}
-		});
+		});		
+		panelGraficos.add(chckbxErroMestre);
 		
+		chckbxNivel1Estimado = new JCheckBox("N\u00EDvel 1 Estimado");
+		chckbxNivel1Estimado.setEnabled(false);
+		chckbxNivel1Estimado.setVisible(false);
+		chckbxNivel1Estimado.setForeground(new Color(0, 128, 0));
+		chckbxNivel1Estimado.setBounds(670, 484, 97, 13);
+		chckbxNivel1Estimado.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxNivel1Estimado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dados.setNvlUmEstimado(chckbxNivel1Estimado.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxNivel1Estimado);
+		
+		chckbxNivel2Estimado = new JCheckBox("N\u00EDvel 2 Estimado");
+		chckbxNivel2Estimado.setEnabled(false);
+		chckbxNivel2Estimado.setVisible(false);
+		chckbxNivel2Estimado.setForeground(Color.MAGENTA);
+		chckbxNivel2Estimado.setBounds(670, 500, 97, 13);
+		chckbxNivel2Estimado.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxNivel2Estimado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dados.setNvlDoisEstimado(chckbxNivel2Estimado.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxNivel2Estimado);
+		
+		chckbxErroEstNivel1 = new JCheckBox("Erro de Est. do N\u00EDvel 1");
+		chckbxErroEstNivel1.setEnabled(false);
+		chckbxErroEstNivel1.setVisible(false);
+		chckbxErroEstNivel1.setForeground(Color.GRAY);
+		chckbxErroEstNivel1.setToolTipText("Erro de Estima\u00E7\u00E3o do N\u00EDvel 1");
+		chckbxErroEstNivel1.setBounds(670, 516, 120, 13);
+		chckbxErroEstNivel1.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxErroEstNivel1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dados.setErroEstimacaoUm(chckbxErroEstNivel1.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxErroEstNivel1);
+		
+		chckbxErroEstNivel2 = new JCheckBox("Erro de Est. do N\u00EDvel 2");
+		chckbxErroEstNivel2.setEnabled(false);
+		chckbxErroEstNivel2.setVisible(false);
+		chckbxErroEstNivel2.setForeground(new Color(128, 0, 128));
+		chckbxErroEstNivel2.setBounds(670, 532, 120, 13);
+		chckbxErroEstNivel2.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxErroEstNivel2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dados.setErroEstimacaoDois(chckbxErroEstNivel2.isSelected());
+				thread.setDadosGrafico(dados);
+			}
+		});
+		panelGraficos.add(chckbxErroEstNivel2);	
 	}
 	
 	private void inicializarPainelCheckSinaisGraficos(){		
-		final JLabel lblExibirCheckSinalGrafico1 = new JLabel("");
+		lblExibirCheckSinalGrafico1 = new JLabel("");
 		lblExibirCheckSinalGrafico1.setBounds(751, 209, 32, 43);
 		lblExibirCheckSinalGrafico1.setToolTipText("Exibir Sinal");
 		lblExibirCheckSinalGrafico1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));
@@ -2038,7 +2231,7 @@ public class Tela extends TelaGeral{
 			}
 		});
 		
-		final JLabel lblExibirCheckSinalGrafico2 = new JLabel("");
+		lblExibirCheckSinalGrafico2 = new JLabel("");
 		lblExibirCheckSinalGrafico2.setBounds(751, 545, 32, 43);
 		lblExibirCheckSinalGrafico2.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));
 		lblExibirCheckSinalGrafico2.setToolTipText("Exibir Sinal");
@@ -2056,8 +2249,10 @@ public class Tela extends TelaGeral{
 					chckbxErro.setVisible(true);
 					chckbxSetPoint.setVisible(true);
 					chckbxErroMestre.setVisible(true);
-					
-					
+					chckbxNivel1Estimado.setVisible(true);
+					chckbxNivel2Estimado.setVisible(true);
+					chckbxErroEstNivel1.setVisible(true);
+					chckbxErroEstNivel2.setVisible(true);
 				}else{
 					lblExibirCheckSinalGrafico2.setIcon(new ImageIcon(Tela.class.getResource("Icons/Chart-Curve-Add-32.png")));
 					chckbxSetPoint.setVisible(false);
@@ -2065,6 +2260,10 @@ public class Tela extends TelaGeral{
 					chckbxNivTanque2.setVisible(false);
 					chckbxErro.setVisible(false);
 					chckbxErroMestre.setVisible(false);
+					chckbxNivel1Estimado.setVisible(false);
+					chckbxNivel2Estimado.setVisible(false);
+					chckbxErroEstNivel1.setVisible(false);
+					chckbxErroEstNivel2.setVisible(false);
 				}
 			}
 		});
