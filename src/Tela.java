@@ -124,7 +124,7 @@ public class Tela extends TelaGeral{
 	private JLabel lblI2;
 	private JLabel lblNewLabel_1;
 	
-	private JCheckBox acionarObservadorEstados;
+	private JCheckBox realizarObservacaoEstados;
 	private JCheckBox chckbxNivel1Estimado;
 	private JCheckBox chckbxNivel2Estimado;
 	private JCheckBox chckbxErroEstNivel1;
@@ -836,11 +836,45 @@ public class Tela extends TelaGeral{
 		panelBombas.setLayout(null);
 		
 		rdbtnTanque1 = new JRadioButton("Tanque 1");
+		rdbtnTanque1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnTanque2.setSelected(false);
+				
+				realizarObservacaoEstados.setEnabled(false);
+				realizarObservacaoEstados.setSelected(false);
+				
+				textFieldReP1.setEnabled(false);
+				textFieldReP1.setText("");
+				
+				textFieldReP2.setEnabled(false);
+				textFieldReP2.setText("");
+				
+				textFieldImP1.setEnabled(false);
+				textFieldImP1.setText("");
+				
+				textFieldImP2.setEnabled(false);
+				textFieldImP2.setText("");
+				
+				textFieldL1.setEnabled(false);
+				textFieldL1.setText("");
+				
+				textFieldL2.setEnabled(false);
+				textFieldL2.setText("");
+			}
+		});
 		rdbtnTanque1.setEnabled(false);
 		rdbtnTanque1.setBounds(6, 24, 71, 18);
 		panelBombas.add(rdbtnTanque1);
 		
 		rdbtnTanque2 = new JRadioButton("Tanque 2");
+		rdbtnTanque2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rdbtnTanque1.setSelected(false);
+				
+				if(rdbtnFechada.isSelected())
+					realizarObservacaoEstados.setEnabled(true);
+			}
+		});
 		rdbtnTanque2.setEnabled(false);
 		rdbtnTanque2.setBounds(79, 24, 71, 18);
 		panelBombas.add(rdbtnTanque2);
@@ -880,11 +914,13 @@ public class Tela extends TelaGeral{
 		panelObsEstados.setLayout(null);
 		
 		textFieldL1 = new JTextField();
+		textFieldL1.setEnabled(false);
 		textFieldL1.setBounds(245, 35, 46, 16);
 		panelObsEstados.add(textFieldL1);
 		textFieldL1.setColumns(10);
 		
 		textFieldL2 = new JTextField();
+		textFieldL2.setEnabled(false);
 		textFieldL2.setBounds(245, 65, 46, 16);
 		panelObsEstados.add(textFieldL2);
 		textFieldL2.setColumns(10);
@@ -915,6 +951,7 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(lblP2);
 		
 		textFieldReP1 = new JTextField();
+		textFieldReP1.setEnabled(false);
 		textFieldReP1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -927,6 +964,7 @@ public class Tela extends TelaGeral{
 		textFieldReP1.setColumns(10);
 		
 		textFieldReP2 = new JTextField();
+		textFieldReP2.setEnabled(false);
 		textFieldReP2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -939,6 +977,7 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(textFieldReP2);
 		
 		textFieldImP1 = new JTextField();
+		textFieldImP1.setEnabled(false);
 		textFieldImP1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -951,6 +990,7 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(textFieldImP1);
 		
 		textFieldImP2 = new JTextField();
+		textFieldImP2.setEnabled(false);
 		textFieldImP2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -1004,11 +1044,12 @@ public class Tela extends TelaGeral{
 		lblNewLabel_1.setBounds(165, 50, 30, 30);
 		panelObsEstados.add(lblNewLabel_1);
 		
-		acionarObservadorEstados = new JCheckBox("Acionar Observador de Estados");
-		acionarObservadorEstados.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(acionarObservadorEstados.isSelected()){
+		realizarObservacaoEstados = new JCheckBox("Realizar Observa\u00E7\u00E3o de Estados");
+		realizarObservacaoEstados.setEnabled(false);
+		realizarObservacaoEstados.setBounds(10, 17, 185, 23);
+		realizarObservacaoEstados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(realizarObservacaoEstados.isSelected()){
 					textFieldReP1.setEnabled(true);
 					textFieldReP2.setEnabled(true);
 					
@@ -1017,6 +1058,16 @@ public class Tela extends TelaGeral{
 					
 					textFieldL1.setEnabled(true);
 					textFieldL2.setEnabled(true);
+			
+					if(comboTipoControle.getSelectedIndex() != 0 && comboTipoControle.getSelectedIndex() != 3){
+						comboTipoControladorMestre.setSelectedIndex(1);
+						comboTipoControladorMestre.setEnabled(false);
+						
+						if(comboTipoControle.getSelectedIndex() == 2){
+							comboTipoControladorEscravo.setSelectedIndex(1);
+							comboTipoControladorEscravo.setEnabled(false);
+						}
+					}
 				}else{
 					textFieldReP1.setEnabled(false);
 					textFieldReP1.setText("");
@@ -1035,11 +1086,22 @@ public class Tela extends TelaGeral{
 					
 					textFieldL2.setEnabled(false);
 					textFieldL2.setText("");
+					
+					comboTipoControladorMestre.setSelectedIndex(0);
+					if(comboTipoControle.getSelectedIndex() == 1 || comboTipoControle.getSelectedIndex() == 2)
+						comboTipoControladorMestre.setEnabled(true);
+					
+					if(comboTipoControle.getSelectedIndex() == 2){
+						comboTipoControladorEscravo.setSelectedIndex(0);
+						comboTipoControladorEscravo.setEnabled(true);
+					}else{
+						comboTipoControladorEscravo.setEnabled(false);
+					}
+					
 				}
 			}
 		});
-		acionarObservadorEstados.setBounds(10, 17, 185, 23);
-		panelObsEstados.add(acionarObservadorEstados);
+		panelObsEstados.add(realizarObservacaoEstados);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1130,18 +1192,40 @@ public class Tela extends TelaGeral{
 		comboTipoControle = new JComboBox(getItensComboTiposControle());
 		comboTipoControle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(comboTipoControle.getSelectedItem().equals("Cascata")){
+				if(comboTipoControle.getSelectedItem().equals("Cascata") && !realizarObservacaoEstados.isSelected()){
 					comboTipoControladorMestre.setEnabled(true);
 					comboTipoControladorEscravo.setEnabled(true);
 					
 					dados.setTipoDeControle("Cascata");
-				}else if(comboTipoControle.getSelectedItem().equals("Simples")){					
+				}else if(comboTipoControle.getSelectedItem().equals("Cascata") && realizarObservacaoEstados.isSelected()){
+					comboTipoControladorMestre.setEnabled(false);
+					comboTipoControladorEscravo.setEnabled(false);
+					
+					comboTipoControladorMestre.setSelectedIndex(1);
+					comboTipoControladorEscravo.setSelectedIndex(1);
+					
+					dados.setTipoDeControle("Cascata");
+				}else if(comboTipoControle.getSelectedItem().equals("Simples") && !realizarObservacaoEstados.isSelected()){					
 					comboTipoControladorMestre.setEnabled(true);
 					comboTipoControladorEscravo.setEnabled(false);
+					
 					comboTipoControladorEscravo.setSelectedIndex(0);
+
+					chckbxWindUpEscravo.setSelected(false);
+					
 					dados.setTipoDeControle("Simples");
 					
+					desabilitarParamsControladorEscravo(true, true);
+				}else if(comboTipoControle.getSelectedItem().equals("Simples") && realizarObservacaoEstados.isSelected()){
+					comboTipoControladorMestre.setEnabled(false);
+					comboTipoControladorEscravo.setEnabled(false);
+					
+					comboTipoControladorMestre.setSelectedIndex(1);
+					comboTipoControladorEscravo.setSelectedIndex(0);
+					
 					chckbxWindUpEscravo.setSelected(false);
+					
+					dados.setTipoDeControle("Simples");
 					
 					desabilitarParamsControladorEscravo(true, true);
 				}else{
@@ -1156,6 +1240,10 @@ public class Tela extends TelaGeral{
 					
 					desabilitarParamsControladorMestre(true, true);
 					desabilitarParamsControladorEscravo(true, true);
+				}
+				
+				if(!realizarObservacaoEstados.isSelected()){
+					
 				}
 			}
 		});
@@ -1187,6 +1275,27 @@ public class Tela extends TelaGeral{
 				
 				desabilitarParamsControladorMestre(true, true);
 				desabilitarParamsControladorEscravo(true, true);
+				
+				realizarObservacaoEstados.setEnabled(false);
+				realizarObservacaoEstados.setSelected(false);
+				
+				textFieldReP1.setEnabled(false);
+				textFieldReP1.setText("");
+				
+				textFieldReP2.setEnabled(false);
+				textFieldReP2.setText("");
+				
+				textFieldImP1.setEnabled(false);
+				textFieldImP1.setText("");
+				
+				textFieldImP2.setEnabled(false);
+				textFieldImP2.setText("");
+				
+				textFieldL1.setEnabled(false);
+				textFieldL1.setText("");
+				
+				textFieldL2.setEnabled(false);
+				textFieldL2.setText("");
 			}
 		});
 		panelTipoMalha.add(rdbtnAberta);
@@ -1200,6 +1309,9 @@ public class Tela extends TelaGeral{
 			
 //				chckbxWindUpMestre.setEnabled(true);
 //				chckbxWindUpEscravo.setEnabled(true);
+				
+				if(rdbtnTanque2.isSelected())
+					realizarObservacaoEstados.setEnabled(true);
 			}
 		});
 		panelTipoMalha.add(rdbtnFechada);
