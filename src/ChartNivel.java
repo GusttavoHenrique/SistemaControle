@@ -227,39 +227,39 @@ public class ChartNivel {
         
         
         renderer.setSeriesShapesVisible(5, false);
-		//if(dados.isNvlUmEstimado())
+		if(dados.isNvlUmEstimado())
 			renderer.setSeriesLinesVisible(5, true);
-		/*else{renderer.setSeriesLinesVisible(5, false);}*/
-		renderer.setSeriesPaint(5, Color.ORANGE);
+		else{renderer.setSeriesLinesVisible(5, false);}
+		renderer.setSeriesPaint(5, Color.GREEN);
 		
         graph.getXYPlot().setRenderer(renderer);
         
         
         renderer.setSeriesShapesVisible(6, false);
-		//if(dados.isNvlDoisEstimado())
+		if(dados.isNvlDoisEstimado())
 			renderer.setSeriesLinesVisible(6, true);
-		/*else{renderer.setSeriesLinesVisible(6, false);}*/
-		renderer.setSeriesPaint(6, Color.cyan);
+		else{renderer.setSeriesLinesVisible(6, false);}
+		renderer.setSeriesPaint(6, Color.MAGENTA);
 		
         graph.getXYPlot().setRenderer(renderer);
         
-       /* renderer.setSeriesShapesVisible(7, false);
-		//if(dados.isErroEstimacaoUm())
+       renderer.setSeriesShapesVisible(7, false);
+       if(dados.isErroEstimacaoUm())
 			renderer.setSeriesLinesVisible(7, true);
 		else{renderer.setSeriesLinesVisible(7, false);}
-		renderer.setSeriesPaint(7, Color.MAGENTA);
+		renderer.setSeriesPaint(7, Color.GRAY);
 		
-        graph.getXYPlot().setRenderer(renderer);*/
+        graph.getXYPlot().setRenderer(renderer);
         
-        //erro dois.
-        /*renderer.setSeriesShapesVisible(8, false);
-      		//if(dados.isErroEstimacaoDois())
+        //'erro dois.
+        renderer.setSeriesShapesVisible(8, false);
+      		if(dados.isErroEstimacaoDois())
       			renderer.setSeriesLinesVisible(8, true);
       		else{renderer.setSeriesLinesVisible(8, false);}
-      		renderer.setSeriesPaint(8, Color.YELLOW);
+      		renderer.setSeriesPaint(8, new Color(107,35,142));
       		
               graph.getXYPlot().setRenderer(renderer);
-        */
+        
         
         
 		return graph;

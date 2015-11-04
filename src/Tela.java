@@ -415,17 +415,11 @@ public class Tela extends TelaGeral{
 					// Seta os parâmetros do observador de estados na classe dados
 					populaParamsObservadorEstadosNaDados();
 					
-					/*thread.graficoAltura.limparFilaDeErroMesmo();
-					thread.graficoAltura.limparFilaDeNivelDois();
-					thread.graficoAltura.limparFilaDeNivelUm();
-					thread.graficoAltura.limparFilaDeSetPoint();
-					thread.grafico.limparFilaDeVP();
-					thread.grafico.limparFilaDeP();
-					thread.grafico.limparFilaDeI();
-					thread.grafico.limparFilaDeD();*/
+			
 					
 					dados.setTanque1(rdbtnTanque1.isSelected());
 					dados.setTanque2(rdbtnTanque2.isSelected());
+					dados.setObservando(realizarObservacaoEstados.isSelected());
 					
 					if(chckbxWindUpMestre.isSelected()){
 						dados.setTt(Double.parseDouble(labelTaltMestre.getText()));
