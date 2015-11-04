@@ -1096,7 +1096,6 @@ public class Tela extends TelaGeral{
 					}else{
 						comboTipoControladorEscravo.setEnabled(false);
 					}
-					
 				}
 			}
 		});

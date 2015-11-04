@@ -10,12 +10,12 @@ import Jama.Matrix;
 @SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
 	
-	private double A[][] = {{-0.00656, 0.0000}, {0.00656, -0.00656}};
-	private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
+	private double A[][] = {{-0.0656, 0.0000}, {0.0656, -0.0656}};
+	private double AElevadoADois[][] = {{0.0043, 0.0000}, {-0.0086, 0.0043}};	
 	private double C[][] = {{0.0000, 1.0000}, {0, 0}};
 	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
-	private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
-	private double InvV[][] = {{1.0000, 152.4390}, {1.0000, 0.0000}};
+	private double V[][] = {{0.0000, 1.0000}, {0.0656, -0.0656}};
+	private double InvV[][] = {{1.0000, 15.2439}, {1.0000, 0.0000}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
 	
 	private Matrix AMatriz = new Matrix(A);
