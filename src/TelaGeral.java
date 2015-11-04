@@ -54,7 +54,8 @@ public class TelaGeral extends JFrame{
 		Matrix MenosLCMatriz = LCMatriz.times(-1);
 		Matrix AMatrizMenosLCMatriz = AMatriz.plus(MenosLCMatriz);
 		Matrix MenosAMatrizMenosLCMatriz = AMatrizMenosLCMatriz.times(-1);
-		double[] polos = {0,0};		
+		
+		double[] polos = {0, 0, 0, 0};		
 		
 		return polos;
 	}

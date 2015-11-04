@@ -1033,7 +1033,12 @@ public class Tela extends TelaGeral{
 					textFieldL2.setText(matrizL.get(1, 0) + "");
 				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
-					double[] polos = calculaPolos(textFieldL1, textFieldL2);					
+					double[] polos = calculaPolos(textFieldL1, textFieldL2);
+					
+					textFieldReP1.setText(polos[0] + "");
+					textFieldImP1.setText(polos[1] + "");
+					textFieldReP1.setText(polos[2] + "");
+					textFieldImP1.setText(polos[3] + "");
 				}else{
 					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
 				}
