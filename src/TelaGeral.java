@@ -12,18 +12,19 @@ public class TelaGeral extends JFrame{
 	
 	private double A[][] = {{-0.00656, 0.0000}, {0.00656, -0.00656}};
 	private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
-	private double C[] = {0.0000, 1.0000};
+	private double C[][] = {{0.0000, 1.0000}, {0, 0}};
 	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
 	private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
 	private double InvV[][] = {{1.0000, 152.4390}, {1.0000, 0.0000}};
-	private double TranspInvV[][] = {{1.0000, 1.0000}, {152.4390, 0.0000}};
+	private double Transp[][] = {{0.0000}, {1.0000}};
 	
 	private Matrix AMatriz = new Matrix(A);
 	private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
+	private Matrix CMatrix = new Matrix(C);
 	private Matrix IMatriz = new Matrix(I);
 	private Matrix VMatriz = new Matrix(V);
 	private Matrix InvVMatriz = new Matrix(InvV);
-	private Matrix TranspInvVMatriz = new Matrix(TranspInvV);
+	private Matrix TranspMatriz = new Matrix(Transp);
 	
 	public TelaGeral(){
 	
@@ -32,19 +33,30 @@ public class TelaGeral extends JFrame{
 	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP) {
 		Matrix ql = calculaQl(Double.parseDouble(textFieldReP.getText()), Double.parseDouble(textFieldImP.getText()));
 		
-		return ql.times(TranspInvVMatriz);
+		Matrix primeiraParteProduto = ql.times(InvVMatriz);
+		
+		return primeiraParteProduto.times(TranspMatriz);
 	}
 	
 	protected Matrix calculaQl(double realP, double imaginarioP) {
 		Matrix terceiroTermo = IMatriz.times(Math.pow(realP, 2) + Math.pow(imaginarioP, 2));
-		Matrix segundoTermo = AMatriz.times(2*realP*(-1)).plus(terceiroTermo);
+		Matrix segundoTermo = (AMatriz.times(2*realP*(-1))).plus(terceiroTermo);
 		Matrix qlMatriz = AElevadoADoisMatriz.plus(segundoTermo);
 		
 		return qlMatriz;
 	}
 	
-	protected void calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
+	protected double[] calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
+		double[][] L = {{Double.parseDouble(textFieldL1.getText())}, {Double.parseDouble(textFieldL2.getText())}};
+		Matrix LMatrix = new Matrix(L);
 		
+		Matrix LCMatriz = LMatrix.times(CMatrix);
+		Matrix MenosLCMatriz = LCMatriz.times(-1);
+		Matrix AMatrizMenosLCMatriz = AMatriz.plus(MenosLCMatriz);
+		
+		double[] polos = {0,0};		
+		
+		return polos;
 	}
 	
 	/**

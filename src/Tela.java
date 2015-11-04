@@ -989,11 +989,11 @@ public class Tela extends TelaGeral{
 					
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1);
 					
-					textFieldL1.setText(matrizL.get(0, 1) + "");
-					textFieldL2.setText(matrizL.get(1, 1) + "");
+					textFieldL1.setText(matrizL.get(0, 0) + "");
+					textFieldL2.setText(matrizL.get(1, 0) + "");
 				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
-					calculaPolos(textFieldL1, textFieldL2);					
+					double[] polos = calculaPolos(textFieldL1, textFieldL2);					
 				}else{
 					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
 				}
