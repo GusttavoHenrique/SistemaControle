@@ -318,6 +318,7 @@ public class Tela extends TelaGeral{
 		panelDadosServidor.add(lblIPServidor);
 		
 		IPServidor = new JLabel();
+		IPServidor.setText("10.13.99.69");
 		IPServidor.setBounds(28, 17, 65, 16);
 		panelDadosServidor.add(IPServidor);
 		
@@ -326,6 +327,7 @@ public class Tela extends TelaGeral{
 		panelDadosServidor.add(lblPorta);
 		
 		Porta = new JLabel();
+		Porta.setText("20081");
 		Porta.setBounds(43, 45, 50, 16);
 		panelDadosServidor.add(Porta);
 		
@@ -415,8 +417,6 @@ public class Tela extends TelaGeral{
 					
 					// Seta os parâmetros do observador de estados na classe dados
 					populaParamsObservadorEstadosNaDados();
-					
-			
 					
 					dados.setTanque1(rdbtnTanque1.isSelected());
 					dados.setTanque2(rdbtnTanque2.isSelected());
@@ -570,23 +570,24 @@ public class Tela extends TelaGeral{
 		if(comboTipoControle.getSelectedItem().equals("Cascata"))
 			sucesso = sucesso && validaParamsControladorEscravo(comboTipoControladorEscravo, labelKpMestre, labelKiMestre, labelKdMestre, labelTaltMestre, labelTaliMestre, labelTaldMestre);
 		
-		sucesso = sucesso && validaPolosObservador();
+		if(realizarObservacaoEstados.isSelected())
+			sucesso = sucesso && validaPolosObservador();
 
 		return sucesso;
 	}
 	
 	private boolean validaPolosObservador(){
 		double somaDosQuadrados = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP1.getText()), 2);				
-		double raizDaSomaDosQuadrados = Math.sqrt(somaDosQuadrados);
 		
-		if(raizDaSomaDosQuadrados > 1){
+		boolean instavel = Math.sqrt(somaDosQuadrados) >= 1;
+		
+		if(instavel){
 			JOptionPane.showMessageDialog(frame, "Não é possível realizar observação de estados utilizando esses polos.");
 			
 			return false;
+		}else{
+			return true;
 		}
-		
-		
-		return true;
 	}
 	
 	private boolean validaTipoControle(){
@@ -924,13 +925,63 @@ public class Tela extends TelaGeral{
 		abaOpcoesEntrada.add(panelObsEstados);
 		panelObsEstados.setLayout(null);
 		
-		textFieldL1 = new JTextField();
+		textFieldL1 = new JTextFieldAlterado();
+		textFieldL1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("") && (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("") &&
+						textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""))){
+					
+					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP1.setText(realEigenvalues[0]*(-1) + "");
+					textFieldImP1.setText(imagEigenvalues[1]*(-1) + "");
+					textFieldReP2.setText(realEigenvalues[0]*(-1) + "");
+					textFieldImP2.setText(imagEigenvalues[1]*(-1) + "");
+					
+					if(!validaPolosObservador()){
+						textFieldReP1.setText("");
+						textFieldImP1.setText("");
+						textFieldReP2.setText("");
+						textFieldImP2.setText("");
+					}
+				}
+			}
+		});
 		textFieldL1.setEnabled(false);
 		textFieldL1.setBounds(245, 35, 46, 16);
 		panelObsEstados.add(textFieldL1);
 		textFieldL1.setColumns(10);
 		
-		textFieldL2 = new JTextField();
+		textFieldL2 = new JTextFieldAlterado();
+		textFieldL2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("") && (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("") &&
+						textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""))){
+					
+					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP1.setText(realEigenvalues[0]*(-1) + "");
+					textFieldImP1.setText(imagEigenvalues[1]*(-1) + "");
+					textFieldReP2.setText(realEigenvalues[0]*(-1) + "");
+					textFieldImP2.setText(imagEigenvalues[1]*(-1) + "");
+					
+					if(!validaPolosObservador()){
+						textFieldReP1.setText("");
+						textFieldImP1.setText("");
+						textFieldReP2.setText("");
+						textFieldImP2.setText("");
+					}
+				}
+			}
+		});
 		textFieldL2.setEnabled(false);
 		textFieldL2.setBounds(245, 65, 46, 16);
 		panelObsEstados.add(textFieldL2);
@@ -961,12 +1012,19 @@ public class Tela extends TelaGeral{
 		lblP2.setBounds(10, 70, 28, 14);
 		panelObsEstados.add(lblP2);
 		
-		textFieldReP1 = new JTextField();
+		textFieldReP1 = new JTextFieldAlterado();
 		textFieldReP1.setEnabled(false);
 		textFieldReP1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldReP2.setText(textFieldReP1.getText());
+				
+				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
+						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
+					
+					if(validaPolosObservador())
+						setPolosObservador();
+				}
 			}
 		});
 		textFieldReP1.setToolTipText("Parte real do polo 1");
@@ -974,12 +1032,19 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(textFieldReP1);
 		textFieldReP1.setColumns(10);
 		
-		textFieldReP2 = new JTextField();
+		textFieldReP2 = new JTextFieldAlterado();
 		textFieldReP2.setEnabled(false);
 		textFieldReP2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldReP1.setText(textFieldReP2.getText());
+				
+				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
+						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
+					
+					if(validaPolosObservador())
+						setPolosObservador();
+				}
 			}
 		});
 		textFieldReP2.setToolTipText("Parte real do polo 2");
@@ -987,12 +1052,19 @@ public class Tela extends TelaGeral{
 		textFieldReP2.setBounds(36, 68, 46, 16);
 		panelObsEstados.add(textFieldReP2);
 		
-		textFieldImP1 = new JTextField();
+		textFieldImP1 = new JTextFieldAlterado();
 		textFieldImP1.setEnabled(false);
 		textFieldImP1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldImP2.setText(textFieldImP1.getText());
+				
+				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
+						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
+					
+					if(validaPolosObservador())
+						setPolosObservador();
+				}
 			}
 		});
 		textFieldImP1.setToolTipText("Parte imagin\u00E1ria do polo 1");
@@ -1000,12 +1072,19 @@ public class Tela extends TelaGeral{
 		textFieldImP1.setBounds(99, 48, 46, 16);
 		panelObsEstados.add(textFieldImP1);
 		
-		textFieldImP2 = new JTextField();
+		textFieldImP2 = new JTextFieldAlterado();
 		textFieldImP2.setEnabled(false);
 		textFieldImP2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				textFieldImP1.setText(textFieldImP2.getText());
+				
+				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
+						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
+					
+					if(validaPolosObservador())
+						setPolosObservador();
+				}
 			}
 		});
 		textFieldImP2.setToolTipText("Parte imagin\u00E1ria do polo 2");
@@ -1032,29 +1111,6 @@ public class Tela extends TelaGeral{
 		panelObsEstados.add(lblI2);
 		
 		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("") 
-						&& !textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
-					
-					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1);
-					
-					textFieldL1.setText(matrizL.get(0, 0) + "");
-					textFieldL2.setText(matrizL.get(1, 0) + "");
-				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
-					
-					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
-					
-					textFieldReP1.setText(polos.getRealEigenvalues() + "");
-					textFieldImP1.setText(polos.getImagEigenvalues() + "");
-					textFieldReP1.setText(polos.getRealEigenvalues() + "");
-					textFieldImP1.setText(polos.getImagEigenvalues() + "");
-				}else{
-					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
-				}
-			}
-		});
 		lblNewLabel_1.setToolTipText("Clique para atualizar os par\u00E2metros");
 		lblNewLabel_1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
 		lblNewLabel_1.setBounds(165, 50, 30, 30);
@@ -1117,6 +1173,13 @@ public class Tela extends TelaGeral{
 			}
 		});
 		panelObsEstados.add(realizarObservacaoEstados);
+	}
+	
+	private void setPolosObservador(){
+		Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
+		
+		textFieldL1.setText(matrizL.get(0, 0) + "");
+		textFieldL2.setText(matrizL.get(1, 0) + "");
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

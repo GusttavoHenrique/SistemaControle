@@ -14,56 +14,69 @@ public class TelaGeral extends JFrame{
 	
 	private double A[][] = {{-0.0656, 0.0000}, {0.0656, -0.0656}};
 	private double AElevadoADois[][] = {{0.0043, 0.0000}, {-0.0086, 0.0043}};	
-	private double C[][] = {{0.0000, 1.0000}, {0, 0}};
+	private double C[][] = {{0.0000, 1.0000}};
 	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
 	private double V[][] = {{0.0000, 1.0000}, {0.0656, -0.0656}};
 	private double InvV[][] = {{1.0000, 15.2439}, {1.0000, 0.0000}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
 	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
+	private double GElevadoADois[][] = {{0.9870, 0.0000}, {0.0130, 0.9870}};
 	
-	
+	@SuppressWarnings("unused")
 	private Matrix AMatriz = new Matrix(A);
+	@SuppressWarnings("unused")
 	private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
 	private Matrix CMatrix = new Matrix(C);
 	private Matrix IMatriz = new Matrix(I);
+	@SuppressWarnings("unused")
 	private Matrix VMatriz = new Matrix(V);
 	private Matrix InvVMatriz = new Matrix(InvV);
 	private Matrix TranspMatriz = new Matrix(Transp);
 	private Matrix GMatriz = new Matrix(G);
+	private Matrix GElevadoADoisMatriz = new Matrix(GElevadoADois);
 	
 	public TelaGeral(){
 	
 	}
 	
-	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP) {
-		Matrix ql = calculaQl(Double.parseDouble(textFieldReP.getText()), Double.parseDouble(textFieldImP.getText()));
+	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP, JTextField textFieldReP2,JTextField textFieldImP2) {
+		double[][] L_calculado = new double[2][1];
 		
-		Matrix primeiraParteProduto = ql.times(InvVMatriz);
+		Matrix L_calc_matrix = new Matrix (L_calculado);
 		
-		return primeiraParteProduto.times(TranspMatriz);
-	}
-	
-	protected Matrix calculaQl(double realP, double imaginarioP) {
-		Matrix terceiroTermo = IMatriz.times(Math.pow(realP, 2) + Math.pow(imaginarioP, 2));
-		Matrix segundoTermo = (AMatriz.times(2*realP*(-1))).plus(terceiroTermo);
-		Matrix qlMatriz = AElevadoADoisMatriz.plus(segundoTermo);
+		double[][] qL_G = new double [2][2];
 		
-		return qlMatriz;
+		Matrix ql_G_matrix = new Matrix(qL_G);
+		
+		double soma_de_polos = 0;
+		double produto_de_polos = 0;
+		double var = Double.parseDouble(textFieldImP.getText());
+		
+		if(var == 0){
+			produto_de_polos = Double.parseDouble(textFieldReP.getText())*Double.parseDouble(textFieldReP2.getText());			
+		}else{
+			produto_de_polos = Math.pow(Double.parseDouble(textFieldReP.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP.getText()), 2);
+		}
+		
+		soma_de_polos = Double.parseDouble(textFieldReP.getText()) + Double.parseDouble(textFieldReP2.getText());
+		
+		ql_G_matrix = (GMatriz.times(GMatriz)).plus(GMatriz.times(soma_de_polos)).plus((IMatriz.times(produto_de_polos)));
+		
+		L_calc_matrix = (ql_G_matrix.times(InvVMatriz)).times(TranspMatriz);
+		
+		return L_calc_matrix;
 	}
 	
 	protected EigenvalueDecomposition calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
 		double[][] L = {{Double.parseDouble(textFieldL1.getText())}, {Double.parseDouble(textFieldL2.getText())}};
 		Matrix LMatrix = new Matrix(L);
 		
-		Matrix SIMatriz = IMatriz.times(arg0);
-		
 		Matrix LCMatriz = LMatrix.times(CMatrix);
 		Matrix MenosLCMatriz = LCMatriz.times(-1);
-		Matrix MenosGMatriz = GMatriz.times(-1);
-		Matrix MenosGMatrizMenosLCMatriz = MenosGMatriz.plus(MenosLCMatriz);
-		Matrix SIMatrizMenosGMatrizMenosLCMatriz = SIMatriz.plus(MenosGMatrizMenosLCMatriz);
 		
-		EigenvalueDecomposition polos = SIMatrizMenosGMatrizMenosLCMatriz.eig();
+		Matrix GMatrizMenosLCMatriz = GMatriz.plus(MenosLCMatriz);
+		
+		EigenvalueDecomposition polos = GMatrizMenosLCMatriz.eig();
 		
 		return polos;
 	}
