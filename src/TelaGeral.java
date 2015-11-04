@@ -21,28 +21,24 @@ public class TelaGeral extends JFrame{
 	private Matrix AMatriz = new Matrix(A);
 	private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
 	private Matrix IMatriz = new Matrix(I);
+	private Matrix VMatriz = new Matrix(V);
+	private Matrix InvVMatriz = new Matrix(InvV);
 	private Matrix TranspInvVMatriz = new Matrix(TranspInvV);
 	
 	public TelaGeral(){
 	
 	}
 	
-	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP) {		
-//		double[][] L = {{0,0}, {0,0}};		
-//		Matrix LMatriz = new Matrix(L);
-
+	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP) {
 		Matrix ql = calculaQl(Double.parseDouble(textFieldReP.getText()), Double.parseDouble(textFieldImP.getText()));
-
-		Matrix LMatriz = ql.times(TranspInvVMatriz);
 		
-		return LMatriz;
+		return ql.times(TranspInvVMatriz);
 	}
 	
 	protected Matrix calculaQl(double realP, double imaginarioP) {
-//		double[][] ql = {{0,0}, {0,0}};
-//		Matrix qlMatriz = new Matrix(ql);
-		
-		Matrix qlMatriz = AElevadoADoisMatriz.plus(AMatriz.times(2*realP*(-1)).plus(IMatriz.times(Math.pow(realP, 2) + Math.pow(imaginarioP, 2))));
+		Matrix terceiroTermo = IMatriz.times(Math.pow(realP, 2) + Math.pow(imaginarioP, 2));
+		Matrix segundoTermo = AMatriz.times(2*realP*(-1)).plus(terceiroTermo);
+		Matrix qlMatriz = AElevadoADoisMatriz.plus(segundoTermo);
 		
 		return qlMatriz;
 	}

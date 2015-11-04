@@ -40,6 +40,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
+
+import Jama.Matrix;
+
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -984,7 +987,10 @@ public class Tela extends TelaGeral{
 				if(!textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("") 
 						&& !textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
 					
-					calculaMatrizL(textFieldReP1, textFieldImP1);
+					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1);
+					
+					textFieldL1.setText(matrizL.get(0, 1) + "");
+					textFieldL2.setText(matrizL.get(1, 1) + "");
 				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
 					calculaPolos(textFieldL1, textFieldL2);					
@@ -2214,7 +2220,6 @@ public class Tela extends TelaGeral{
 					chckbxTensCalc.setVisible(true);
 					chckbxTensaoSat.setVisible(true);
 					
-					//chckbxControle.setVisible(true);
 					chckbxP.setVisible(true);
 					chckbxI.setVisible(true);
 					chckbxD.setVisible(true);
