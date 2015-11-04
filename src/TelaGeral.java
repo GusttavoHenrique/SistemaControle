@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JTextField;
+
+import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 
 @SuppressWarnings("serial")
@@ -17,6 +19,8 @@ public class TelaGeral extends JFrame{
 	private double V[][] = {{0.0000, 1.0000}, {0.0656, -0.0656}};
 	private double InvV[][] = {{1.0000, 15.2439}, {1.0000, 0.0000}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
+	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
+	
 	
 	private Matrix AMatriz = new Matrix(A);
 	private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
@@ -25,6 +29,7 @@ public class TelaGeral extends JFrame{
 	private Matrix VMatriz = new Matrix(V);
 	private Matrix InvVMatriz = new Matrix(InvV);
 	private Matrix TranspMatriz = new Matrix(Transp);
+	private Matrix GMatriz = new Matrix(G);
 	
 	public TelaGeral(){
 	
@@ -46,16 +51,19 @@ public class TelaGeral extends JFrame{
 		return qlMatriz;
 	}
 	
-	protected double[] calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
+	protected EigenvalueDecomposition calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
 		double[][] L = {{Double.parseDouble(textFieldL1.getText())}, {Double.parseDouble(textFieldL2.getText())}};
 		Matrix LMatrix = new Matrix(L);
 		
+		Matrix SIMatriz = IMatriz.times(arg0);
+		
 		Matrix LCMatriz = LMatrix.times(CMatrix);
 		Matrix MenosLCMatriz = LCMatriz.times(-1);
-		Matrix AMatrizMenosLCMatriz = AMatriz.plus(MenosLCMatriz);
-		Matrix MenosAMatrizMenosLCMatriz = AMatrizMenosLCMatriz.times(-1);
+		Matrix MenosGMatriz = GMatriz.times(-1);
+		Matrix MenosGMatrizMenosLCMatriz = MenosGMatriz.plus(MenosLCMatriz);
+		Matrix SIMatrizMenosGMatrizMenosLCMatriz = SIMatriz.plus(MenosGMatrizMenosLCMatriz);
 		
-		double[] polos = {0, 0, 0, 0};		
+		EigenvalueDecomposition polos = SIMatrizMenosGMatrizMenosLCMatriz.eig();
 		
 		return polos;
 	}

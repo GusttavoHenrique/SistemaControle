@@ -41,6 +41,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 
+import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 
 import java.awt.event.FocusAdapter;
@@ -401,7 +402,7 @@ public class Tela extends TelaGeral{
 			public void actionPerformed(ActionEvent arg0) { 
 				dados = new Dados();					
 				
-				if(validaPoupulaTudoNaDados()){				
+				if(validaPoupulaTudoNaDados()){			
 					
 					// Seta na classe dados o tipo de controle
 					populaTipoControleNaDados();
@@ -568,8 +569,24 @@ public class Tela extends TelaGeral{
 		//Validando painel de escolha dos parametros do controlador mestre
 		if(comboTipoControle.getSelectedItem().equals("Cascata"))
 			sucesso = sucesso && validaParamsControladorEscravo(comboTipoControladorEscravo, labelKpMestre, labelKiMestre, labelKdMestre, labelTaltMestre, labelTaliMestre, labelTaldMestre);
+		
+		sucesso = sucesso && validaPolosObservador();
 
 		return sucesso;
+	}
+	
+	private boolean validaPolosObservador(){
+		double somaDosQuadrados = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP1.getText()), 2);				
+		double raizDaSomaDosQuadrados = Math.sqrt(somaDosQuadrados);
+		
+		if(raizDaSomaDosQuadrados > 1){
+			JOptionPane.showMessageDialog(frame, "Não é possível realizar observação de estados utilizando esses polos.");
+			
+			return false;
+		}
+		
+		
+		return true;
 	}
 	
 	private boolean validaTipoControle(){
@@ -1027,12 +1044,12 @@ public class Tela extends TelaGeral{
 					textFieldL2.setText(matrizL.get(1, 0) + "");
 				}else if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("")){
 					
-					double[] polos = calculaPolos(textFieldL1, textFieldL2);
+					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
 					
-					textFieldReP1.setText(polos[0] + "");
-					textFieldImP1.setText(polos[1] + "");
-					textFieldReP1.setText(polos[2] + "");
-					textFieldImP1.setText(polos[3] + "");
+					textFieldReP1.setText(polos.getRealEigenvalues() + "");
+					textFieldImP1.setText(polos.getImagEigenvalues() + "");
+					textFieldReP1.setText(polos.getRealEigenvalues() + "");
+					textFieldImP1.setText(polos.getImagEigenvalues() + "");
 				}else{
 					JOptionPane.showMessageDialog(frame, "Informe os parâmetros do observador de estados!");
 				}
