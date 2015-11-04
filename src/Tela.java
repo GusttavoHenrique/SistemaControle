@@ -528,14 +528,23 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void populaParamsObservadorEstadosNaDados(){
-	//	dados.setParteReP1(Double.parseDouble(textFieldReP1.getText()));
-	//	dados.setParteImP1(Double.parseDouble(textFieldImP1.getText()));
+		if(!textFieldReP1.getText().equals(""))
+			dados.setParteReP1(Double.parseDouble(textFieldReP1.getText()));
 		
-	//	dados.setParteReP2(Double.parseDouble(textFieldReP2.getText()));
-	//	dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
+		if(!textFieldImP1.getText().equals(""))
+			dados.setParteImP1(Double.parseDouble(textFieldImP1.getText()));
 		
-		dados.setL1(Double.parseDouble(textFieldL1.getText()));
-		dados.setL2(Double.parseDouble(textFieldL2.getText()));
+		if(!textFieldReP2.getText().equals(""))
+			dados.setParteReP2(Double.parseDouble(textFieldReP2.getText()));
+		
+		if(!textFieldImP2.getText().equals(""))
+			dados.setParteImP2(Double.parseDouble(textFieldImP2.getText()));
+		
+		if(!textFieldL1.getText().equals(""))
+			dados.setL1(Double.parseDouble(textFieldL1.getText()));
+		
+		if(!textFieldL2.getText().equals(""))
+			dados.setL2(Double.parseDouble(textFieldL2.getText()));
 	}
 	
 	private boolean validaPoupulaTudoNaDados(){
