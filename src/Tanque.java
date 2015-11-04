@@ -118,6 +118,10 @@ public class Tanque extends Thread{
 		grafico_nivel.filaDeNivelDois.clear();
 		grafico_nivel.filaDeNivelUm.clear();
 		grafico_nivel.filaDeSetPoint.clear();
+		grafico_nivel.fila_nivel_um_estimado.clear();
+		grafico_nivel.fila_nivel_dois_estimado.clear();
+		grafico_nivel.fila_erro_estimacao_um.clear();
+		grafico_nivel.fila_erro_estimacao_dois.clear();
 		
 		
 		
@@ -237,7 +241,13 @@ public class Tanque extends Thread{
 						Ponto pto_sem_controle = new Ponto();
 						pto_sem_controle.setY(dados.getVP());
 						pto_sem_controle.setX(sinal.getTempo() - 0.1);
-						grafico_controle.atualizarFilaDeVP(pto_sem_controle);								
+						grafico_controle.atualizarFilaDeVP(pto_sem_controle);	
+						
+						verificarRegras();
+						Ponto pto_vp_sat = new Ponto();
+						pto_vp_sat.setY(dados.getVP());
+						pto_vp_sat.setX(sinal.getTempo() - 0.1);
+						grafico_controle.atualizarDeVPSaturado(pto_vp_sat);
 						
 					}else if (dados.getTipoDeControle().equals("Simples")){	
 						
@@ -385,27 +395,27 @@ public class Tanque extends Thread{
 						
 						
 						Ponto pto_nvl_um_estimado = new Ponto();
-						pto_nvl_um_estimado.setY(observador.x_chapeu_anterior[0][0]);
+						pto_nvl_um_estimado.setY(Observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_estimado.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_nvl_um_estimado(pto_nvl_um_estimado);
 						
 						Ponto pto_nvl_dois_estimado = new Ponto();
-						pto_nvl_dois_estimado.setY(observador.x_chapeu_anterior[1][0]);
+						pto_nvl_dois_estimado.setY(Observador.x_chapeu_anterior[1][0]);
 						pto_nvl_dois_estimado.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_nvl_dois_estimado(pto_nvl_dois_estimado);
 						
 						
 						Ponto pto_nvl_um_erro = new Ponto();
-						pto_nvl_um_erro.setY(observador.x_erro_estimacao_anterior[0][0]);
+						pto_nvl_um_erro.setY(Observador.x_erro_estimacao_anterior[0][0]);
 						pto_nvl_um_erro.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_estimacao_um(pto_nvl_um_estimado);
 						
 						
 						Ponto pto_nvl_dois_erro = new Ponto();
-						pto_nvl_dois_erro.setY(observador.x_erro_estimacao_anterior[1][0]);
+						pto_nvl_dois_erro.setY(Observador.x_erro_estimacao_anterior[1][0]);
 						pto_nvl_dois_erro.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_estimado);
