@@ -12,15 +12,12 @@ import Jama.Matrix;
 @SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
 	
-	//private double A[][] = {{1, 0.0000}, {0, -2}};
 	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
 	//private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
-//	private double C[][] = {{1, 1.0000}, {0, 0}};
 	private double C[][] = {{0,1}};
 	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
 	//private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
-	private double V[][] = {{0.0000, 1.0000}, {0.00656, 0.9935}};
-	//private double V[][] = {{1, 1}, {1, -2}};
+	private double Wo[][] = {{0.0000, 1.0000}, {0.00656, 0.9935}};
 	//private double InvV[][] = {{2.0/3.0, 1.0/3.0}, {1.0/3.0, -1.0/3.0}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
 	
@@ -29,8 +26,8 @@ public class TelaGeral extends JFrame{
 	//private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
 	private Matrix CMatriz = new Matrix(C);
 	private Matrix IMatriz = new Matrix(I);
-	private Matrix VMatriz = new Matrix(V);
-	private Matrix InvVMatriz = new Matrix(VMatriz.inverse().getArray());
+	private Matrix WoMatriz = new Matrix(Wo);
+	private Matrix InvWoMatriz = new Matrix(WoMatriz.inverse().getArray());
 	private Matrix TranspMatriz = new Matrix(Transp);
 	
 	public TelaGeral(){
@@ -62,7 +59,7 @@ public class TelaGeral extends JFrame{
 		
 		ql_G_matrix = (GMatriz.times(GMatriz)).plus(GMatriz.times(soma_de_polos)).plus((IMatriz.times(produto_de_polos)));
 		
-		L_calc_matrix = (ql_G_matrix.times(InvVMatriz)).times(TranspMatriz);
+		L_calc_matrix = (ql_G_matrix.times(InvWoMatriz)).times(TranspMatriz);
 		
 		return L_calc_matrix;
 		
