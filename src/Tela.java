@@ -1,5 +1,7 @@
 import java.awt.EventQueue;
+import java.awt.Graphics2D;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -48,6 +50,9 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 @SuppressWarnings("serial")
 public class Tela extends TelaGeral{
@@ -125,7 +130,7 @@ public class Tela extends TelaGeral{
 	private JLabel lblMenos;
 	private JLabel lblI1;
 	private JLabel lblI2;
-	private JLabel lblNewLabel_1;
+	private JLabel lblCalculaPolosMatrizL;
 	
 	private JCheckBox realizarObservacaoEstados;
 	private JCheckBox chckbxNivel1Estimado;
@@ -1094,8 +1099,8 @@ public class Tela extends TelaGeral{
 		lblI2.setBounds(150, 69, 13, 15);
 		panelObsEstados.add(lblI2);
 		
-		lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+		lblCalculaPolosMatrizL = new JLabel("");
+		lblCalculaPolosMatrizL.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(todosOsCamposDosPolosVazios() && todosOsCamposDaMatrizLPreenchidos()){
@@ -1120,13 +1125,15 @@ public class Tela extends TelaGeral{
 					
 					textFieldL1.setText(matrizL.get(0, 0) + "");
 					textFieldL2.setText(matrizL.get(1, 0) + "");
+				}else{
+					JOptionPane.showMessageDialog(frame, "Informe os pólos (ou a matriz L) do observador de estados.");
 				}
 			}
 		});
-		lblNewLabel_1.setToolTipText("Clique para atualizar os par\u00E2metros");
-		lblNewLabel_1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
-		lblNewLabel_1.setBounds(165, 50, 30, 30);
-		panelObsEstados.add(lblNewLabel_1);
+		lblCalculaPolosMatrizL.setToolTipText("Clique para atualizar os par\u00E2metros");
+		lblCalculaPolosMatrizL.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
+		lblCalculaPolosMatrizL.setBounds(165, 50, 30, 30);
+		panelObsEstados.add(lblCalculaPolosMatrizL);
 		
 		realizarObservacaoEstados = new JCheckBox("Realizar Observa\u00E7\u00E3o de Estados");
 		realizarObservacaoEstados.setEnabled(false);
@@ -2143,7 +2150,6 @@ public class Tela extends TelaGeral{
 			textFieldImP2Anterior = "";
 			textFieldL1Anterior = "";
 			textFieldL2Anterior = "";
-			
 		}
 	}
 	
