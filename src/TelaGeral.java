@@ -12,6 +12,15 @@ import Jama.Matrix;
 @SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
 	
+	protected String textFieldReP1Anterior = "";
+	protected String textFieldImP1Anterior = "";
+	
+	protected String textFieldReP2Anterior = "";
+	protected String textFieldImP2Anterior = "";
+	
+	protected String textFieldL1Anterior = "";
+	protected String textFieldL2Anterior = "";
+	
 	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
 	//private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
 	private double C[][] = {{0,1}};
