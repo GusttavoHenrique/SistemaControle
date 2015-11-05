@@ -932,9 +932,7 @@ public class Tela extends TelaGeral{
 		textFieldL1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("") && (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("") &&
-						textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""))){
-					
+				if(todosOsCamposDaMatrizLPreenchidos() && todosOsCamposDosPolosVazios()){
 					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
 					
 					double[] imagEigenvalues = polos.getImagEigenvalues();
@@ -963,8 +961,7 @@ public class Tela extends TelaGeral{
 		textFieldL2.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				if(!textFieldL1.getText().equals("") && !textFieldL2.getText().equals("") && (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("") &&
-						textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""))){
+				if(todosOsCamposDaMatrizLPreenchidos() && todosOsCamposDosPolosVazios()){
 					
 					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
 					
@@ -1022,8 +1019,7 @@ public class Tela extends TelaGeral{
 			public void focusLost(FocusEvent arg0) {
 				textFieldReP2.setText(textFieldReP1.getText());
 				
-				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
-						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
+				if(todosOsCamposDosPolosPreenchidos() && todosOsCamposDaMatrizLVazios()){
 					
 					if(validaPolosObservador())
 						setPolosObservador();
@@ -1042,9 +1038,7 @@ public class Tela extends TelaGeral{
 			public void focusLost(FocusEvent arg0) {
 				textFieldReP1.setText(textFieldReP2.getText());
 				
-				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
-						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
-					
+				if(todosOsCamposDosPolosPreenchidos() && todosOsCamposDaMatrizLVazios()){
 					if(validaPolosObservador())
 						setPolosObservador();
 				}
@@ -1062,9 +1056,7 @@ public class Tela extends TelaGeral{
 			public void focusLost(FocusEvent arg0) {
 				textFieldImP2.setText(textFieldImP1.getText());
 				
-				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
-						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
-					
+				if(todosOsCamposDosPolosPreenchidos() && todosOsCamposDaMatrizLVazios()){
 					if(validaPolosObservador())
 						setPolosObservador();
 				}
@@ -1082,9 +1074,7 @@ public class Tela extends TelaGeral{
 			public void focusLost(FocusEvent arg0) {
 				textFieldImP1.setText(textFieldImP2.getText());
 				
-				if(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
-						!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("") && (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""))){
-					
+				if(todosOsCamposDosPolosPreenchidos() && todosOsCamposDaMatrizLVazios()){
 					if(validaPolosObservador())
 						setPolosObservador();
 				}
@@ -1184,6 +1174,25 @@ public class Tela extends TelaGeral{
 		textFieldL1.setText(matrizL.get(0, 0) + "");
 		textFieldL2.setText(matrizL.get(1, 0) + "");
 	}
+	
+	private boolean todosOsCamposDosPolosVazios(){
+		return(textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("") &&
+				textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""));
+	}
+	
+	private boolean todosOsCamposDosPolosPreenchidos(){
+		return(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
+				!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals(""));
+	}
+	
+	private boolean todosOsCamposDaMatrizLVazios(){
+		return (textFieldL1.getText().equals("") && textFieldL2.getText().equals(""));
+	}
+	
+	private boolean todosOsCamposDaMatrizLPreenchidos(){
+		return (!textFieldL1.getText().equals("") && !textFieldL2.getText().equals(""));
+	}
+	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarComboTipoOnda(){
