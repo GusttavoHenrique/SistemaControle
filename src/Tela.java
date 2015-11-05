@@ -376,6 +376,7 @@ public class Tela extends TelaGeral{
 		
 		leitura1 = new JLabel();
 		leitura1.setBounds(172, 17, 36, 16);
+		leitura1.setText("0");
 		panelDadosServidor.add(leitura1);
 		
 		JLabel lblLeitura2 = new JLabel("Leitura 2:");
@@ -384,6 +385,7 @@ public class Tela extends TelaGeral{
 		
 		leitura2 = new JLabel();
 		leitura2.setBounds(172, 45, 36, 16);
+		leitura2.setText("1");
 		panelDadosServidor.add(leitura2);
 		
 		JLabel lblEscrita = new JLabel("Escrita:");
@@ -392,6 +394,7 @@ public class Tela extends TelaGeral{
 		
 		escrita = new JLabel();
 		escrita.setBounds(281, 17, 36, 16);
+		escrita.setText("0");
 		panelDadosServidor.add(escrita);
 	}
 	
