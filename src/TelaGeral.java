@@ -12,48 +12,48 @@ import Jama.Matrix;
 @SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
 	
-	private double A[][] = {{-0.0656, 0.0000}, {0.0656, -0.0656}};
-	private double AElevadoADois[][] = {{0.0043, 0.0000}, {-0.0086, 0.0043}};	
-	private double C[][] = {{0.0000, 1.0000}};
-	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
-	private double V[][] = {{0.0000, 1.0000}, {0.0656, -0.0656}};
-	private double InvV[][] = {{1.0000, 15.2439}, {1.0000, 0.0000}};
-	private double Transp[][] = {{0.0000}, {1.0000}};
+	//private double A[][] = {{1, 0.0000}, {0, -2}};
 	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
-	private double GElevadoADois[][] = {{0.9870, 0.0000}, {0.0130, 0.9870}};
+	//private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
+//	private double C[][] = {{1, 1.0000}, {0, 0}};
+	private double C[][] = {{0,1}};
+	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
+	//private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
+	private double V[][] = {{0.0000, 1.0000}, {0.00656, 0.9935}};
+	//private double V[][] = {{1, 1}, {1, -2}};
+	//private double InvV[][] = {{2.0/3.0, 1.0/3.0}, {1.0/3.0, -1.0/3.0}};
+	private double Transp[][] = {{0.0000}, {1.0000}};
 	
-	@SuppressWarnings("unused")
-	private Matrix AMatriz = new Matrix(A);
-	@SuppressWarnings("unused")
-	private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
-	private Matrix CMatrix = new Matrix(C);
-	private Matrix IMatriz = new Matrix(I);
-	@SuppressWarnings("unused")
-	private Matrix VMatriz = new Matrix(V);
-	private Matrix InvVMatriz = new Matrix(InvV);
-	private Matrix TranspMatriz = new Matrix(Transp);
+	//private Matrix AMatriz = new Matrix(A);
 	private Matrix GMatriz = new Matrix(G);
-	private Matrix GElevadoADoisMatriz = new Matrix(GElevadoADois);
+	//private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
+	private Matrix CMatriz = new Matrix(C);
+	private Matrix IMatriz = new Matrix(I);
+	private Matrix VMatriz = new Matrix(V);
+	private Matrix InvVMatriz = new Matrix(VMatriz.inverse().getArray());
+	private Matrix TranspMatriz = new Matrix(Transp);
 	
 	public TelaGeral(){
 	
 	}
 	
-	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP, JTextField textFieldReP2,JTextField textFieldImP2) {
-		double[][] L_calculado = new double[2][1];
+	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP, JTextField textFieldReP2,JTextField textFieldImP2 ) {
+		
+		
+		double [][] L_calculado = new double[2][1];
 		
 		Matrix L_calc_matrix = new Matrix (L_calculado);
 		
-		double[][] qL_G = new double [2][2];
+		double [][] qL_G = new double [2][2];
 		
 		Matrix ql_G_matrix = new Matrix(qL_G);
 		
 		double soma_de_polos = 0;
 		double produto_de_polos = 0;
 		double var = Double.parseDouble(textFieldImP.getText());
-		
 		if(var == 0){
-			produto_de_polos = Double.parseDouble(textFieldReP.getText())*Double.parseDouble(textFieldReP2.getText());			
+			produto_de_polos = Double.parseDouble(textFieldReP.getText())*Double.parseDouble(textFieldReP2.getText());
+			
 		}else{
 			produto_de_polos = Math.pow(Double.parseDouble(textFieldReP.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP.getText()), 2);
 		}
@@ -65,13 +65,15 @@ public class TelaGeral extends JFrame{
 		L_calc_matrix = (ql_G_matrix.times(InvVMatriz)).times(TranspMatriz);
 		
 		return L_calc_matrix;
+		
+		
 	}
 	
 	protected EigenvalueDecomposition calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
 		double[][] L = {{Double.parseDouble(textFieldL1.getText())}, {Double.parseDouble(textFieldL2.getText())}};
 		Matrix LMatrix = new Matrix(L);
 		
-		Matrix LCMatriz = LMatrix.times(CMatrix);
+		Matrix LCMatriz = LMatrix.times(CMatriz);
 		Matrix MenosLCMatriz = LCMatriz.times(-1);
 		
 		Matrix GMatrizMenosLCMatriz = GMatriz.plus(MenosLCMatriz);

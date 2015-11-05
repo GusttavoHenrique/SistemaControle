@@ -136,28 +136,27 @@ public class Tanque extends Thread{
 		//setServer("10.13.99.69", 20081);
 		//test();
 
-		//getConexao();
+		getConexao();
 		
 		while(true){
 
 		try {
 				
 		
-				//dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-				//dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
-				//nivel_tanque_um = 6.25*dados.getPV();
-				//nivel_tanque_dois = 6.25*dados.getPV_two();
+				nivel_tanque_um = 6.25*dados.getPV();
+				nivel_tanque_dois = 6.25*dados.getPV_two();
 					
-				nivel_tanque_um = 1 - Math.exp(-(sinal.getTempo()- 0.1))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
-				nivel_tanque_dois = 1 - Math.exp(-(sinal.getTempo()- 0.1))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
+				/*nivel_tanque_um = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
+				nivel_tanque_dois = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));*/
+				
+				/*nivel_tanque_dois = nivel_tanque_dois*15;
+				nivel_tanque_um = nivel_tanque_um*15;*/
 				
 				
-				//nivel_tanque_um = 6.25*nivel_tanque_um;
-			//	nivel_tanque_dois = 6.25*nivel_tanque_dois;
-				
-				System.out.println(nivel_tanque_um);
-				
+				//dados.setPV_two(nivel_tanque_dois);
 				if(dados.isTanque1()){
 					nivel_coringa = nivel_tanque_um;
 				}else{
@@ -388,15 +387,18 @@ public class Tanque extends Thread{
 					
 					if(dados.isObservando()){
 						
-						observador.vp = dados.getVP();
+				
 						
-						observador.calcularObservador();
-						
+						observador.calcularObservador(nivel_tanque_um, nivel_tanque_dois, dados.getVP());
+						System.out.println("Nivel dois" + nivel_tanque_dois);
+						System.out.println("Nivel um" + nivel_tanque_um);
 						
 						
 						Ponto pto_nvl_um_estimado = new Ponto();
 						pto_nvl_um_estimado.setY(Observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_estimado.setX(sinal.getTempo() - 0.1);
+						
+						System.out.println(Observador.x_chapeu_anterior[0][0]);
 						
 						grafico_nivel.atualizar_fila_nvl_um_estimado(pto_nvl_um_estimado);
 						
@@ -408,17 +410,23 @@ public class Tanque extends Thread{
 						
 						
 						Ponto pto_nvl_um_erro = new Ponto();
-						pto_nvl_um_erro.setY(Observador.x_erro_estimacao_anterior[0][0]);
+						pto_nvl_um_erro.setY(nivel_tanque_um - Observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_erro.setX(sinal.getTempo() - 0.1);
 						
-						grafico_nivel.atualizar_fila_estimacao_um(pto_nvl_um_estimado);
+						grafico_nivel.atualizar_fila_estimacao_um(pto_nvl_um_erro);
 						
+						
+					
 						
 						Ponto pto_nvl_dois_erro = new Ponto();
-						pto_nvl_dois_erro.setY(Observador.x_erro_estimacao_anterior[1][0]);
+						pto_nvl_dois_erro.setY(nivel_tanque_dois - Observador.x_chapeu_anterior[1][0]);
 						pto_nvl_dois_erro.setX(sinal.getTempo() - 0.1);
 						
-						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_estimado);
+						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_erro);
+						System.out.println(pto_nvl_um_erro.getY());
+						System.out.println(pto_nvl_dois_erro.getY());
+						
+						
 					}
 					
 				}
@@ -430,10 +438,10 @@ public class Tanque extends Thread{
 				
 				//para calculo de windUP
 			
-				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (/*QuanserClientException |*/ InterruptedException e) {e.printStackTrace();}
+			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
 		}
 	}
 
