@@ -1,7 +1,5 @@
 import java.awt.EventQueue;
-import java.awt.Graphics2D;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -53,6 +51,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 @SuppressWarnings("serial")
 public class Tela extends TelaGeral{
@@ -232,12 +232,36 @@ public class Tela extends TelaGeral{
 		mnEstatistica.add(mnTempoDeSubida);
 		
 		zeroA100 = new JCheckBoxMenuItem("0 - 100 %");
+		zeroA100.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(zeroA100.isSelected()){
+					dezA90.setSelected(false);
+					cincoA95.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeSubida.add(zeroA100);
 		
 		cincoA95 = new JCheckBoxMenuItem("5 - 95 %");
+		cincoA95.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(cincoA95.isSelected()){
+					dezA90.setSelected(false);
+					zeroA100.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeSubida.add(cincoA95);
 		
 		dezA90 = new JCheckBoxMenuItem("10 - 90 %");
+		dezA90.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(dezA90.isSelected()){
+					cincoA95.setSelected(false);
+					zeroA100.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeSubida.add(dezA90);
 
 		//Cria menu Tempo de acomodação (Ts)
@@ -245,15 +269,51 @@ public class Tela extends TelaGeral{
 		mnEstatistica.add(mnTempoDeAcomodao);
 		
 		doisPorcento = new JCheckBoxMenuItem("2%");
+		doisPorcento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(doisPorcento.isSelected()){
+					cincoPorcento.setSelected(false);
+					setePorcento.setSelected(false);
+					dezPorcento.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeAcomodao.add(doisPorcento);
 		
 		cincoPorcento = new JCheckBoxMenuItem("5%");
+		cincoPorcento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(cincoPorcento.isSelected()){
+					doisPorcento.setSelected(false);
+					setePorcento.setSelected(false);
+					dezPorcento.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeAcomodao.add(cincoPorcento);
 		
 		setePorcento = new JCheckBoxMenuItem("7%");
+		setePorcento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(setePorcento.isSelected()){
+					doisPorcento.setSelected(false);
+					cincoPorcento.setSelected(false);
+					dezPorcento.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeAcomodao.add(setePorcento);
 		
 		dezPorcento = new JCheckBoxMenuItem("10%");
+		dezPorcento.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(dezPorcento.isSelected()){
+					doisPorcento.setSelected(false);
+					cincoPorcento.setSelected(false);
+					setePorcento.setSelected(false);
+				}
+			}
+		});
 		mnTempoDeAcomodao.add(dezPorcento);
 		
 		//Cria menu Overshoot (Mp)
@@ -261,9 +321,23 @@ public class Tela extends TelaGeral{
 		mnEstatistica.add(mnOvershootmp);
 		
 		porcentagem = new JCheckBoxMenuItem("Porcentagem");
+		porcentagem.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(porcentagem.isSelected()){
+					absoluto.setSelected(false);
+				}
+			}
+		});
 		mnOvershootmp.add(porcentagem);
 		
 		absoluto = new JCheckBoxMenuItem("Absoluto");
+		absoluto.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if(absoluto.isSelected()){
+					porcentagem.setSelected(false);
+				}
+			}
+		});
 		mnOvershootmp.add(absoluto);
 	}
 	
