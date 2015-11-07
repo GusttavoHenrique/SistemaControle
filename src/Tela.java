@@ -44,13 +44,8 @@ import javax.swing.JCheckBoxMenuItem;
 import Jama.EigenvalueDecomposition;
 import Jama.Matrix;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
@@ -59,86 +54,62 @@ public class Tela extends TelaGeral{
 	private JFrame frame;
 	
 	private JMenuBar menuBar;
-	
-	private JLayeredPane panelGrafico1, panelGrafico2;
-	
-	private JPanel panelGraficos, abaOpcoesEntrada, panelTipoMalha, panelDadosSinal, panelParamsControladorMestre, panelParamsControladorEscravo, panelBombas;
-	
-	public JLabel IPServidor, Porta;
-	
-	private JLabel leitura1, leitura2, escrita;
-	
-	private JCheckBox chckbxTensaoSat, chckbxTensCalc, chckbxNivTanque1, chckbxNivTanque2, chckbxSetPoint, chckbxErro;
-	private JCheckBox chckbxP, chckbxI, chckbxD;
-	
-	private JLabel lblPeriodo, lblAmplitude, lblAmplitudeMin;
-	
-	private JSpinner amplitudeMin, amplitude, periodo, periodoMin, offSet;
-	
-	private JRadioButton rdbtnAberta, rdbtnFechada;
-	
-	private JButton botaoAtualizar, btnReset;
-	
-	private JLabel labelKpMestre, labelKiMestre, labelKdMestre, labelTaltMestre, labelTaliMestre, labelTaldMestre;
-	private JLabel labelKpEscravo, labelKiEscravo, labelKdEscravo, labelTaliEscravo, labelTaldEscravo, labelTaltEscravo;
-	
-	private JCheckBox chckbxWindUpMestre, chckbxWindUpEscravo;
-	
-	@SuppressWarnings("rawtypes")
-	private JComboBox comboTipoOnda;
-	
-	@SuppressWarnings("rawtypes")
-	private JComboBox comboTipoControladorMestre;
-	
-	private JPanel panelDadosServidor;
-	private JPanel panelValores;
-	
-	private JLabel labelTr, labelMp, labelTp, labelTs;
-	
 	private JCheckBoxMenuItem zeroA100, cincoA95, dezA90;
 	private JCheckBoxMenuItem doisPorcento, cincoPorcento, setePorcento, dezPorcento;
 	private JCheckBoxMenuItem porcentagem, absoluto;
 	
-	public String onda_limpa_tanque;
-	public double amplitude_limpa_tanque;
+	private JPanel panelDadosServidor;
+	public JLabel iPServidor, portaServidor;
+	private JLabel leitura1, leitura2, escrita;
 	
+	private JPanel abaOpcoesEntrada;
+	
+	private JPanel panelBombas;
 	private JRadioButton rdbtnTanque1, rdbtnTanque2;
 	
-	@SuppressWarnings("rawtypes")
-	private JComboBox comboTipoControle, comboTipoControladorEscravo;
+	private JPanel panelTipoMalha;
+	private JRadioButton rdbtnAberta, rdbtnFechada;
 	
-	private JCheckBox chckbxAoD, chckbxAcoI, chckbxAoP;
-	private JCheckBox chckbxControleMestre;
-	private JCheckBox chckbxErroMestre;
-	private JLabel label;
+	@SuppressWarnings("rawtypes")
+	private JComboBox comboTipoOnda;
+	
+	private JPanel panelDadosSinal;
+	private JLabel lblPeriodo, lblAmplitude;
+	private JSpinner amplitudeMin, amplitude, periodo, periodoMin, offSet;
+	
+	@SuppressWarnings("rawtypes")
+	private JComboBox comboTipoControle;
+	
+	private JPanel panelParamsControladorMestre, panelParamsControladorEscravo;
+	@SuppressWarnings("rawtypes")
+	private JComboBox comboTipoControladorMestre, comboTipoControladorEscravo;
+	private JLabel labelKpMestre, labelKiMestre, labelKdMestre, labelTaltMestre, labelTaliMestre, labelTaldMestre;
+	private JLabel labelKpEscravo, labelKiEscravo, labelKdEscravo, labelTaliEscravo, labelTaldEscravo, labelTaltEscravo;
+	private JCheckBox chckbxWindUpMestre, chckbxWindUpEscravo;
+	
+	private JPanel panelObsEstados;
+	private JTextField textFieldReP1, textFieldReP2, textFieldImP1, textFieldImP2;
+	private JTextField textFieldL1, textFieldL2;
+	private JLabel lblCalculaPolosMatrizL;	
+	private JCheckBox realizarObservacaoEstados;
+	private ImageIcon icon = new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png"));
+
+	private JButton botaoAtualizar, btnReset;
+	
+	private JPanel panelGraficos;
+	private JLayeredPane panelGrafico1, panelGrafico2;
+	private JLabel lblExibirCheckSinalGrafico1, lblExibirCheckSinalGrafico2;	
+	private JCheckBox chckbxControleMestre, chckbxAcaoD, chckbxAcaoI, chckbxAcaoP, chckbxP, chckbxI, chckbxD, chckbxTensaoSat, chckbxTensCalc;
+	private JCheckBox chckbxErroMestre, chckbxSetPoint, chckbxErro, chckbxNivTanque1, chckbxNivTanque2, chckbxNivel1Estimado, chckbxNivel2Estimado, chckbxErroEstNivel1, chckbxErroEstNivel2;	
+	
+	private JPanel panelValores;
+	private JLabel labelTr, labelMp, labelTp, labelTs;
 	
 	private Tanque thread;
 	private Dados dados;
-	private JPanel panelObsEstados;
-	private JTextField textFieldL1;
-	private JTextField textFieldL2;
-	private JLabel lblColchete1;
-	private JLabel lblMatrizL;
-	private JLabel lblColchete2;
-	private JLabel lblP1;
-	private JLabel lblP2;
-	private JTextField textFieldReP1;
-	private JTextField textFieldReP2;
-	private JTextField textFieldImP1;
-	private JTextField textFieldImP2;
-	private JLabel lblMais;
-	private JLabel lblMenos;
-	private JLabel lblI1;
-	private JLabel lblI2;
-	private JLabel lblCalculaPolosMatrizL;
 	
-	private JCheckBox realizarObservacaoEstados;
-	private JCheckBox chckbxNivel1Estimado;
-	private JCheckBox chckbxNivel2Estimado;
-	private JCheckBox chckbxErroEstNivel1;
-	private JCheckBox chckbxErroEstNivel2;
-	
-	private JLabel lblExibirCheckSinalGrafico1, lblExibirCheckSinalGrafico2; 
+	public String onda_limpa_tanque;
+	public double amplitude_limpa_tanque;
 	
 	/**
 	 * Launch the application.
@@ -398,19 +369,19 @@ public class Tela extends TelaGeral{
 		lblIPServidor.setBounds(10, 17, 14, 16);
 		panelDadosServidor.add(lblIPServidor);
 		
-		IPServidor = new JLabel();
-		IPServidor.setText("10.13.99.69");
-		IPServidor.setBounds(28, 17, 65, 16);
-		panelDadosServidor.add(IPServidor);
+		iPServidor = new JLabel();
+		iPServidor.setText("10.13.99.69");
+		iPServidor.setBounds(28, 17, 65, 16);
+		panelDadosServidor.add(iPServidor);
 		
 		JLabel lblPorta = new JLabel("Porta:");
 		lblPorta.setBounds(10, 45, 36, 16);
 		panelDadosServidor.add(lblPorta);
 		
-		Porta = new JLabel();
-		Porta.setText("20081");
-		Porta.setBounds(43, 45, 50, 16);
-		panelDadosServidor.add(Porta);
+		portaServidor = new JLabel();
+		portaServidor.setText("20081");
+		portaServidor.setBounds(43, 45, 50, 16);
+		panelDadosServidor.add(portaServidor);
 		
 		final JButton btnConectarDesconectar = new JButton("Conectar");
 		btnConectarDesconectar.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1439269447_gtk-apply.png")));
@@ -420,12 +391,12 @@ public class Tela extends TelaGeral{
 		btnConectarDesconectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(IPServidor.getText().equals("") || Porta.getText().equals("")){
+				if(iPServidor.getText().equals("") || portaServidor.getText().equals("")){
 					JOptionPane.showMessageDialog(frame, "                          Conexão não Realizada! " +
 							"\nInforme o Ip do Servidor e/ou a Porta e tente novamente.");
 				}else{
 					thread = new Tanque();
-					thread.setServer(IPServidor.getText(), Integer.parseInt(Porta.getText()));
+					thread.setServer(iPServidor.getText(), Integer.parseInt(portaServidor.getText()));
 					
 					//Muda nome (conectar ou desconectar) e cor (verde ou vermelho) do botão.
 					//Também desabilita alguns componentes da tela.			
@@ -572,9 +543,9 @@ public class Tela extends TelaGeral{
 		dados.setErroEstimacaoUm(chckbxErroEstNivel1.isSelected());
 		dados.setErroEstimacaoDois(chckbxErroEstNivel2.isSelected());
 		
-		dados.setProporcional_c2(chckbxAoP.isSelected());
-		dados.setIntegral_c2(chckbxAcoI.isSelected());
-		dados.setDerivativo_c2(chckbxAoD.isSelected());
+		dados.setProporcional_c2(chckbxAcaoP.isSelected());
+		dados.setIntegral_c2(chckbxAcaoI.isSelected());
+		dados.setDerivativo_c2(chckbxAcaoD.isSelected());
 		dados.setSinalCascata(chckbxControleMestre.isSelected());
 		dados.setErro_c1(chckbxErroMestre.isSelected());
 	}
@@ -658,9 +629,17 @@ public class Tela extends TelaGeral{
 	}
 	
 	private boolean validaPolosObservador(){
-		double somaDosQuadrados = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP1.getText()), 2);				
+		double somaDosQuadradosP1 = 0.0, somaDosQuadradosP2 = 0.0;;
 		
-		boolean instavel = Math.sqrt(somaDosQuadrados) >= 1;
+		if(!textFieldReP1.getText().equals(textFieldReP2.getText())){
+			somaDosQuadradosP1 = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2);
+			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2.getText()), 2);
+		}else{
+			somaDosQuadradosP1 = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP1.getText()), 2);
+			somaDosQuadradosP2 = somaDosQuadradosP1;
+		}
+		
+		boolean instavel = (Math.sqrt(somaDosQuadradosP1) >= 1) || (Math.sqrt(somaDosQuadradosP2) >= 1);
 		
 		if(instavel){
 			JOptionPane.showMessageDialog(frame, "Não é possível realizar observação de estados utilizando esses polos.");
@@ -995,88 +974,47 @@ public class Tela extends TelaGeral{
 		
 		inicializarOutrosComponentesPainelPrincipal();
 		
-		label = new JLabel("");
-		label.setToolTipText("Para Atualizar os parametros, basta clicar nos campos.");
-		label.setBounds(282, 11, 24, 26);
-		panelParamsControladorEscravo.add(label);	
-		
+		inicializarPainelObservadorEstados();
+	}
+	
+	private void inicializarPainelObservadorEstados(){
 		panelObsEstados = new JPanel();
 		panelObsEstados.setBorder(new TitledBorder(null, "Observador de Estados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelObsEstados.setBounds(5, 474, 314, 100);
-		abaOpcoesEntrada.add(panelObsEstados);
 		panelObsEstados.setLayout(null);
+		abaOpcoesEntrada.add(panelObsEstados);
+	
+		insereCamposPolos();
 		
-		textFieldL1 = new JTextFieldAlterado();
-		textFieldL1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				if(!textFieldL1.getText().equals(textFieldL1Anterior)){
-					textFieldReP1.setText("");
-					textFieldReP2.setText("");
-					textFieldImP1.setText("");
-					textFieldImP2.setText("");
-					
-					textFieldL1Anterior = textFieldL1.getText();
-					textFieldL2Anterior = textFieldL2.getText();
-				}
-			}
-		});
-		textFieldL1.setEnabled(false);
-		textFieldL1.setBounds(245, 35, 46, 16);
-		panelObsEstados.add(textFieldL1);
-		textFieldL1.setColumns(10);
+		insereBotaoCalculaPolosOuMatriz();
+		panelObsEstados.add(lblCalculaPolosMatrizL);
 		
-		textFieldL2 = new JTextFieldAlterado();		
-		textFieldL2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				if(!textFieldL2.getText().equals(textFieldL2Anterior)){
-					textFieldReP1.setText("");
-					textFieldReP2.setText("");
-					textFieldImP1.setText("");
-					textFieldImP2.setText("");
-					
-					textFieldL1Anterior = textFieldL1.getText();
-					textFieldL2Anterior = textFieldL2.getText();
-				}
-			}
-		});
-		textFieldL2.setEnabled(false);
-		textFieldL2.setBounds(245, 65, 46, 16);
-		panelObsEstados.add(textFieldL2);
-		textFieldL2.setColumns(10);
+		insereCamposMatrizL();
 		
-		lblColchete1 = new JLabel("[");
-		lblColchete1.setForeground(Color.GRAY);
-		lblColchete1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
-		lblColchete1.setBounds(221, -12, 35, 138);
-		panelObsEstados.add(lblColchete1);
-		
-		lblMatrizL = new JLabel("L = ");
-		lblMatrizL.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblMatrizL.setBounds(208, 50, 23, 14);
-		panelObsEstados.add(lblMatrizL);
-		
-		lblColchete2 = new JLabel("]");
-		lblColchete2.setForeground(Color.GRAY);
-		lblColchete2.setFont(new Font("Calibri Light", Font.PLAIN, 85));
-		lblColchete2.setBounds(290, -12, 35, 138);
-		panelObsEstados.add(lblColchete2);
-		
-		lblP1 = new JLabel("P1 = ");
+		insereCheckNoPainel();
+		panelObsEstados.add(realizarObservacaoEstados);
+	}
+	
+	private void insereCamposPolos(){
+		JLabel lblP1 = new JLabel("P1 = ");
 		lblP1.setBounds(10, 50, 28, 14);
 		panelObsEstados.add(lblP1);
-		
-		lblP2 = new JLabel("P2 = ");
-		lblP2.setBounds(10, 70, 28, 14);
-		panelObsEstados.add(lblP2);
 		
 		textFieldReP1 = new JTextFieldAlterado();
 		textFieldReP1.setEnabled(false);
 		textFieldReP1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				textFieldReP2.setText(textFieldReP1.getText());
+				if(!textFieldReP1.getText().equals(textFieldReP2.getText())){
+					textFieldImP1.setText("");
+					textFieldImP2.setText("");
+					
+					textFieldImP1.setEnabled(false);
+					textFieldImP2.setEnabled(false);
+				}else{
+					textFieldImP1.setEnabled(true);
+					textFieldImP2.setEnabled(true);
+				}
 				
 				if(!textFieldReP1.getText().equals(textFieldReP1Anterior)){
 					textFieldL1.setText("");
@@ -1085,18 +1023,69 @@ public class Tela extends TelaGeral{
 					textFieldReP1Anterior = textFieldReP1.getText();
 					textFieldReP2Anterior = textFieldReP2.getText();
 				}
+				
+				if(todosOsCamposDosPolosPreenchidos(false) && !setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
 			}
 		});
 		textFieldReP1.setToolTipText("Parte real do polo 1");
 		textFieldReP1.setBounds(36, 48, 46, 16);
 		panelObsEstados.add(textFieldReP1);
-		textFieldReP1.setColumns(10);
+		textFieldReP1.setColumns(10);		
+		
+		JLabel lblMais = new JLabel("+");
+		lblMais.setBounds(86, 49, 13, 15);
+		panelObsEstados.add(lblMais);
+		
+		textFieldImP1 = new JTextFieldAlterado();
+		textFieldImP1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				textFieldImP2.setText(textFieldImP1.getText());
+				
+				if(!textFieldImP1.getText().equals(textFieldImP1Anterior)){
+					textFieldL1.setText("");
+					textFieldL2.setText("");
+					
+					textFieldImP1Anterior = textFieldImP1.getText();
+					textFieldImP2Anterior = textFieldImP2.getText();
+				}
+
+				if(todosOsCamposDosPolosPreenchidos(false) && !setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+			}
+		});
+		textFieldImP1.setEnabled(false);
+		textFieldImP1.setToolTipText("Parte imagin\u00E1ria do polo 1");
+		textFieldImP1.setColumns(10);
+		textFieldImP1.setBounds(99, 48, 46, 16);
+		panelObsEstados.add(textFieldImP1);
+		
+		JLabel lblI1 = new JLabel("i");
+		lblI1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblI1.setBounds(150, 49, 13, 15);
+		panelObsEstados.add(lblI1);
+		
+		JLabel lblP2 = new JLabel("P2 = ");
+		lblP2.setBounds(10, 70, 28, 14);
+		panelObsEstados.add(lblP2);
 		
 		textFieldReP2 = new JTextFieldAlterado();
 		textFieldReP2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				textFieldReP1.setText(textFieldReP2.getText());
+				if(!textFieldReP2.getText().equals(textFieldReP1.getText())){
+					textFieldImP1.setText("");
+					textFieldImP2.setText("");
+					
+					textFieldImP1.setEnabled(false);
+					textFieldImP2.setEnabled(false);
+				}else{
+					textFieldImP1.setEnabled(true);
+					textFieldImP2.setEnabled(true);
+				}
 				
 				if(!textFieldReP2.getText().equals(textFieldReP2Anterior)){
 					textFieldL1.setText("");
@@ -1104,6 +1093,10 @@ public class Tela extends TelaGeral{
 					
 					textFieldReP1Anterior = textFieldReP1.getText();
 					textFieldReP2Anterior = textFieldReP2.getText();
+				}
+				
+				if(todosOsCamposDosPolosPreenchidos(false) && !setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
 				}
 			}
 		});
@@ -1113,26 +1106,9 @@ public class Tela extends TelaGeral{
 		textFieldReP2.setBounds(36, 68, 46, 16);
 		panelObsEstados.add(textFieldReP2);
 		
-		textFieldImP1 = new JTextFieldAlterado();
-		textFieldImP1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				textFieldImP2.setText(textFieldImP1.getText());
-
-				if(!textFieldImP1.getText().equals(textFieldImP1Anterior)){
-					textFieldL1.setText("");
-					textFieldL2.setText("");
-					
-					textFieldImP1Anterior = textFieldImP1.getText();
-					textFieldImP2Anterior = textFieldImP2.getText();
-				}
-			}
-		});
-		textFieldImP1.setEnabled(false);
-		textFieldImP1.setToolTipText("Parte imagin\u00E1ria do polo 1");
-		textFieldImP1.setColumns(10);
-		textFieldImP1.setBounds(99, 48, 46, 16);
-		panelObsEstados.add(textFieldImP1);
+		JLabel lblMenos = new JLabel("-");
+		lblMenos.setBounds(88, 69, 13, 15);
+		panelObsEstados.add(lblMenos);
 		
 		textFieldImP2 = new JTextFieldAlterado();
 		textFieldImP2.addKeyListener(new KeyAdapter() {
@@ -1147,6 +1123,10 @@ public class Tela extends TelaGeral{
 					textFieldImP1Anterior = textFieldImP1.getText();
 					textFieldImP2Anterior = textFieldImP2.getText();
 				}
+
+				if(todosOsCamposDosPolosPreenchidos(false) && !setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
 			}
 		});
 		textFieldImP2.setEnabled(false);
@@ -1155,24 +1135,13 @@ public class Tela extends TelaGeral{
 		textFieldImP2.setBounds(99, 68, 46, 16);
 		panelObsEstados.add(textFieldImP2);
 		
-		lblMais = new JLabel("+");
-		lblMais.setBounds(86, 49, 13, 15);
-		panelObsEstados.add(lblMais);
-		
-		lblMenos = new JLabel("-");
-		lblMenos.setBounds(88, 69, 13, 15);
-		panelObsEstados.add(lblMenos);
-		
-		lblI1 = new JLabel("i");
-		lblI1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblI1.setBounds(150, 49, 13, 15);
-		panelObsEstados.add(lblI1);
-		
-		lblI2 = new JLabel("i");
+		JLabel lblI2 = new JLabel("i");
 		lblI2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblI2.setBounds(150, 69, 13, 15);
 		panelObsEstados.add(lblI2);
-		
+	}
+	
+	private void insereBotaoCalculaPolosOuMatriz(){
 		lblCalculaPolosMatrizL = new JLabel("");
 		lblCalculaPolosMatrizL.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1194,21 +1163,87 @@ public class Tela extends TelaGeral{
 						textFieldReP2.setText("");
 						textFieldImP2.setText("");
 					}
-				}else if(todosOsCamposDosPolosPreenchidos() && todosOsCamposDaMatrizLVazios() && validaPolosObservador()){
+				}else if(todosOsCamposDosPolosPreenchidos(true) && todosOsCamposDaMatrizLVazios() && validaPolosObservador()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
 					
 					textFieldL1.setText(matrizL.get(0, 0) + "");
 					textFieldL2.setText(matrizL.get(1, 0) + "");
-				}else{
-					JOptionPane.showMessageDialog(frame, "Informe os pólos (ou a matriz L) do observador de estados.");
 				}
 			}
 		});
 		lblCalculaPolosMatrizL.setToolTipText("Clique para atualizar os par\u00E2metros");
-		lblCalculaPolosMatrizL.setIcon(new ImageIcon(Tela.class.getResource("/Icons/10885_32x32.png")));
+		lblCalculaPolosMatrizL.setIcon(icon);		
 		lblCalculaPolosMatrizL.setBounds(165, 50, 30, 30);
-		panelObsEstados.add(lblCalculaPolosMatrizL);
+	}
+	
+	private void insereCamposMatrizL(){
+		JLabel lblMatrizL = new JLabel("L = ");
+		lblMatrizL.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblMatrizL.setBounds(208, 50, 23, 14);
+		panelObsEstados.add(lblMatrizL);
 		
+		JLabel lblColchete1 = new JLabel("[");
+		lblColchete1.setForeground(Color.GRAY);
+		lblColchete1.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		lblColchete1.setBounds(221, -12, 35, 138);
+		panelObsEstados.add(lblColchete1);
+		
+		textFieldL1 = new JTextFieldAlterado();
+		textFieldL1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if(!textFieldL1.getText().equals(textFieldL1Anterior)){
+					textFieldReP1.setText("");
+					textFieldReP2.setText("");
+					textFieldImP1.setText("");
+					textFieldImP2.setText("");
+					
+					textFieldL1Anterior = textFieldL1.getText();
+					textFieldL2Anterior = textFieldL2.getText();
+				}
+				
+				if(todosOsCamposDaMatrizLPreenchidos() && setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+			}
+		});
+		textFieldL1.setEnabled(false);
+		textFieldL1.setBounds(245, 35, 46, 16);
+		textFieldL1.setColumns(10);
+		panelObsEstados.add(textFieldL1);
+		
+		textFieldL2 = new JTextFieldAlterado();		
+		textFieldL2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				if(!textFieldL2.getText().equals(textFieldL2Anterior)){
+					textFieldReP1.setText("");
+					textFieldReP2.setText("");
+					textFieldImP1.setText("");
+					textFieldImP2.setText("");
+					
+					textFieldL1Anterior = textFieldL1.getText();
+					textFieldL2Anterior = textFieldL2.getText();
+				}
+
+				if(todosOsCamposDaMatrizLPreenchidos() && setaAzulIconParaDireita){
+					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+			}
+		});
+		textFieldL2.setEnabled(false);
+		textFieldL2.setBounds(245, 65, 46, 16);
+		textFieldL2.setColumns(10);
+		panelObsEstados.add(textFieldL2);
+				
+		JLabel lblColchete2 = new JLabel("]");
+		lblColchete2.setForeground(Color.GRAY);
+		lblColchete2.setFont(new Font("Calibri Light", Font.PLAIN, 85));
+		lblColchete2.setBounds(290, -12, 35, 138);
+		panelObsEstados.add(lblColchete2);
+	}
+	
+	private void insereCheckNoPainel(){
 		realizarObservacaoEstados = new JCheckBox("Realizar Observa\u00E7\u00E3o de Estados");
 		realizarObservacaoEstados.setEnabled(false);
 		realizarObservacaoEstados.setBounds(10, 17, 185, 23);
@@ -1273,9 +1308,23 @@ public class Tela extends TelaGeral{
 				textFieldReP1.getText().equals("") && textFieldReP2.getText().equals(""));
 	}
 	
-	private boolean todosOsCamposDosPolosPreenchidos(){
-		return(!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("") &&
-				!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals(""));
+	private boolean todosOsCamposDosPolosPreenchidos(boolean retornaMensagem){
+		boolean polosComPartesReaisDistintas = (!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals(""))
+				&& !textFieldReP1.getText().equals(textFieldReP2.getText()) 
+				&& (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals(""));
+
+		boolean polosComPartesReaisIguais = (!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals(""))
+				&& textFieldReP1.getText().equals(textFieldReP2.getText()) 
+				&& (!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals(""));		
+		
+		if(polosComPartesReaisDistintas || polosComPartesReaisIguais){
+			return true;
+		}else{			
+			if(retornaMensagem)
+				JOptionPane.showMessageDialog(frame, "Informe os pólos (ou a matriz L) do observador de estados.");
+			
+			return false;
+		}
 	}
 	
 	private boolean todosOsCamposDaMatrizLVazios(){
@@ -1424,10 +1473,6 @@ public class Tela extends TelaGeral{
 					desabilitarParamsControladorMestre(true, true);
 					desabilitarParamsControladorEscravo(true, true);
 				}
-				
-				if(!realizarObservacaoEstados.isSelected()){
-					
-				}
 			}
 		});
 		comboTipoControle.setEnabled(false);
@@ -1517,7 +1562,7 @@ public class Tela extends TelaGeral{
 		amplitude.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 		panelDadosSinal.add(amplitude);
 		
-		lblAmplitudeMin = new JLabel("Amplitude (M\u00EDn):");
+		JLabel lblAmplitudeMin = new JLabel("Amplitude (M\u00EDn):");
 		lblAmplitudeMin.setBounds(169, 40, 85, 20);
 		panelDadosSinal.add(lblAmplitudeMin);
 		
@@ -1791,10 +1836,10 @@ public class Tela extends TelaGeral{
 	private void criaPaneilDadosControle(){
 		JTextField ip = new JTextField();
 		ip.setBounds(100, 170, 140, 160);
-		ip.setText(IPServidor.getText());
+		ip.setText(iPServidor.getText());
 		
 		JTextField porta = new JTextFieldAlterado();
-		porta.setText(Porta.getText());
+		portaServidor.setText(porta.getText());
 		 
 		JComboBox leitura1 = new JComboBox(getItensComboLeituraEscrita());
 		leitura1.setSelectedItem(Tela.this.leitura1.getText().equals("") ? "Selecione" : Integer.parseInt(Tela.this.leitura1.getText()));
@@ -1809,8 +1854,8 @@ public class Tela extends TelaGeral{
 		int option = JOptionPane.showConfirmDialog(null, message, "Dados de Conexão", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE); 
 		 
 		if (option == JOptionPane.OK_OPTION) { 
-			IPServidor.setText(ip.getText());
-			Porta.setText(porta.getText());
+			iPServidor.setText(ip.getText());
+			portaServidor.setText(porta.getText());
 			
 			Tela.this.leitura1.setText(leitura1.getSelectedItem().toString().equals("Selecione") ? "" : leitura1.getSelectedItem().toString());
 			Tela.this.leitura2.setText(leitura2.getSelectedItem().toString().equals("Selecione") ? "" : leitura2.getSelectedItem().toString());
@@ -2045,9 +2090,9 @@ public class Tela extends TelaGeral{
 			chckbxD.setEnabled(true);
 			chckbxI.setEnabled(true);
 			
-			chckbxAoP.setEnabled(true);
-			chckbxAoD.setEnabled(true);
-			chckbxAcoI.setEnabled(true);
+			chckbxAcaoP.setEnabled(true);
+			chckbxAcaoD.setEnabled(true);
+			chckbxAcaoI.setEnabled(true);
 			chckbxControleMestre.setEnabled(true);
 			
 			/*chckbxComControle = false;*/
@@ -2123,17 +2168,17 @@ public class Tela extends TelaGeral{
 			chckbxI.setVisible(false);
 			chckbxI.setSelected(false);
 			
-			chckbxAoP.setEnabled(false);
-			chckbxAoP.setVisible(false);
-			chckbxAoP.setSelected(false);
+			chckbxAcaoP.setEnabled(false);
+			chckbxAcaoP.setVisible(false);
+			chckbxAcaoP.setSelected(false);
 			
-			chckbxAoD.setEnabled(false);
-			chckbxAoD.setVisible(false);
-			chckbxAoD.setSelected(false);
+			chckbxAcaoD.setEnabled(false);
+			chckbxAcaoD.setVisible(false);
+			chckbxAcaoD.setSelected(false);
 			
-			chckbxAcoI.setEnabled(false);
-			chckbxAcoI.setVisible(false);
-			chckbxAcoI.setSelected(false);
+			chckbxAcaoI.setEnabled(false);
+			chckbxAcaoI.setVisible(false);
+			chckbxAcaoI.setSelected(false);
 			
 			chckbxControleMestre.setEnabled(false);
 			chckbxControleMestre.setVisible(false);
@@ -2224,6 +2269,9 @@ public class Tela extends TelaGeral{
 			textFieldImP2Anterior = "";
 			textFieldL1Anterior = "";
 			textFieldL2Anterior = "";
+			
+			realizarObservacaoEstados.setEnabled(false);
+			realizarObservacaoEstados.setSelected(false);
 		}
 	}
 	
@@ -2311,46 +2359,46 @@ public class Tela extends TelaGeral{
 		});
 		panelGraficos.add(chckbxD);
 		
-		chckbxAoP = new JCheckBox("A\u00E7\u00E3o P - Mestre");
-		chckbxAoP.setEnabled(false);
-		chckbxAoP.setVisible(false);
-		chckbxAoP.setForeground(new Color(0, 191, 255));
-		chckbxAoP.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAoP.setBounds(670, 89, 97, 13);
-		chckbxAoP.addActionListener(new ActionListener() {
+		chckbxAcaoP = new JCheckBox("A\u00E7\u00E3o P - Mestre");
+		chckbxAcaoP.setEnabled(false);
+		chckbxAcaoP.setVisible(false);
+		chckbxAcaoP.setForeground(new Color(0, 191, 255));
+		chckbxAcaoP.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxAcaoP.setBounds(670, 89, 97, 13);
+		chckbxAcaoP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dados.setProporcional_c2(chckbxAoP.isSelected());
+				dados.setProporcional_c2(chckbxAcaoP.isSelected());
 				thread.setDadosGrafico(dados);
 			}
 		});		
-		panelGraficos.add(chckbxAoP);
+		panelGraficos.add(chckbxAcaoP);
 		
-		chckbxAcoI = new JCheckBox("Ac\u00E3o I - Mestre");
-		chckbxAcoI.setEnabled(false);
-		chckbxAcoI.setVisible(false);
-		chckbxAcoI.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAcoI.setBounds(670, 105, 97, 13);
-		chckbxAcoI.addActionListener(new ActionListener() {
+		chckbxAcaoI = new JCheckBox("Ac\u00E3o I - Mestre");
+		chckbxAcaoI.setEnabled(false);
+		chckbxAcaoI.setVisible(false);
+		chckbxAcaoI.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxAcaoI.setBounds(670, 105, 97, 13);
+		chckbxAcaoI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dados.setIntegral_c2(chckbxAcoI.isSelected());
+				dados.setIntegral_c2(chckbxAcaoI.isSelected());
 				thread.setDadosGrafico(dados);
 			}
 		});		
-		panelGraficos.add(chckbxAcoI);
+		panelGraficos.add(chckbxAcaoI);
 		
-		chckbxAoD = new JCheckBox("A\u00E7\u00E3o D - Mestre");
-		chckbxAoD.setEnabled(false);
-		chckbxAoD.setVisible(false);
-		chckbxAoD.setForeground(new Color(50, 205, 50));
-		chckbxAoD.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAoD.setBounds(670, 121, 97, 13);
-		chckbxAoD.addActionListener(new ActionListener() {
+		chckbxAcaoD = new JCheckBox("A\u00E7\u00E3o D - Mestre");
+		chckbxAcaoD.setEnabled(false);
+		chckbxAcaoD.setVisible(false);
+		chckbxAcaoD.setForeground(new Color(50, 205, 50));
+		chckbxAcaoD.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		chckbxAcaoD.setBounds(670, 121, 97, 13);
+		chckbxAcaoD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dados.setDerivativo_c2(chckbxAoD.isSelected());
+				dados.setDerivativo_c2(chckbxAcaoD.isSelected());
 				thread.setDadosGrafico(dados);
 			}
 		});
-		panelGraficos.add(chckbxAoD);
+		panelGraficos.add(chckbxAcaoD);
 		
 		chckbxControleMestre = new JCheckBox("Controle Mestre");
 		chckbxControleMestre.setEnabled(false);
@@ -2526,9 +2574,9 @@ public class Tela extends TelaGeral{
 					chckbxI.setVisible(true);
 					chckbxD.setVisible(true);
 					
-					chckbxAoP.setVisible(true);
-					chckbxAcoI.setVisible(true);
-					chckbxAoD.setVisible(true);
+					chckbxAcaoP.setVisible(true);
+					chckbxAcaoI.setVisible(true);
+					chckbxAcaoD.setVisible(true);
 					chckbxControleMestre.setVisible(true);
 				}else{
 					lblExibirCheckSinalGrafico1.setIcon(new ImageIcon(Tela.class.getResource("Icons/Chart-Curve-Add-32.png")));
@@ -2539,9 +2587,9 @@ public class Tela extends TelaGeral{
 					chckbxI.setVisible(false);
 					chckbxD.setVisible(false);
 					
-					chckbxAoP.setVisible(false);
-					chckbxAcoI.setVisible(false);
-					chckbxAoD.setVisible(false);
+					chckbxAcaoP.setVisible(false);
+					chckbxAcaoI.setVisible(false);
+					chckbxAcaoD.setVisible(false);
 					chckbxControleMestre.setVisible(false);
 				}
 			}
