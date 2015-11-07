@@ -1000,7 +1000,7 @@ public class Tela extends TelaGeral{
 		lblP1.setBounds(10, 50, 28, 14);
 		panelObsEstados.add(lblP1);
 		
-		textFieldReP1 = new JTextFieldAlterado();
+		textFieldReP1 = new JTextFieldAlterado(6, false);
 		textFieldReP1.setEnabled(false);
 		textFieldReP1.addKeyListener(new KeyAdapter() {
 			@Override
@@ -1038,7 +1038,7 @@ public class Tela extends TelaGeral{
 		lblMais.setBounds(86, 49, 13, 15);
 		panelObsEstados.add(lblMais);
 		
-		textFieldImP1 = new JTextFieldAlterado();
+		textFieldImP1 = new JTextFieldAlterado(6, false);
 		textFieldImP1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1072,7 +1072,7 @@ public class Tela extends TelaGeral{
 		lblP2.setBounds(10, 70, 28, 14);
 		panelObsEstados.add(lblP2);
 		
-		textFieldReP2 = new JTextFieldAlterado();
+		textFieldReP2 = new JTextFieldAlterado(6, false);
 		textFieldReP2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1110,7 +1110,7 @@ public class Tela extends TelaGeral{
 		lblMenos.setBounds(88, 69, 13, 15);
 		panelObsEstados.add(lblMenos);
 		
-		textFieldImP2 = new JTextFieldAlterado();
+		textFieldImP2 = new JTextFieldAlterado(6, false);
 		textFieldImP2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1152,10 +1152,10 @@ public class Tela extends TelaGeral{
 					double[] imagEigenvalues = polos.getImagEigenvalues();
 					double[] realEigenvalues = polos.getRealEigenvalues();
 					
-					textFieldReP1.setText(realEigenvalues[0]*(-1) + "");
-					textFieldImP1.setText(Math.abs(imagEigenvalues[1]) + "");
-					textFieldReP2.setText(realEigenvalues[0]*(-1) + "");
-					textFieldImP2.setText(Math.abs(imagEigenvalues[1]) + "");
+					textFieldReP1.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP1.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldReP2.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
 					
 					if(!validaPolosObservador()){
 						textFieldReP1.setText("");
@@ -1166,8 +1166,8 @@ public class Tela extends TelaGeral{
 				}else if(todosOsCamposDosPolosPreenchidos(true) && todosOsCamposDaMatrizLVazios() && validaPolosObservador()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
 					
-					textFieldL1.setText(matrizL.get(0, 0) + "");
-					textFieldL2.setText(matrizL.get(1, 0) + "");
+					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
+					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
 				}
 			}
 		});
@@ -1188,7 +1188,7 @@ public class Tela extends TelaGeral{
 		lblColchete1.setBounds(221, -12, 35, 138);
 		panelObsEstados.add(lblColchete1);
 		
-		textFieldL1 = new JTextFieldAlterado();
+		textFieldL1 = new JTextFieldAlterado(6, false);
 		textFieldL1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1212,7 +1212,7 @@ public class Tela extends TelaGeral{
 		textFieldL1.setColumns(10);
 		panelObsEstados.add(textFieldL1);
 		
-		textFieldL2 = new JTextFieldAlterado();		
+		textFieldL2 = new JTextFieldAlterado(6, false);		
 		textFieldL2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1765,8 +1765,7 @@ public class Tela extends TelaGeral{
 		lblKpEscravo.setBounds(10, 58, 22, 15);
 		panelParamsControladorEscravo.add(lblKpEscravo);
 		
-		labelKpEscravo = new JLabel();
-		labelKpEscravo.setEnabled(false);		
+		labelKpEscravo = new JLabel();		
 		labelKpEscravo.setBounds(36, 58, 66, 15);
 		panelParamsControladorEscravo.add(labelKpEscravo);
 		
@@ -1834,11 +1833,11 @@ public class Tela extends TelaGeral{
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void criaPaneilDadosControle(){
-		JTextField ip = new JTextField();
+		JTextField ip = new JTextFieldAlterado(false);
 		ip.setBounds(100, 170, 140, 160);
 		ip.setText(iPServidor.getText());
 		
-		JTextField porta = new JTextFieldAlterado();
+		JTextField porta = new JTextFieldAlterado(true);
 		portaServidor.setText(porta.getText());
 		 
 		JComboBox leitura1 = new JComboBox(getItensComboLeituraEscrita());
@@ -1867,12 +1866,12 @@ public class Tela extends TelaGeral{
 	private void criaPaneilDadosControle(JComboBox comboTipoControlador, JCheckBox chckbxWindUp, JLabel labelKp, JLabel labelKi, JLabel labelKd, JLabel labelTalT, JLabel labelTalI, JLabel labelTalD){
 		String strControlador = comboTipoControlador.equals(comboTipoControladorMestre) ? " Mestre" : " Escravo";
 		
-		final JTextField kP = new JTextFieldAlterado();
-		final JTextField kI = new JTextFieldAlterado();				
-		final JTextField kD = new JTextFieldAlterado();
-		final JTextField tT = new JTextFieldAlterado();
-		final JTextField tI = new JTextFieldAlterado();
-		final JTextField tD = new JTextFieldAlterado();
+		final JTextField kP = new JTextFieldAlterado(6, false);
+		final JTextField kI = new JTextFieldAlterado(6, false);				
+		final JTextField kD = new JTextFieldAlterado(6, false);
+		final JTextField tT = new JTextFieldAlterado(6, false);
+		final JTextField tI = new JTextFieldAlterado(6, false);
+		final JTextField tD = new JTextFieldAlterado(6, false);
 		final JCheckBox windUp = new JCheckBox("Wind Up");
 		
 		windUp.setEnabled(rdbtnFechada.isSelected());
@@ -1890,8 +1889,8 @@ public class Tela extends TelaGeral{
 		kI.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				try{
-					tI.setText("" + Double.parseDouble(kP.getText())
-							/Double.parseDouble(kI.getText()));
+					double calculo = Double.parseDouble(kP.getText())/Double.parseDouble(kI.getText()); 
+					tI.setText(setText(calculo + "", calculo < 0 ? 7 : 6));
 				}catch (Exception e){}
 			}
 		});
@@ -1901,8 +1900,8 @@ public class Tela extends TelaGeral{
 		kD.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				try {
-					tD.setText("" + Double.parseDouble(kD.getText())
-							/Double.parseDouble(kP.getText()));
+					double calculo = Double.parseDouble(kD.getText())/Double.parseDouble(kP.getText()); 
+					tD.setText(setText(calculo + "", calculo < 0 ? 7 : 6));
 				} catch (Exception e) {	}
 			}
 		});
@@ -1915,8 +1914,8 @@ public class Tela extends TelaGeral{
 		tI.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				try{
-					kI.setText("" + Double.parseDouble(kP.getText())
-							/Double.parseDouble(tI.getText()));
+					double calculo = Double.parseDouble(kP.getText())/Double.parseDouble(tI.getText());
+					kI.setText(setText(calculo + "", calculo < 0 ? 7 : 6));
 				}catch(Exception e){}
 			}
 		});
@@ -1925,8 +1924,8 @@ public class Tela extends TelaGeral{
 		tD.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent arg0) {
 				try {
-					kD.setText("" + Double.parseDouble(kP.getText())
-							*Double.parseDouble(tD.getText()));
+					double calculo = Double.parseDouble(kP.getText())*Double.parseDouble(tD.getText()); 
+					kD.setText(setText(calculo + "", calculo < 0 ? 7 : 6));
 				} catch (Exception e) {}
 			}
 		});

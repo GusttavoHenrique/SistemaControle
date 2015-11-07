@@ -78,8 +78,6 @@ public class TelaGeral extends JFrame{
 		L_calc_matrix = (ql_G_matrix.times(InvWoMatriz)).times(TranspMatriz);
 		
 		return L_calc_matrix;
-		
-		
 	}
 	
 	protected EigenvalueDecomposition calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
@@ -94,6 +92,18 @@ public class TelaGeral extends JFrame{
 		EigenvalueDecomposition polos = GMatrizMenosLCMatriz.eig();
 		
 		return polos;
+	}
+	
+	protected String setText(String textoAntigo, int maxCaracteres) {
+		String textoNovo = "";
+		
+		if((textoAntigo.length() >= maxCaracteres) && (maxCaracteres != -1)){
+			textoNovo = textoAntigo.substring(0, maxCaracteres);
+		}else{
+			textoNovo = textoAntigo;
+		}
+		
+		return textoNovo;
 	}
 	
 	/**

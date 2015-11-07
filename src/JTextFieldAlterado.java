@@ -6,10 +6,13 @@ import javax.swing.JTextField;
 public final class JTextFieldAlterado extends JTextField{
 	
 		private int maximoCaracteres = -1;
+		private boolean soNumeros = false;
 		
 		/** Construtor de um JTextField que só aceita números.*/
-		public JTextFieldAlterado() {
+		public JTextFieldAlterado(boolean soAceitaNumeros) {		
 	        super();
+	        
+	        soNumeros = soAceitaNumeros;
 	        addKeyListener(new java.awt.event.KeyAdapter() {
 	            @Override
 	            public void keyTyped(KeyEvent evt) {
@@ -19,8 +22,11 @@ public final class JTextFieldAlterado extends JTextField{
     	}
 
 		/** Construtor de um JTextField que não aceita números.*/
-		public JTextFieldAlterado(int maximo) {    
+		public JTextFieldAlterado(int maximo, boolean soAceitaNumeros) {    
 		    super();
+		    
+		    soNumeros = soAceitaNumeros;
+		    
 		    setMaximoCaracteres(maximo);
 		  
 			addKeyListener(new java.awt.event.KeyAdapter() {
@@ -32,11 +38,18 @@ public final class JTextFieldAlterado extends JTextField{
 		}
 		  
 	private void jTextFieldKeyTyped(KeyEvent evt) {
-      
-		String caracteres = "0987654321.-";
+		String caracteres = "";
+		
+		if(soNumeros){
+			caracteres = "0987654321";
+		}else{
+			caracteres = "0987654321.-";
+		}
+		
 		if (!caracteres.contains(evt.getKeyChar() + "")) {
 			evt.consume();
 		}
+		
 		if((getText().length() >= getMaximoCaracteres()) && (getMaximoCaracteres() != -1)){
 			evt.consume();
 			setText(getText().substring(0,getMaximoCaracteres()));
