@@ -35,9 +35,13 @@ public class Dados {
 	
 	private double l1, l2;
 	
-	private double parteReP1, parteImP1;
-	
+	private double parteReP1, parteImP1;	
 	private double parteReP2, parteImP2;
+	
+	private double parteReP1Seg;
+	private double parteReP2Seg, parteImP2Seg;
+	private double parteReP3Seg, parteImP3Seg;
+	private double k1, k21, k22;
 	
 	public Dados(){
 	}
@@ -621,5 +625,69 @@ public class Dados {
 
 	public void setControleCSeguidor(boolean controleCSeguidor) {
 		this.controleCSeguidor = controleCSeguidor;
+	}
+
+	public double getParteReP1Seg() {
+		return parteReP1Seg;
+	}
+
+	public void setParteReP1Seg(double parteReP1Seg) {
+		this.parteReP1Seg = parteReP1Seg;
+	}
+
+	public double getParteReP2Seg() {
+		return parteReP2Seg;
+	}
+
+	public void setParteReP2Seg(double parteReP2Seg) {
+		this.parteReP2Seg = parteReP2Seg;
+	}
+
+	public double getParteImP2Seg() {
+		return parteImP2Seg;
+	}
+
+	public void setParteImP2Seg(double parteImP2Seg) {
+		this.parteImP2Seg = parteImP2Seg;
+	}
+
+	public double getParteReP3Seg() {
+		return parteReP3Seg;
+	}
+
+	public void setParteReP3Seg(double parteReP3Seg) {
+		this.parteReP3Seg = parteReP3Seg;
+	}
+
+	public double getParteImP3Seg() {
+		return parteImP3Seg;
+	}
+
+	public void setParteImP3Seg(double parteImP3Seg) {
+		this.parteImP3Seg = parteImP3Seg;
+	}
+
+	public double getK1() {
+		return k1;
+	}
+
+	public void setK1(double k1) {
+		this.k1 = k1;
+	}
+
+	public double getK21() {
+		return k21;
+	}
+
+	public void setK21(double k21) {
+		this.k21 = k21;
+	}
+
+	public double getK22() {
+		return k22;
+	}
+
+	public void setK22(double k22) {
+		this.k22 = k22;
 	}
 }

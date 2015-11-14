@@ -40,7 +40,8 @@ public class TelaGeral extends JFrame{
 	protected String textFieldK21Anterior = "";
 	protected String textFieldK22Anterior = "";
 	
-	protected boolean setaAzulIconParaDireita = true;
+	protected boolean setaAzulIconObservadorParaDireita = true;
+	protected boolean setaAzulIconSeguidorParaDireita = true;	
 	
 	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
 	//private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
@@ -94,7 +95,7 @@ public class TelaGeral extends JFrame{
 		return L_calc_matrix;
 	}
 	
-	protected EigenvalueDecomposition calculaPolos(JTextField textFieldL1, JTextField textFieldL2) {
+	protected EigenvalueDecomposition calculaPolosObservadorEstados(JTextField textFieldL1, JTextField textFieldL2) {
 		double[][] L = {{Double.parseDouble(textFieldL1.getText())}, {Double.parseDouble(textFieldL2.getText())}};
 		Matrix LMatrix = new Matrix(L);
 		
@@ -106,6 +107,14 @@ public class TelaGeral extends JFrame{
 		EigenvalueDecomposition polos = GMatrizMenosLCMatriz.eig();
 		
 		return polos;
+	}
+	
+	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3, JTextField textFieldImP3) {
+		return null;
+	}
+	
+	protected EigenvalueDecomposition calculaPolosSeguidorReferencia(JTextField textFieldK1, JTextField textFieldL21, JTextField textFieldL22) {
+		return null;
 	}
 	
 	protected String setText(String textoAntigo, int maxCaracteres) {
@@ -133,7 +142,7 @@ public class TelaGeral extends JFrame{
 		return botao.getText();
 	}
 	
-	protected void rotacionarIcon(ImageIcon icon, JLabel label){
+	protected boolean rotacionarIcon(ImageIcon icon, JLabel label, boolean sentidoSeta){
 		int w = icon.getIconWidth();
         int h = icon.getIconHeight();
         int type = BufferedImage.TRANSLUCENT;
@@ -144,19 +153,25 @@ public class TelaGeral extends JFrame{
         double y = (w - h)/2.0;
         AffineTransform at = AffineTransform.getTranslateInstance(x, y);
                 
-        if(setaAzulIconParaDireita){
-        	at.rotate(Math.toRadians(180), w/2.0, h/2.0);
-        	setaAzulIconParaDireita = false;
+        if(sentidoSeta){
+        	at.rotate(Math.toRadians(180), w/2.0, h/2.0);        	
+        	g2.drawImage(icon.getImage(), at, label);
+            g2.dispose();
+            
+            icon = new ImageIcon(image);        
+            label.setIcon(icon);
+        	
+        	return false;
 		}else{
 			at.rotate(Math.toRadians(0), w/2.0, h/2.0);
-        	setaAzulIconParaDireita = true;
-		}
-        
-        g2.drawImage(icon.getImage(), at, label);
-        g2.dispose();
-        
-        icon = new ImageIcon(image);        
-        label.setIcon(icon);
+			g2.drawImage(icon.getImage(), at, label);
+	        g2.dispose();
+	        
+	        icon = new ImageIcon(image);        
+	        label.setIcon(icon);
+        	
+			return true;
+		}        
 	}
 	
 	/** 
