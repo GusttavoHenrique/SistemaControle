@@ -13,7 +13,7 @@ public class Dados {
 	
 	private boolean windUP, windUpEscravo, tensao, tensaoSat, nivel1, nivel2, setPoint, proporcional, integral, derivativo, erroMesmo;
 	private boolean faixa2, faixa5, faixa7, faixa10, tanque1, tanque2;
-	private boolean proporcional_c2, integral_c2, derivativo_c2, sinalCascata, Erro_c1, tanque_Seco = true;
+	private boolean proporcional_c2, integral_c2, derivativo_c2, sinalCascata, controleCSeguidor, Erro_c1, tanque_Seco = true;
 	
 	private boolean observando = false;
 	private boolean nvlUmEstimado, nvlDoisEstimado, erroEstimacaoUm, erroEstimacaoDois;
@@ -613,5 +613,13 @@ public class Dados {
 
 	public void setErroEstimacaoDois(boolean erooEstimacaoDois) {
 		this.erroEstimacaoDois = erooEstimacaoDois;
+	}
+
+	public boolean isControleCSeguidor() {
+		return controleCSeguidor;
+	}
+
+	public void setControleCSeguidor(boolean controleCSeguidor) {
+		this.controleCSeguidor = controleCSeguidor;
 	}
 }

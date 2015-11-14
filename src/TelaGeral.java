@@ -16,6 +16,8 @@ import Jama.Matrix;
 
 @SuppressWarnings("serial")
 public class TelaGeral extends JFrame{
+	protected Tanque thread;
+	protected Dados dados;
 	
 	protected String textFieldReP1Anterior = "";
 	protected String textFieldImP1Anterior = "";
@@ -25,6 +27,18 @@ public class TelaGeral extends JFrame{
 	
 	protected String textFieldL1Anterior = "";
 	protected String textFieldL2Anterior = "";
+	
+	protected String textFieldP1SegAnterior = "";
+	
+	protected String textFieldReP2SegAnterior = "";
+	protected String textFieldImP2SegAnterior = "";
+	
+	protected String textFieldReP3SegAnterior = "";
+	protected String textFieldImP3SegAnterior = "";
+	
+	protected String textFieldK1Anterior = "";
+	protected String textFieldK21Anterior = "";
+	protected String textFieldK22Anterior = "";
 	
 	protected boolean setaAzulIconParaDireita = true;
 	
@@ -113,24 +127,6 @@ public class TelaGeral extends JFrame{
 		Object[] io = {"Selecione", 0, 1, 2, 3, 4, 5, 6, 7};
 		
 		return io;
-	}
-
-	protected Object[] getItensComboTiposOnda() {
-		String[] tiposOnda = {"Selecione", "Quadrada", "Degrau", "Aleatória", "Senoidal", "Dente de Serra"};
-		
-		return tiposOnda;
-	}
-	
-	protected Object[] getItensComboTiposControlador() {
-		String[] tiposControle = {"Selecione", "P", "PI", "PD", "PID", "PI-D", "Sem Controle"};
-		
-		return tiposControle;
-	}
-	
-	protected Object[] getItensComboTiposControle() {
-		String[] tiposControle = {"Selecione", "Simples", "Cascata", "Sem Controle"};
-		
-		return tiposControle;
 	}
 
 	protected String conectarDesconectar(JButton botao, JFrame frame){

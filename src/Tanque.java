@@ -76,10 +76,10 @@ public class Tanque extends Thread{
 
 	//setar todos os atributos na interface como zero se não for ser utilizado;
 	void test(){
-		dados.setTipoMalha("Malha Fechada");
-		dados.setTipoSinal("Degrau");
-		dados.setTipoDeControle("Simples");
-		dados.setTipoDeControlador("PID");
+		dados.setTipoMalha(TipoMalha.MALHA_FECHADA.getDescricao());
+		dados.setTipoSinal(TipoOnda.DEGRAU.getDescricao());
+		dados.setTipoDeControle(TipoControle.SIMPLES.getDescricao());
+		dados.setTipoDeControlador(TipoControlador.PID.getDescricao());
 		dados.setAmplitude(20);
 		dados.setFaixa5(true);
 		dados.setKP(2);
@@ -163,7 +163,7 @@ public class Tanque extends Thread{
 					nivel_coringa = nivel_tanque_dois;
 				}
 				
-				if(dados.getTipoMalha().equals("Malha Aberta")){
+				if(dados.getTipoMalha().equals(TipoMalha.MALHA_ABERTA.getDescricao())){
 					
 					dados.setVP(sinal.gerarPonto().getY());
 					Ponto pto_nivel_tanque_um = new Ponto();
@@ -194,7 +194,7 @@ public class Tanque extends Thread{
 					pto_vp_sat.setX(sinal.getTempo() - 0.1);
 					grafico_controle.atualizarDeVPSaturado(pto_vp_sat);		
 					
-				}else if(dados.getTipoMalha().equals("Malha Fechada")){
+				}else if(dados.getTipoMalha().equals(TipoMalha.MALHA_FECHADA.getDescricao())){
 					
 					//Ponto que irá popular o gráfico do setPoint.
 					Ponto pto_setPoint = new Ponto(sinal.gerarPonto());
@@ -219,7 +219,8 @@ public class Tanque extends Thread{
 					grafico_nivel.atualizarFilaDeNivelUm(pto_nvl_tanque_um_clsd);
 					grafico_nivel.atualizarFilaDeNivelDois(pto_nvl_tanque_dois_clsd);
 					
-					if(!dados.getTipoSinal().equals("Dente de serra") && !dados.getTipoSinal().equals("Senoidal")){
+					if(!dados.getTipoSinal().equals(TipoOnda.DENTE_SERRA.getDescricao()) 
+							&& !dados.getTipoSinal().equals(TipoOnda.SENOIDAL.getDescricao())){
 
 						if (setPoint != newSetPoint)
 							sp_mudou();
@@ -234,7 +235,7 @@ public class Tanque extends Thread{
 						nivel_passado = nivel_coringa;
 	    			}
 					
-					if(dados.getTipoDeControle().equals("Sem Controle")){
+					if(dados.getTipoDeControle().equals(TipoControle.SEM_CONTROLE.getDescricao())){
 						dados.setVP(erro);
 						
 						Ponto pto_sem_controle = new Ponto();
@@ -248,7 +249,7 @@ public class Tanque extends Thread{
 						pto_vp_sat.setX(sinal.getTempo() - 0.1);
 						grafico_controle.atualizarDeVPSaturado(pto_vp_sat);
 						
-					}else if (dados.getTipoDeControle().equals("Simples")){	
+					}else if (dados.getTipoDeControle().equals(TipoControle.SIMPLES.getDescricao())){	
 						
 						Ponto pto_erro_ct_smpl = new Ponto();
 						pto_erro_ct_smpl.setX(sinal.getTempo() - 0.1);
@@ -256,7 +257,7 @@ public class Tanque extends Thread{
 						grafico_nivel.atualizarFilaDeErroMesmo(pto_erro_ct_smpl);
 						
 						
-						if(dados.getTipoDeControlador().equals("PI-D")){
+						if(dados.getTipoDeControlador().equals(TipoControlador.PI_D.getDescricao())){
 							dados.setVP(controladorUm.calcularAcao(erro, nivel_coringa));
 						}else{dados.setVP(controladorUm.calcularAcao(erro, 0));}
 						
@@ -300,10 +301,10 @@ public class Tanque extends Thread{
 						
 						
 							
-					}else if(dados.getTipoDeControle().equals("Cascata")){
+					}else if(dados.getTipoDeControle().equals(TipoControle.CASCATA.getDescricao())){
 						
 						double erro_tanque_dois = grafico_nivel.filaDeSetPoint.getLast().getY() - nivel_tanque_dois;
-						if(dados.getTipoDeControlador().equals("PI-D")){
+						if(dados.getTipoDeControlador().equals(TipoControlador.PI_D.getDescricao())){
 							erro_controlador_dois = controladorUm.calcularAcao(erro_tanque_dois, nivel_tanque_dois) - nivel_tanque_um;
 							dados.setVP(controladorDois.calcularAcao(erro_controlador_dois, nivel_tanque_um));
 						}else{	
