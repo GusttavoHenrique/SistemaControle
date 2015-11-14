@@ -629,7 +629,7 @@ public class Tela extends TelaGeral{
 		return sucesso;
 	}
 	
-	private boolean validaPolosObservador(){
+	private boolean validaPolosObservador(JTextField campo1ParaApagar, JTextField campo2ParaApagar){
 		double somaDosQuadradosP1 = 0.0, somaDosQuadradosP2 = 0.0;;
 		
 		if(!textFieldReP1.getText().equals(textFieldReP2.getText())){
@@ -642,8 +642,11 @@ public class Tela extends TelaGeral{
 		
 		boolean instavel = (Math.sqrt(somaDosQuadradosP1) >= 1) || (Math.sqrt(somaDosQuadradosP2) >= 1);
 		
-		if(instavel){
+		if(instavel){			
 			JOptionPane.showMessageDialog(frame, "Não é possível realizar observação de estados utilizando esses polos.");
+			
+			campo1ParaApagar.setText("");
+			campo2ParaApagar.setText("");
 			
 			return false;
 		}else{
@@ -826,25 +829,33 @@ public class Tela extends TelaGeral{
 				}else{
 					dados.setKP(Double.parseDouble(labelKpMestre.getText()));
 					
-					if((comboTipoControlador.getSelectedItem().equals("PI") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PI.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& (labelKiMestre.getText().equals("") || labelTaliMestre.getText().equals(""))){
 						
 						JOptionPane.showMessageDialog(frame, "Informe todos os parâmetros do controlador integrativo (Ki e Ti) do mestre.");
 						
 						return false;
-					}else if((comboTipoControlador.getSelectedItem().equals("PI") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					}else if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PI.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& !(labelKiMestre.getText().equals("") || labelTaliMestre.getText().equals(""))){
 				
 						dados.setKI(Double.parseDouble(labelKiMestre.getText()));
 					}
 					
-					if((comboTipoControlador.getSelectedItem().equals("PD") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PD.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& (labelKdMestre.getText().equals("") || labelTaldMestre.getText().equals(""))){
 						
 						JOptionPane.showMessageDialog(frame, "Informe todos os parâmetros do controlador derivativo (Kd e Td) do mestre.");
 						
 						return false;
-					}else if((comboTipoControlador.getSelectedItem().equals("PD") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					}else if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PD.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& !(labelKdMestre.getText().equals("") || labelTaldMestre.getText().equals(""))){
 						
 						dados.setKD(Double.parseDouble(labelKdMestre.getText()));
@@ -873,25 +884,33 @@ public class Tela extends TelaGeral{
 				}else{
 					dados.setKpEscravo(Double.parseDouble(labelKpEscravo.getText()));
 					
-					if((comboTipoControlador.getSelectedItem().equals("PI") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PI.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& (labelKiEscravo.getText().equals("") || labelTaliEscravo.getText().equals(""))){
 						
 						JOptionPane.showMessageDialog(frame, "Informe todos os parâmetros do controlador integrativo (Ki e Ti) do escravo.");
 						
 						return false;
-					}else if((comboTipoControlador.getSelectedItem().equals("PI") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					}else if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PI.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& !(labelKiEscravo.getText().equals("") || labelTaliEscravo.getText().equals(""))){
 				
 						dados.setKiEscravo(Double.parseDouble(labelKiEscravo.getText()));
 					}
 					
-					if((comboTipoControlador.getSelectedItem().equals("PD") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PD.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& (labelKdEscravo.getText().equals("") || labelTaldEscravo.getText().equals(""))){
 						
 						JOptionPane.showMessageDialog(frame, "Informe todos os parâmetros do controlador derivativo (Kd e Td) do escravo.");
 						
 						return false;
-					}else if((comboTipoControlador.getSelectedItem().equals("PD") || comboTipoControlador.getSelectedItem().equals("PID") || comboTipoControlador.getSelectedItem().equals("PI-D"))
+					}else if((comboTipoControlador.getSelectedItem().equals(TipoControlador.PD.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PID.getDescricao()) 
+							|| comboTipoControlador.getSelectedItem().equals(TipoControlador.PI_D.getDescricao()))
 							&& !(labelKdEscravo.getText().equals("") || labelTaldEscravo.getText().equals(""))){
 						
 						dados.setKdEscravo(Double.parseDouble(labelKdEscravo.getText()));
@@ -990,7 +1009,11 @@ public class Tela extends TelaGeral{
 		
 		insereCamposPolosObservador();
 		
-		insereBotaoCalculaPolosOuMatrizObservador();
+		lblCalculaPolosMatrizL = new JLabel("");
+		lblCalculaPolosMatrizL.setBounds(178, 50, 32, 32);
+		lblCalculaPolosMatrizL.setToolTipText("Sentido da \u00FAltima transforma\u00E7\u00E3o");
+		lblCalculaPolosMatrizL.setIcon(icon);
+		painelObservadorEstados.add(lblCalculaPolosMatrizL);
 		
 		insereCamposMatrizL();
 		
@@ -1007,18 +1030,42 @@ public class Tela extends TelaGeral{
 		textFieldReP1.setEnabled(false);
 		textFieldReP1.setColumns(10);
 		textFieldReP1.setBounds(36, 48, 46, 16);
+		textFieldReP1.setToolTipText("Parte real do polo 1");
 		textFieldReP1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				if(!textFieldReP1.getText().equals(textFieldReP2.getText())){
-					textFieldImP1.setText("");
-					textFieldImP2.setText("");
+				if(textFieldReP1.getText().equals("") && !textFieldImP1.getText().equals("")){
+					textFieldReP2.setText(textFieldReP1.getText());
+				}
+				
+				if(!textFieldReP1.getText().equals(textFieldReP2.getText()) && 
+						textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("")){
 					
-					textFieldImP1.setEnabled(false);
-					textFieldImP2.setEnabled(false);
+					if(!textFieldReP2.getText().equals("")){
+						textFieldImP1.setText("");
+						textFieldImP2.setText("");
+						
+						textFieldImP1.setEnabled(false);
+						textFieldImP2.setEnabled(false);
+						
+						textFieldImP1.setToolTipText("<html><p style='background-color:FFFFAA; color:red;'>" +
+								"<b>Atenção!</b><br></br><br></br>" +
+								"Esse campo só é habilitado quando os polos possuem partes reais iguais." +
+								"</p></html>");
+						
+						textFieldImP2.setToolTipText("<html><p style='background-color:FFFFAA; color:red;'>" +
+								"<b>Atenção!</b><br></br><br></br>" +
+								"Esse campo só é habilitado quando os polos possuem partes reais iguais." +
+								"</p></html>");
+					}
 				}else{
+					textFieldReP2.setText(textFieldReP1.getText());
+					
 					textFieldImP1.setEnabled(true);
 					textFieldImP2.setEnabled(true);
+					
+					textFieldImP1.setToolTipText("Parte imaginária do polo 1");
+					textFieldImP2.setToolTipText("Parte imaginária do polo 2");
 				}
 				
 				if(!textFieldReP1.getText().equals(textFieldReP1Anterior)){
@@ -1032,9 +1079,15 @@ public class Tela extends TelaGeral{
 				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
 				}
+				
+				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios() && validaPolosObservador(textFieldReP1, textFieldReP2)){
+					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
+					
+					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
+					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));					
+				}
 			}
 		});
-		textFieldReP1.setToolTipText("Parte real do polo 1");
 		painelObservadorEstados.add(textFieldReP1);
 		
 		JLabel lblMais1 = new JLabel("+");
@@ -1051,6 +1104,10 @@ public class Tela extends TelaGeral{
 			public void keyReleased(KeyEvent arg0) {
 				textFieldImP2.setText(textFieldImP1.getText());
 				
+				if(!textFieldImP1.getText().equals("") && !textFieldReP1.getText().equals("")){
+					textFieldReP2.setText(textFieldReP1.getText());
+				}		
+				
 				if(!textFieldImP1.getText().equals(textFieldImP1Anterior)){
 					textFieldL1.setText("");
 					textFieldL2.setText("");
@@ -1061,6 +1118,13 @@ public class Tela extends TelaGeral{
 
 				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+								
+				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios() && validaPolosObservador(textFieldImP1, textFieldImP2)){
+					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
+					
+					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
+					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));					
 				}
 			}
 		});
@@ -1083,15 +1147,38 @@ public class Tela extends TelaGeral{
 		textFieldReP2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				if(!textFieldReP2.getText().equals(textFieldReP1.getText())){
-					textFieldImP1.setText("");
-					textFieldImP2.setText("");
+				if(textFieldReP2.getText().equals("") && !textFieldImP2.getText().equals("")){
+					textFieldReP1.setText(textFieldReP2.getText());
+				}
+				
+				if(!textFieldReP2.getText().equals(textFieldReP1.getText()) && 
+						textFieldImP1.getText().equals("") && textFieldImP2.getText().equals("")){
 					
-					textFieldImP1.setEnabled(false);
-					textFieldImP2.setEnabled(false);
+					if(!textFieldReP1.getText().equals("")){
+						textFieldImP1.setText("");
+						textFieldImP2.setText("");
+						
+						textFieldImP1.setEnabled(false);
+						textFieldImP2.setEnabled(false);
+						 
+						textFieldImP1.setToolTipText("<html><p style='background-color:FFFFAA; color:red;'>" +
+								"<b>Atenção!</b><br></br><br></br>" +
+								"Esse campo só é habilitado quando os polos possuem partes reais iguais." +
+								"</p></html>");
+						
+						textFieldImP2.setToolTipText("<html><p style='background-color:FFFFAA; color:red;'>" +
+								"<b>Atenção!</b><br></br><br></br>" +
+								"Esse campo só é habilitado quando os polos possuem partes reais iguais." +
+								"</p></html>");						
+					}
 				}else{
+					textFieldReP1.setText(textFieldReP2.getText());
+					
 					textFieldImP1.setEnabled(true);
 					textFieldImP2.setEnabled(true);
+					
+					textFieldImP1.setToolTipText("Parte imaginária do polo 1");
+					textFieldImP2.setToolTipText("Parte imaginária do polo 2");
 				}
 				
 				if(!textFieldReP2.getText().equals(textFieldReP2Anterior)){
@@ -1104,6 +1191,13 @@ public class Tela extends TelaGeral{
 				
 				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+				
+				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios() && validaPolosObservador(textFieldReP2, textFieldReP1)){
+					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
+					
+					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
+					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));					
 				}
 			}
 		});
@@ -1122,6 +1216,10 @@ public class Tela extends TelaGeral{
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				textFieldImP1.setText(textFieldImP2.getText());
+				
+				if(!textFieldImP2.getText().equals("") && !textFieldReP2.getText().equals("")){
+					textFieldReP1.setText(textFieldReP2.getText());
+				}
 
 				if(!textFieldImP2.getText().equals(textFieldImP2Anterior)){
 					textFieldL1.setText("");
@@ -1134,6 +1232,13 @@ public class Tela extends TelaGeral{
 				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
 				}
+				
+				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios() && validaPolosObservador(textFieldImP2, textFieldImP1)){
+					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
+					
+					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
+					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));					
+				}
 			}
 		});
 		painelObservadorEstados.add(textFieldImP2);
@@ -1142,42 +1247,6 @@ public class Tela extends TelaGeral{
 		lblI2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblI2.setBounds(150, 69, 13, 15);
 		painelObservadorEstados.add(lblI2);
-	}
-	
-	private void insereBotaoCalculaPolosOuMatrizObservador(){		
-		lblCalculaPolosMatrizL = new JLabel("");
-		lblCalculaPolosMatrizL.setBounds(178, 50, 32, 32);
-		lblCalculaPolosMatrizL.setToolTipText("Clique para atualizar os par\u00E2metros");
-		lblCalculaPolosMatrizL.setIcon(icon);
-		lblCalculaPolosMatrizL.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
-					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
-					
-					double[] imagEigenvalues = polos.getImagEigenvalues();
-					double[] realEigenvalues = polos.getRealEigenvalues();
-					
-					textFieldReP1.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-					textFieldImP1.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-					textFieldReP2.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-					textFieldImP2.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-					
-					if(!validaPolosObservador()){
-						textFieldReP1.setText("");
-						textFieldImP1.setText("");
-						textFieldReP2.setText("");
-						textFieldImP2.setText("");
-					}
-				}else if(allCamposPolosObservadorPreenchidos(true) && allCamposMatrizLVazios() && validaPolosObservador()){
-					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
-					
-					textFieldL1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
-					textFieldL2.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
-				}
-			}
-		});
-		painelObservadorEstados.add(lblCalculaPolosMatrizL);
 	}
 	
 	private void insereCamposMatrizL(){		
@@ -1213,6 +1282,25 @@ public class Tela extends TelaGeral{
 				if(allCamposMatrizLPreenchidos() && setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
 				}
+				
+				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
+					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP1.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP1.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldReP2.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					
+					if(!validaPolosObservador(textFieldL1, textFieldL2)){
+						textFieldReP1.setText("");
+						textFieldImP1.setText("");
+						textFieldReP2.setText("");
+						textFieldImP2.setText("");
+					}
+				}
 			}
 		});
 		painelObservadorEstados.add(textFieldL1);
@@ -1237,6 +1325,25 @@ public class Tela extends TelaGeral{
 
 				if(allCamposMatrizLPreenchidos() && setaAzulIconParaDireita){
 					rotacionarIcon(icon, lblCalculaPolosMatrizL);
+				}
+				
+				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
+					EigenvalueDecomposition polos = calculaPolos(textFieldL1, textFieldL2);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP1.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP1.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldReP2.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					
+					if(!validaPolosObservador(textFieldL2, textFieldL1)){
+						textFieldReP1.setText("");
+						textFieldImP1.setText("");
+						textFieldReP2.setText("");
+						textFieldImP2.setText("");
+					}
 				}
 			}
 		});
@@ -1288,7 +1395,10 @@ public class Tela extends TelaGeral{
 					textFieldL2.setText("");
 			
 					comboTipoControle.removeAllItems();
-					recarregaComboTipoControle();			
+					recarregaComboTipoControle();
+					
+					textFieldImP1.setToolTipText("Parte imaginária do polo 1");
+					textFieldImP2.setToolTipText("Parte imaginária do polo 2");
 				}
 			}
 		});
@@ -1297,7 +1407,7 @@ public class Tela extends TelaGeral{
 	
 	private void insereBotaoCalculaPolosOuMatrizSeguidor(){
 		lblCalculaPolosMatrizK = new JLabel("");
-		lblCalculaPolosMatrizK.setToolTipText("Clique para atualizar os par\u00E2metros");
+		lblCalculaPolosMatrizK.setToolTipText("Sentido da \u00FAltima transforma\u00E7\u00E3o");
 		lblCalculaPolosMatrizK.setIcon(icon);
 		lblCalculaPolosMatrizK.setBounds(174, 48, 32, 32);
 //		lblCalculaPolosMatrizL.addMouseListener(new MouseAdapter() {
@@ -1463,15 +1573,14 @@ public class Tela extends TelaGeral{
 				&& !textFieldReP1.getText().equals(textFieldReP2.getText()) 
 				&& (textFieldImP1.getText().equals("") && textFieldImP2.getText().equals(""));
 
-		boolean polosComPartesReaisIguais = (!textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals(""))
-				&& textFieldReP1.getText().equals(textFieldReP2.getText()) 
-				&& (!textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals(""));		
+		boolean polosComPartesReaisIguais = !textFieldReP1.getText().equals("") && !textFieldReP2.getText().equals("")
+				&& !textFieldImP1.getText().equals("") && !textFieldImP2.getText().equals("");		
 		
 		if(polosComPartesReaisDistintas || polosComPartesReaisIguais){
 			return true;
 		}else{			
 			if(retornaMensagem)
-				JOptionPane.showMessageDialog(frame, "Informe os pólos (ou a matriz L) do observador de estados.");
+				JOptionPane.showMessageDialog(frame, "Informe os polos (ou a matriz L) do observador de estados.");
 			
 			return false;
 		}
@@ -1489,6 +1598,34 @@ public class Tela extends TelaGeral{
 		return(textFieldP1Seg.getText().equals("") && 
 				textFieldReP2Seg.getText().equals("") && textFieldImP2Seg.getText().equals("") &&
 				textFieldReP3Seg.getText().equals("") && textFieldImP3Seg.getText().equals(""));
+	}
+	
+	private boolean allCamposPolosSeguidorPreenchidos(boolean retornaMensagem){
+		boolean polosComPartesReaisDistintas = 
+				(!textFieldP1Seg.getText().equals("") && !textFieldReP2Seg.getText().equals("") && !textFieldReP3Seg.getText().equals(""))
+				&& !textFieldReP2Seg.getText().equals(textFieldReP3Seg.getText()) 
+				&& (textFieldImP2Seg.getText().equals("") && textFieldImP3Seg.getText().equals(""));
+
+		boolean polosComPartesReaisIguais = 
+				!textFieldP1Seg.getText().equals("") && !textFieldReP2Seg.getText().equals("") && !textFieldReP3Seg.getText().equals("")				
+				&& !textFieldImP2Seg.getText().equals("") && !textFieldImP3Seg.getText().equals("");		
+		
+		if(polosComPartesReaisDistintas || polosComPartesReaisIguais){
+			return true;
+		}else{			
+			if(retornaMensagem)
+				JOptionPane.showMessageDialog(frame, "Informe os polos (ou a matriz L) do observador de estados.");
+			
+			return false;
+		}
+	}
+	
+	private boolean allCamposMatrizKVazios(){
+		return (textFieldK1.getText().equals("") && textFieldK21.getText().equals("") && textFieldK22.getText().equals(""));
+	}
+	
+	private boolean allCamposMatrizKPreenchidos(){
+		return (!textFieldK1.getText().equals("") && !textFieldK21.getText().equals("") && !textFieldK22.getText().equals(""));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
