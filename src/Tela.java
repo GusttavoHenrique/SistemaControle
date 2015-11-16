@@ -455,7 +455,7 @@ public class Tela extends TelaGeral{
 		botaoAtualizar = new JButton("Atualizar");
 		botaoAtualizar.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1439269378_gtk-refresh.png")));		
 		botaoAtualizar.setEnabled(false);
-		botaoAtualizar.setBounds(65, 620, 101, 58);
+		botaoAtualizar.setBounds(21, 620, 145, 44);
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dados = new Dados();					
@@ -506,7 +506,7 @@ public class Tela extends TelaGeral{
 		
 		btnReset = new JButton("Reset");
 		btnReset.setEnabled(false);
-		btnReset.setBounds(185, 620, 101, 58);
+		btnReset.setBounds(185, 620, 145, 44);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//onda_limpa_tanque = "Degrau";

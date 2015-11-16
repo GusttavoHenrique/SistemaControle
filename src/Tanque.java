@@ -12,6 +12,7 @@ public class Tanque extends Thread{
 	Controlador controladorUm;
 	Controlador controladorDois;
 	Observador  observador;
+	Seguidor seguidor;
 
 	private double vp_sat;
 	public double nivel_tanque_um;
@@ -384,6 +385,17 @@ public class Tanque extends Thread{
 						
 						controladorDois.setControleAnteriorSaturado(dados.getVP());
 						
+					}else if(dados.getTipoDeControle().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+						
+						seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois);
+						Ponto pto_vp_seguidor = new Ponto();
+						pto_vp_seguidor.setY(Seguidor.seguidor[2][0]);
+						pto_vp_seguidor.setX(sinal.getTempo());
+						
+						grafico_controle.atualizarFilaDeVP(pto_vp_seguidor);
+						
+						dados.setVP(pto_vp_seguidor.getY());
+						verificarRegras();
 					}
 					
 					if(dados.isObservando()){
@@ -483,6 +495,8 @@ public class Tanque extends Thread{
 	
 	
 		observador = new Observador(dados.getL1(), dados.getL2());
+		
+		seguidor = new Seguidor(dados.getK1(), dados.getK21(), dados.getK22());
 	
 	}	
 	
