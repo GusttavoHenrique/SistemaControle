@@ -1,8 +1,7 @@
 import java.util.Random;
 
 
-public class Tsunami {
-	
+public class Tsunami {	
 	public double periodo;
 	public double offset;
 	public double amplitude;
@@ -18,11 +17,7 @@ public class Tsunami {
 	public int randomAmplitude;
 	public int randomPeriodo;
 	
-	
-	
-	
-	Random random = new Random();
-	
+	Random random = new Random();	
 	
 	Ponto ponto = new Ponto();
 	
@@ -41,77 +36,54 @@ public class Tsunami {
 		this.tipoDeOnda = tipoDeOnda;
 	}
 	
-	public Ponto gerarPonto(){
-		
-		switch (tipoDeOnda){
-			
-			case "Degrau":
+	public Ponto gerarPonto(){		
+		if(tipoDeOnda.equals(TipoOnda.DEGRAU.getDescricao())){
+			ponto.setY(amplitude + offset);
+			ponto.setX(tempo);
+			tempo = tempo + 0.1;
+		}else if(tipoDeOnda.equals(TipoOnda.ALEATORIA.getDescricao())){
+			if(contadorDePeriodo <= randomPeriodo)
+				ponto.setY(randomAmplitude + offset);
+			else if (contadorDePeriodo > randomPeriodo){
 				
+				contadorDePeriodo = 0;
+				randomAmplitude = random.nextInt((int)((amplitude - amplitudeMinima) + 1)) + (int) amplitudeMinima;
+				randomPeriodo = random.nextInt((int)(periodo - periodoMinimo + 1)) + (int) periodoMinimo;
+			}
+			
+			contadorDePeriodo = contadorDePeriodo + 0.1;
+			ponto.setX(tempo);
+			tempo = tempo + 0.1;
+		}else if(tipoDeOnda.equals(TipoOnda.QUADRADA.getDescricao())){
+			if (contadorDePeriodo <= periodo/2)
 				ponto.setY(amplitude + offset);
-				ponto.setX(tempo);
-				tempo = tempo + 0.1;
-				
-			break;
+			else if( contadorDePeriodo >= periodo/2){
+				ponto.setY(-amplitude + offset);
+				if(contadorDePeriodo > periodo){contadorDePeriodo = 0;}
+			}
 			
-			case "Aleatória":
-				
-				if(contadorDePeriodo <= randomPeriodo)
-					ponto.setY(randomAmplitude + offset);
-				else if (contadorDePeriodo > randomPeriodo){
-					
-					contadorDePeriodo = 0;
-					randomAmplitude = random.nextInt((int)((amplitude - amplitudeMinima) + 1)) + (int) amplitudeMinima;
-					randomPeriodo = random.nextInt((int)(periodo - periodoMinimo + 1)) + (int) periodoMinimo;
-				}
-				
-				contadorDePeriodo = contadorDePeriodo + 0.1;
-				ponto.setX(tempo);
-				tempo = tempo + 0.1;
-				
-			break;
+			ponto.setX(tempo);
+			tempo = tempo + 0.1;
+			contadorDePeriodo = contadorDePeriodo + 0.1;
+		}else if(tipoDeOnda.equals(TipoOnda.SENOIDAL.getDescricao())){
+			double frequencia = (1/periodo);
+			double arg = (2*Math.PI*frequencia*tempo);
 			
-			case "Quadrada":
-				
-				if (contadorDePeriodo <= periodo/2)
-					ponto.setY(amplitude + offset);
-				else if( contadorDePeriodo >= periodo/2){
-					ponto.setY(-amplitude + offset);
-					if(contadorDePeriodo > periodo){contadorDePeriodo = 0;}
-				}
-				
-				ponto.setX(tempo);
-				tempo = tempo + 0.1;
-				contadorDePeriodo = contadorDePeriodo + 0.1;
-				
-			break;
+			ponto.setY(amplitude*(Math.sin(arg)) + offset);
 			
-			case "Senoidal":
-				
-				double frequencia = (1/periodo);
-				double arg = (2*Math.PI*frequencia*tempo);
-				
-				ponto.setY(amplitude*(Math.sin(arg)) + offset);
-				
-				ponto.setX(tempo);
-				tempo = tempo + 0.1;
-				
-			break;
+			ponto.setX(tempo);
+			tempo = tempo + 0.1;
+		}else if(tipoDeOnda.equals(TipoOnda.DENTE_SERRA.getDescricao())){			
+			if (passoNovo  < amplitude){
+				ponto.setY(passoNovo + offset);
+				passoNovo += passo;
+			}else{
+				ponto.setY(passoNovo + offset);
+				passoNovo = -amplitude;
+			}
 			
-			case "Dente de Serra":
-				
-				if (passoNovo  < amplitude){
-					ponto.setY(passoNovo + offset);
-					passoNovo += passo;
-				}else{
-					ponto.setY(passoNovo + offset);
-					passoNovo = -amplitude;
-				}
-				
-				ponto.setX(tempo);
-				tempo = tempo + 0.1;
-				
-			break;
-			
+			ponto.setX(tempo);
+			tempo = tempo + 0.1;
 		}
 		
 		return ponto;

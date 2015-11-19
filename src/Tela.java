@@ -153,7 +153,7 @@ public class Tela extends TelaGeral{
 		frame = new JFrame();
 		frame.setResizable(false);
 		frame.getContentPane().setLocation(0, -113);
-		frame.setBounds(100, 100, 1154, 732);
+		frame.setBounds(100, 0, 1154, 728);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -186,7 +186,7 @@ public class Tela extends TelaGeral{
 		JMenuItem mntmConfigurarConexao = new JMenuItem("Configurar");
 		mntmConfigurarConexao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-				criaPaneilDadosControle();
+				criaPaneilDadosConexao();
 			}
 		});
 		mnConexao.add(mntmConfigurarConexao);
@@ -520,12 +520,14 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void populaTipoControleNaDados(){
-		if(comboTipoControle.getSelectedItem().equals("Cascata")){
-			dados.setTipoDeControle("Cascata");
-		}else if(comboTipoControle.getSelectedItem().equals("Simples")){
-			dados.setTipoDeControle("Simples");
+		if(comboTipoControle.getSelectedItem().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+			dados.setTipoDeControle(TipoControle.SEGUIDOR_REFERENCIA.getDescricao());
+		}else if(comboTipoControle.getSelectedItem().equals(TipoControle.CASCATA.getDescricao())){
+			dados.setTipoDeControle(TipoControle.CASCATA.getDescricao());
+		}else if(comboTipoControle.getSelectedItem().equals(TipoControle.SIMPLES.getDescricao())){
+			dados.setTipoDeControle(TipoControle.SIMPLES.getDescricao());
 		}else{
-			dados.setTipoDeControle("Sem Controle");
+			dados.setTipoDeControle(TipoControle.SEM_CONTROLE.getDescricao());
 		}
 	}
 	
@@ -649,11 +651,14 @@ public class Tela extends TelaGeral{
 		sucesso = sucesso && validaTipoControle();
 
 		//Validando painel de escolha dos parametros do controlador mestre
-		if(comboTipoControle.getSelectedItem().equals("Simples") || comboTipoControle.getSelectedItem().equals("Cascata"))
+		if(comboTipoControle.getSelectedItem().equals(TipoControle.SIMPLES.getDescricao()) 
+				|| comboTipoControle.getSelectedItem().equals(TipoControle.CASCATA.getDescricao())){
+		
 			sucesso = sucesso && validaParamsControladorMestre(comboTipoControladorMestre, labelKpEscravo, labelKiEscravo, labelKdEscravo, labelTaltEscravo, labelTaliEscravo, labelTaldEscravo);
+		}
 
 		//Validando painel de escolha dos parametros do controlador mestre
-		if(comboTipoControle.getSelectedItem().equals("Cascata"))
+		if(comboTipoControle.getSelectedItem().equals(TipoControle.CASCATA.getDescricao()))
 			sucesso = sucesso && validaParamsControladorEscravo(comboTipoControladorEscravo, labelKpMestre, labelKiMestre, labelKdMestre, labelTaltMestre, labelTaliMestre, labelTaldMestre);
 
 		return sucesso;
@@ -684,11 +689,37 @@ public class Tela extends TelaGeral{
 		}
 	}
 	
-	private boolean validaPolosSeguidor(JTextField campo1ParaApagar, JTextField campo2ParaApagar, JTextField campo3ParaApagar){		
-//		if(campo3ParaApagar != null)
-//			campo3ParaApagar.setText("");
+	private boolean validaPolosSeguidor(JTextField campo1ParaApagar, JTextField campo2ParaApagar, JTextField campo3ParaApagar){
+		double somaDosQuadradosP1 = 0.0, somaDosQuadradosP2 = 0.0, somaDosQuadradosP3 = 0.0;
 		
-		return true;
+		somaDosQuadradosP1 = Math.pow(Double.parseDouble(textFieldP1Seg.getText()), 2);
+		
+		if(!textFieldReP2Seg.getText().equals(textFieldReP3Seg.getText())){
+			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2Seg.getText()), 2);
+			somaDosQuadradosP3 = Math.pow(Double.parseDouble(textFieldReP3Seg.getText()), 2);
+		}else{
+			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2Seg.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP2Seg.getText()), 2);
+			somaDosQuadradosP3 = somaDosQuadradosP2;
+		}
+		
+		boolean instavel = (Math.sqrt(somaDosQuadradosP1) >= 1) || (Math.sqrt(somaDosQuadradosP2) >= 1 || (Math.sqrt(somaDosQuadradosP3) >= 1));
+		
+		if(instavel){			
+			JOptionPane.showMessageDialog(frame, "Não é possível realizar observação de estados utilizando esses polos.");
+			
+			if(campo1ParaApagar != null)
+				campo1ParaApagar.setText("");
+			
+			if(campo2ParaApagar != null)
+				campo2ParaApagar.setText("");
+			
+			if(campo3ParaApagar != null)
+				campo3ParaApagar.setText("");
+			
+			return false;
+		}else{
+			return true;
+		}
 	}
 	
 	private boolean validaTipoControle(){
@@ -778,8 +809,7 @@ public class Tela extends TelaGeral{
 	/** 
 	 * Valida campos e Popula os parâmetros do sinal na classe Dados.
 	 */
-	public boolean validaOnda(){
-		
+	public boolean validaOnda(){		
 		if(comboTipoOnda.getSelectedItem().equals(TipoOnda.SELECIONE.getDescricao())){
 			JOptionPane.showMessageDialog(frame, "Informe o Tipo de Onda.");
 			
@@ -818,8 +848,7 @@ public class Tela extends TelaGeral{
 				}
 			}
 			
-			if(comboTipoOnda.getSelectedItem().equals(TipoOnda.ALEATORIA.getDescricao())){
-				
+			if(comboTipoOnda.getSelectedItem().equals(TipoOnda.ALEATORIA.getDescricao())){				
 				if(amplitudeMin.getValue().equals("")){
 					JOptionPane.showMessageDialog(frame, "Informe a Amplitude (Mín) do sinal.");
 				
@@ -1424,10 +1453,7 @@ public class Tela extends TelaGeral{
 					textFieldL1.setText("");
 					
 					textFieldL2.setEnabled(false);
-					textFieldL2.setText("");
-			
-//					comboTipoControle.removeAllItems();
-//					recarregaComboTipoControle();
+					textFieldL2.setText("");	
 					
 					comboTipoControle.addItem(TipoControle.SIMPLES.getDescricao());
 					comboTipoControle.addItem(TipoControle.CASCATA.getDescricao());
@@ -1715,7 +1741,6 @@ public class Tela extends TelaGeral{
 				}
 
 				if(allCamposPolosSeguidorPreenchidos(false) && !setaAzulIconSeguidorParaDireita){
-					//Falta ver se a setaAzulIconSeguidorParaDireita funciona e não há conflito
 					setaAzulIconSeguidorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizK, setaAzulIconSeguidorParaDireita);
 				}
 								
@@ -1738,16 +1763,16 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void insereCamposMatrizK(){
-		JLabel lblK21Igual = new JLabel("K21:");
-		lblK21Igual.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblK21Igual.setBounds(265, 64, 24, 14);
+		JLabel lblK21Igual = new JLabel("K21 = ");
+		lblK21Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblK21Igual.setBounds(227, 70, 33, 14);
 		painelSeguidorReferencia.add(lblK21Igual);
 		
 		textFieldK1 = new JTextFieldAlterado(6, false);
 		textFieldK1.setToolTipText("valor de K1");
 		textFieldK1.setEnabled(false);
 		textFieldK1.setColumns(10);
-		textFieldK1.setBounds(258, 24, 46, 16);
+		textFieldK1.setBounds(259, 44, 46, 16);
 		textFieldK1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1768,24 +1793,24 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
-//					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
-//					
-//					double[] imagEigenvalues = polos.getImagEigenvalues();
-//					double[] realEigenvalues = polos.getRealEigenvalues();
-//					
-//					textFieldP1Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP2Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					
-//					if(!validaPolosSeguidor(textFieldK1, textFieldK21, textFieldK22)){
-//						textFieldP1Seg.setText("");
-//						textFieldReP2Seg.setText("");
-//						textFieldImP2Seg.setText("");
-//						textFieldReP3Seg.setText("");
-//						textFieldImP3Seg.setText("");
-//					}
+					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					
+					if(!validaPolosSeguidor(textFieldK1, null, null)){
+						textFieldP1Seg.setText("");
+						textFieldReP2Seg.setText("");
+						textFieldImP2Seg.setText("");
+						textFieldReP3Seg.setText("");
+						textFieldImP3Seg.setText("");
+					}
 				}
 			}
 		});
@@ -1795,7 +1820,7 @@ public class Tela extends TelaGeral{
 		textFieldK21.setToolTipText("valor de K21");
 		textFieldK21.setEnabled(false);
 		textFieldK21.setColumns(10);
-		textFieldK21.setBounds(287, 63, 46, 16);
+		textFieldK21.setBounds(259, 69, 46, 16);
 		textFieldK21.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1816,41 +1841,34 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
-//					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
-//					
-//					double[] imagEigenvalues = polos.getImagEigenvalues();
-//					double[] realEigenvalues = polos.getRealEigenvalues();
-//					
-//					textFieldP1Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP2Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					
-//					if(!validaPolosSeguidor(textFieldK1, textFieldK21, textFieldK22)){
-//						textFieldP1Seg.setText("");
-//						textFieldReP2Seg.setText("");
-//						textFieldImP2Seg.setText("");
-//						textFieldReP3Seg.setText("");
-//						textFieldImP3Seg.setText("");
-//					}
+					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					
+					if(!validaPolosSeguidor(null, textFieldK21, null)){
+						textFieldP1Seg.setText("");
+						textFieldReP2Seg.setText("");
+						textFieldImP2Seg.setText("");
+						textFieldReP3Seg.setText("");
+						textFieldImP3Seg.setText("");
+					}
 				}
 			}
 		});
-		
-		JLabel lblColchete3 = new JLabel("[");
-		lblColchete3.setToolTipText("");
-		lblColchete3.setForeground(Color.GRAY);
-		lblColchete3.setFont(new Font("Calibri Light", Font.BOLD, 47));
-		lblColchete3.setBounds(253, 35, 35, 75);
-		painelSeguidorReferencia.add(lblColchete3);
 		painelSeguidorReferencia.add(textFieldK21);
 		
 		textFieldK22 = new JTextFieldAlterado(6, false);
 		textFieldK22.setToolTipText("valor de K22");
 		textFieldK22.setEnabled(false);
 		textFieldK22.setColumns(10);
-		textFieldK22.setBounds(370, 63, 46, 16);
+		textFieldK22.setBounds(368, 69, 46, 16);
 		textFieldK22.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1871,49 +1889,38 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
-//					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
-//					
-//					double[] imagEigenvalues = polos.getImagEigenvalues();
-//					double[] realEigenvalues = polos.getRealEigenvalues();
-//					
-//					textFieldP1Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP2Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
-//					textFieldReP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-//					
-//					if(!validaPolosSeguidor(textFieldK1, textFieldK21, textFieldK22)){
-//						textFieldP1Seg.setText("");
-//						textFieldReP2Seg.setText("");
-//						textFieldImP2Seg.setText("");
-//						textFieldReP3Seg.setText("");
-//						textFieldImP3Seg.setText("");
-//					}
+					EigenvalueDecomposition polos = calculaPolosSeguidorReferencia(textFieldK1, textFieldK21, textFieldK22);
+					
+					double[] imagEigenvalues = polos.getImagEigenvalues();
+					double[] realEigenvalues = polos.getRealEigenvalues();
+					
+					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					
+					if(!validaPolosSeguidor(null, null, textFieldK22)){
+						textFieldP1Seg.setText("");
+						textFieldReP2Seg.setText("");
+						textFieldImP2Seg.setText("");
+						textFieldReP3Seg.setText("");
+						textFieldImP3Seg.setText("");
+					}
 				}
 			}
 		});
 		painelSeguidorReferencia.add(textFieldK22);
 		
-		JLabel lblColchete4 = new JLabel("]");
-		lblColchete4.setForeground(Color.GRAY);
-		lblColchete4.setFont(new Font("Calibri Light", Font.BOLD, 47));
-		lblColchete4.setBounds(413, 35, 35, 75);
-		painelSeguidorReferencia.add(lblColchete4);
-		
 		JLabel lblK1Igual = new JLabel("K1 = ");
 		lblK1Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblK1Igual.setBounds(230, 25, 26, 14);
+		lblK1Igual.setBounds(230, 45, 26, 14);
 		painelSeguidorReferencia.add(lblK1Igual);
 		
-		JLabel lblK22Igual = new JLabel("K22:");
-		lblK22Igual.setFont(new Font("Tahoma", Font.PLAIN, 10));
-		lblK22Igual.setBounds(345, 64, 24, 14);
+		JLabel lblK22Igual = new JLabel("K22 = ");
+		lblK22Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblK22Igual.setBounds(333, 70, 33, 14);
 		painelSeguidorReferencia.add(lblK22Igual);
-		
-		JLabel lblK2Igual = new JLabel("K2 = ");
-		lblK2Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblK2Igual.setBounds(230, 64, 26, 14);
-		painelSeguidorReferencia.add(lblK2Igual);
 	}
 	
 	private void inicializarPainelSeguidorReferencia(){
@@ -2010,7 +2017,7 @@ public class Tela extends TelaGeral{
 		comboTipoOnda.setBounds(126, 65, 151, 18);
 		comboTipoOnda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(comboTipoOnda.getSelectedItem().equals(TipoOnda.SELECIONE.getDescricao())){
+				if(comboTipoOnda.getSelectedItem() != null && comboTipoOnda.getSelectedItem().equals(TipoOnda.SELECIONE.getDescricao())){
 					lblAmplitude.setText("Amplitude:");	
 					amplitude.setEnabled(false);
 					amplitudeMin.setEnabled(false);
@@ -2022,7 +2029,7 @@ public class Tela extends TelaGeral{
 					periodoMin.setValue(0);
 					offSet.setEnabled(false);
 					offSet.setValue(0);
-				}else if(comboTipoOnda.getSelectedItem().equals(TipoOnda.QUADRADA.getDescricao())){
+				}else if(comboTipoOnda.getSelectedItem() != null && comboTipoOnda.getSelectedItem().equals(TipoOnda.QUADRADA.getDescricao())){
 					lblAmplitude.setText("Amplitude:");
 					amplitude.setEnabled(true);
 					amplitudeMin.setEnabled(false);
@@ -2032,7 +2039,7 @@ public class Tela extends TelaGeral{
 					periodoMin.setEnabled(false);
 					periodoMin.setValue(0);
 					offSet.setEnabled(true);
-				}else if(comboTipoOnda.getSelectedItem().equals(TipoOnda.DEGRAU.getDescricao())){
+				}else if(comboTipoOnda.getSelectedItem() != null && comboTipoOnda.getSelectedItem().equals(TipoOnda.DEGRAU.getDescricao())){
 					lblAmplitude.setText("Amplitude:");	
 					amplitude.setEnabled(true);
 					amplitudeMin.setEnabled(false);
@@ -2044,7 +2051,7 @@ public class Tela extends TelaGeral{
 					periodoMin.setValue(0);
 					offSet.setEnabled(false);
 					offSet.setValue(0);
-				}else if(comboTipoOnda.getSelectedItem().equals(TipoOnda.ALEATORIA.getDescricao())){
+				}else if(comboTipoOnda.getSelectedItem() != null && comboTipoOnda.getSelectedItem().equals(TipoOnda.ALEATORIA.getDescricao())){
 					lblAmplitude.setText("Amplitude (Máx):");
 					amplitude.setEnabled(true);
 					amplitudeMin.setEnabled(true);
@@ -2053,7 +2060,7 @@ public class Tela extends TelaGeral{
 					periodoMin.setEnabled(true);
 					offSet.setEnabled(false);
 					offSet.setValue(0);
-				}else if(comboTipoOnda.getSelectedItem().equals(TipoOnda.SENOIDAL.getDescricao())){
+				}else if(comboTipoOnda.getSelectedItem() != null && comboTipoOnda.getSelectedItem().equals(TipoOnda.SENOIDAL.getDescricao())){
 					lblAmplitude.setText("Amplitude:");	
 					amplitude.setEnabled(true);
 					amplitudeMin.setEnabled(false);
@@ -2091,8 +2098,6 @@ public class Tela extends TelaGeral{
 					comboTipoControladorMestre.setEnabled(true);
 					comboTipoControladorEscravo.setEnabled(true);
 					
-					dados.setTipoDeControle(TipoControle.CASCATA.getDescricao());
-					
 					textFieldP1Seg.setEnabled(false);
 					textFieldP1Seg.setText("");
 					textFieldReP2Seg.setEnabled(false);
@@ -2109,6 +2114,8 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
+					
+					dados.setTipoDeControle(TipoControle.CASCATA.getDescricao());
 				}else if(comboTipoControle.getSelectedItem() != null && comboTipoControle.getSelectedItem().equals(TipoControle.SIMPLES.getDescricao())){					
 					comboTipoControladorMestre.setEnabled(true);
 					comboTipoControladorEscravo.setEnabled(false);
@@ -2116,8 +2123,6 @@ public class Tela extends TelaGeral{
 					comboTipoControladorEscravo.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
 
 					chckbxWindUpEscravo.setSelected(false);
-					
-					dados.setTipoDeControle(TipoControle.SIMPLES.getDescricao());
 					
 					desabilitarParamsControladorEscravo(true, true);
 					
@@ -2137,6 +2142,8 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
+					
+					dados.setTipoDeControle(TipoControle.SIMPLES.getDescricao());
 				}else if(comboTipoControle.getSelectedItem() != null && comboTipoControle.getSelectedItem().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){					
 					comboTipoControladorMestre.setEnabled(false);
 					comboTipoControladorEscravo.setEnabled(false);
@@ -2146,8 +2153,6 @@ public class Tela extends TelaGeral{
 
 					chckbxWindUpMestre.setSelected(false);
 					chckbxWindUpEscravo.setSelected(false);
-					
-					dados.setTipoDeControle(TipoControle.SEGUIDOR_REFERENCIA.getDescricao());
 					
 					desabilitarParamsControladorMestre(true, true);
 					desabilitarParamsControladorEscravo(true, true);
@@ -2160,12 +2165,13 @@ public class Tela extends TelaGeral{
 					textFieldK1.setEnabled(true);
 					textFieldK21.setEnabled(true);
 					textFieldK22.setEnabled(true);
+					
+					dados.setTipoDeControle(TipoControle.SEGUIDOR_REFERENCIA.getDescricao());
 				}else{
 					comboTipoControladorMestre.setEnabled(false);
 					comboTipoControladorMestre.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
 					comboTipoControladorEscravo.setEnabled(false);
 					comboTipoControladorEscravo.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
-					dados.setTipoDeControle(TipoControle.SEM_CONTROLE.getDescricao());
 					
 					chckbxWindUpMestre.setSelected(false);
 					chckbxWindUpEscravo.setSelected(false);
@@ -2189,6 +2195,8 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
+					
+					dados.setTipoDeControle(TipoControle.SEM_CONTROLE.getDescricao());
 				}
 			}
 		});
@@ -2429,8 +2437,8 @@ public class Tela extends TelaGeral{
 		labelChamaConfiguracaoMestre.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				criaPaneilDadosControle(comboTipoControladorMestre, chckbxControleMestre, labelKpMestre, labelKiMestre, labelKdMestre,
-						labelTaltMestre, labelTaliMestre, labelTaldMestre);
+				criaPaneilDadosControle(comboTipoControladorMestre, chckbxWindUpMestre, labelKpMestre, labelKiMestre, labelKdMestre,
+						labelTaltMestre, labelTaliMestre, labelTaldMestre, true);
 			}
 		});
 		labelChamaConfiguracaoMestre.setToolTipText("Clique para atualizar os par\u00E2metros");
@@ -2538,7 +2546,7 @@ public class Tela extends TelaGeral{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				criaPaneilDadosControle(comboTipoControladorEscravo, chckbxWindUpEscravo, labelKpEscravo, labelKiEscravo, labelKdEscravo,
-						labelTaltEscravo, labelTaliEscravo, labelTaldEscravo);
+						labelTaltEscravo, labelTaliEscravo, labelTaldEscravo, false);
 			}
 		});
 		labelChamaConfiguracaoEscravo.setToolTipText("Clique para atualizar os par\u00E2metros");
@@ -2554,13 +2562,13 @@ public class Tela extends TelaGeral{
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void criaPaneilDadosControle(){
+	private void criaPaneilDadosConexao(){
 		JTextField ip = new JTextFieldAlterado(false);
 		ip.setBounds(100, 170, 140, 160);
 		ip.setText(iPServidor.getText());
 		
 		JTextField porta = new JTextFieldAlterado(true);
-		portaServidor.setText(porta.getText());
+		porta.setText(portaServidor.getText());
 		 
 		JComboBox leitura1 = new JComboBox(getItensComboLeituraEscrita());
 		leitura1.setSelectedItem(Tela.this.leitura1.getText().equals("") ? "Selecione" : Integer.parseInt(Tela.this.leitura1.getText()));
@@ -2585,9 +2593,7 @@ public class Tela extends TelaGeral{
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private void criaPaneilDadosControle(JComboBox comboTipoControlador, JCheckBox chckbxWindUp, JLabel labelKp, JLabel labelKi, JLabel labelKd, JLabel labelTalT, JLabel labelTalI, JLabel labelTalD){
-		String strControlador = comboTipoControlador.equals(comboTipoControladorMestre) ? " Mestre" : " Escravo";
-		
+	private void criaPaneilDadosControle(JComboBox comboTipoControlador, JCheckBox chckbxWindUp, JLabel labelKp, JLabel labelKi, JLabel labelKd, JLabel labelTalT, JLabel labelTalI, JLabel labelTalD, boolean isMestre){		
 		final JTextField kP = new JTextFieldAlterado(6, false);
 		final JTextField kI = new JTextFieldAlterado(6, false);				
 		final JTextField kD = new JTextFieldAlterado(6, false);
@@ -2597,12 +2603,7 @@ public class Tela extends TelaGeral{
 		final JCheckBox windUp = new JCheckBox("Wind Up");
 		
 		windUp.setEnabled(rdbtnFechada.isSelected());
-		
-		if(strControlador.equals(" Mestre")){
-			windUp.setSelected(chckbxWindUpMestre.isSelected());
-		}else{
-			windUp.setSelected(chckbxWindUpEscravo.isSelected());
-		}
+		windUp.setSelected(chckbxWindUp.isSelected());
 				
 		setEnableCamposControlador(comboTipoControlador, windUp, kP, kI, kD, tT, tI, tD);
 		
@@ -2665,7 +2666,7 @@ public class Tela extends TelaGeral{
 		});
 						 	
 		Object[] message = {"Kp:", kP, "Ki:", kI, "Kd:", kD, "Tt:", tT, "Ti:", tI, "Td:", tD, "", windUp}; 
-		int option = JOptionPane.showConfirmDialog(null, message, "Parâmetros do Controlador" + strControlador, JOptionPane.OK_CANCEL_OPTION); 
+		int option = JOptionPane.showConfirmDialog(null, message, "Parâmetros do Controlador" + (isMestre ? " Mestre" : " Escravo"), JOptionPane.OK_CANCEL_OPTION); 
 		 
 		if (option == JOptionPane.OK_OPTION) { 
 			labelKp.setText(kP.getText());			
@@ -2675,11 +2676,7 @@ public class Tela extends TelaGeral{
 			labelTalI.setText(tI.getText());
 			labelTalD.setText(tD.getText());				
 			
-			if(strControlador.equals(" Mestre")){
-				chckbxWindUpMestre.setSelected(windUp.isSelected());
-			}else{
-				chckbxWindUpEscravo.setSelected(windUp.isSelected());
-			}
+			chckbxWindUp.setSelected(windUp.isSelected());
 		}
 	}
 	
@@ -2701,7 +2698,7 @@ public class Tela extends TelaGeral{
 			tT.setText("");
 			
 			windUp.setSelected(false);
-			windUp.setEnabled(rdbtnFechada.isSelected());
+			windUp.setEnabled(false);
 		}else if(tipoControlador.getSelectedItem().equals(TipoControlador.P.getDescricao())){
 			kP.setEnabled(true);
 			kI.setEnabled(false);
@@ -2823,14 +2820,6 @@ public class Tela extends TelaGeral{
 			chckbxAcaoI.setEnabled(true);
 			chckbxControleMestre.setEnabled(true);
 			chckbxControleCSeguidor.setEnabled(true);
-			
-			/*chckbxComControle = false;*/
-						
-//			rdbtnAleatorio.setEnabled(true);
-//			rdbtnDegrau.setEnabled(true);
-//			rdbtnDenteSerra.setEnabled(true);
-//			rdbtnQuadrada.setEnabled(true);
-//			rdbtnSenoidal.setEnabled(true);
 		}else{			
 			rdbtnAberta.setEnabled(false);			
 			rdbtnFechada.setEnabled(false);
@@ -3359,7 +3348,7 @@ public class Tela extends TelaGeral{
 					chckbxAcaoI.setVisible(true);
 					chckbxAcaoD.setVisible(true);
 					chckbxControleMestre.setVisible(true);
-					chckbxControleCSeguidor.setVisible(true);
+					chckbxControleCSeguidor.setVisible(false);
 				}else{
 					lblExibirCheckSinalGrafico1.setIcon(new ImageIcon(Tela.class.getResource("Icons/Chart-Curve-Add-32.png")));
 					chckbxTensCalc.setVisible(false);

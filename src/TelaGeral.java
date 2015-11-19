@@ -119,6 +119,8 @@ public class TelaGeral extends JFrame{
 	}
 	
 	protected EigenvalueDecomposition calculaPolosSeguidorReferencia(JTextField textFieldK1, JTextField textFieldK21, JTextField textFieldK22) {
+		double [][] KChapeu = new double[1][3];
+		
 		double k1 = textFieldK1.getText().equals("") ? 0 : Double.parseDouble(textFieldK1.getText());
 		double k21 = textFieldK21.getText().equals("") ? 0 : Double.parseDouble(textFieldK21.getText());
 		double k22 = textFieldK22.getText().equals("") ? 0 : Double.parseDouble(textFieldK22.getText());
@@ -126,8 +128,8 @@ public class TelaGeral extends JFrame{
 		double K[][] = {{k21, k22, k1}};
 		Matrix KMatrix = new Matrix(K);
 		
-		Matrix KChapeuMatrix = new Matrix(3, 3);
-		KChapeuMatrix = KMatrix.times(HChapeuMatriz);
+		Matrix KChapeuMatrix = new Matrix(KChapeu);
+		KChapeuMatrix = KMatrix.times(GHCIInvMatriz);
 		KChapeuMatrix = KChapeuMatrix.plus(TranspChapeuMatriz.times(-1));
 		
 		Matrix GChapeuMenosHKChapeuMatriz = GChapeuMatriz.plus((HChapeuMatriz.times(KChapeuMatrix)).times(-1));
