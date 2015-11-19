@@ -312,57 +312,57 @@ public class Tela extends TelaGeral{
 	private void inicializarPainelValoresAtuais(){
 		//Inicializando Painel Painel de exibição dos Valores
 		panelValores = new JPanel();
-		panelValores.setBounds(99, 266, 472, 43);
+		panelValores.setBounds(6, 525, 660, 43);
 		panelGraficos.add(panelValores);
 		panelValores.setBorder(new TitledBorder(null, "Valores Atuais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelValores.setLayout(null);
 		
 		JLabel lblTr = new JLabel("Tr:");
 		lblTr.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblTr.setBounds(12, 16, 24, 17);
+		lblTr.setBounds(112, 15, 24, 17);
 		panelValores.add(lblTr);
 		
 		labelTr = new JLabel();
 		labelTr.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		labelTr.setBackground(Color.WHITE);
-		labelTr.setBounds(46, 16, 66, 17);
+		labelTr.setBounds(146, 15, 66, 17);
 		panelValores.add(labelTr);
 		
 		JLabel lblMp = new JLabel("Mp:");
 		lblMp.setFont(new Font("Dialog", Font.PLAIN, 16));
-		lblMp.setBounds(122, 16, 30, 17);
+		lblMp.setBounds(222, 15, 30, 17);
 		panelValores.add(lblMp);
 		
 		labelMp = new JLabel();
 		labelMp.setFont(new Font("Dialog", Font.PLAIN, 16));
 		labelMp.setBackground(Color.WHITE);
-		labelMp.setBounds(162, 16, 66, 17);
+		labelMp.setBounds(262, 15, 66, 17);
 		panelValores.add(labelMp);
 		
 		JLabel lblTp = new JLabel("Tp:");
 		lblTp.setFont(new Font("Dialog", Font.PLAIN, 16));
-		lblTp.setBounds(241, 16, 28, 17);
+		lblTp.setBounds(341, 15, 28, 17);
 		panelValores.add(lblTp);
 		
 		labelTp = new JLabel();
 		labelTp.setFont(new Font("Dialog", Font.PLAIN, 16));
-		labelTp.setBounds(279, 16, 66, 17);
+		labelTp.setBounds(379, 15, 66, 17);
 		panelValores.add(labelTp);
 		
 		JLabel lblTs = new JLabel("Ts:");
 		lblTs.setFont(new Font("Dialog", Font.PLAIN, 16));
-		lblTs.setBounds(355, 16, 28, 17);
+		lblTs.setBounds(455, 15, 28, 17);
 		panelValores.add(lblTs);
 		
 		labelTs = new JLabel();
 		labelTs.setFont(new Font("Dialog", Font.PLAIN, 16));
-		labelTs.setBounds(393, 16, 66, 17);
+		labelTs.setBounds(493, 15, 66, 17);
 		panelValores.add(labelTs);		
 	}	
 	
 	private void inicializarPainelDadosServidor(){
 		panelDadosServidor = new JPanel();
-		panelDadosServidor.setBounds(10, 22, 327, 73);
+		panelDadosServidor.setBounds(6, 22, 340, 73);
 		panelDadosServidor.setBorder(new TitledBorder(null, "Dados do Servidor", TitledBorder.CENTER, TitledBorder.TOP, null, null));
 		panelDadosServidor.setLayout(null);
 		
@@ -388,7 +388,7 @@ public class Tela extends TelaGeral{
 		btnConectarDesconectar.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1439269447_gtk-apply.png")));
 		btnConectarDesconectar.setForeground(new Color(0, 128, 0));
 		btnConectarDesconectar.setBackground(new Color(0, 128, 0));
-		btnConectarDesconectar.setBounds(196, 37, 119, 25);
+		btnConectarDesconectar.setBounds(205, 37, 119, 25);
 		btnConectarDesconectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -455,7 +455,7 @@ public class Tela extends TelaGeral{
 		botaoAtualizar = new JButton("Atualizar");
 		botaoAtualizar.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1439269378_gtk-refresh.png")));		
 		botaoAtualizar.setEnabled(false);
-		botaoAtualizar.setBounds(21, 620, 145, 44);
+		botaoAtualizar.setBounds(65, 655, 101, 37);
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dados = new Dados();					
@@ -463,7 +463,7 @@ public class Tela extends TelaGeral{
 				if(validaPoupulaTudoNaDados()){			
 					
 					// Seta na classe dados o tipo de controle
-					populaTipoControleNaDados();
+					//populaTipoControleNaDados();
 					
 					// Seta na classe dados os checkBox dos gráficos que serão exibidos
 					populaCheckDosGraficosNaDados();
@@ -506,7 +506,7 @@ public class Tela extends TelaGeral{
 		
 		btnReset = new JButton("Reset");
 		btnReset.setEnabled(false);
-		btnReset.setBounds(185, 620, 145, 44);
+		btnReset.setBounds(185, 655, 101, 37);
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//onda_limpa_tanque = "Degrau";
@@ -961,7 +961,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializePainelOpcoesTanque(){
 		panelBombas = new JPanel();
-		panelBombas.setBounds(161, 2, 153, 51);
+		panelBombas.setBounds(170, 2, 160, 55);
 		panelBombas.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Opções de Tanque", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 		panelBombas.setLayout(null);
 		
@@ -1012,7 +1012,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelOpcoesEntrada(){
 		JTabbedPane abas = new JTabbedPane(JTabbedPane.TOP);
-		abas.setBounds(10, 94, 327, 502);
+		abas.setBounds(6, 94, 340, 552);
 		frame.getContentPane().add(abas);
 		
 		abaOpcoesEntrada = new JPanel();
@@ -1393,6 +1393,7 @@ public class Tela extends TelaGeral{
 		realizarObservacaoEstados.setEnabled(false);
 		realizarObservacaoEstados.setBounds(10, 17, 185, 15);
 		realizarObservacaoEstados.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
 				if(realizarObservacaoEstados.isSelected()){
 					textFieldReP1.setEnabled(true);
@@ -1425,8 +1426,11 @@ public class Tela extends TelaGeral{
 					textFieldL2.setEnabled(false);
 					textFieldL2.setText("");
 			
-					comboTipoControle.removeAllItems();
-					recarregaComboTipoControle();
+//					comboTipoControle.removeAllItems();
+//					recarregaComboTipoControle();
+					
+					comboTipoControle.addItem(TipoControle.SIMPLES.getDescricao());
+					comboTipoControle.addItem(TipoControle.CASCATA.getDescricao());
 					
 					textFieldImP1.setToolTipText("Parte imaginária do polo 1");
 					textFieldImP2.setToolTipText("Parte imaginária do polo 2");
@@ -1472,11 +1476,11 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(textFieldP1Seg, null, null)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg, textFieldImP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
-//					textFieldK1.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
-//					textFieldK21.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
-//					textFieldK22.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
+					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
+					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
+					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
 					//TODO
 				}
 			}
@@ -1546,11 +1550,11 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldReP2Seg, textFieldReP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg, textFieldImP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
-//					textFieldK1.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
-//					textFieldK21.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
-//					textFieldK22.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
+					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
+					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
+					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
 					//TODO
 				}
 			}
@@ -1593,11 +1597,11 @@ public class Tela extends TelaGeral{
 				}
 								
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldImP2Seg, textFieldImP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg, textFieldImP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
-//					textFieldK1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
-//					textFieldK21.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
-//					textFieldK22.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
+					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
+					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
+					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
 					//TODO
 				}
 			}
@@ -1672,11 +1676,11 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldReP2Seg, textFieldReP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg, textFieldImP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
-//					textFieldK1.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
-//					textFieldK21.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
-//					textFieldK22.setText(setText(matrizK.get(1, 0) + "", matrizK.get(1, 0) < 0 ? 7 : 6));
+					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
+					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
+					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
 					//TODO
 				}
 			}
@@ -1716,11 +1720,11 @@ public class Tela extends TelaGeral{
 				}
 								
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldImP2Seg, textFieldImP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg, textFieldImP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
-//					textFieldK1.setText(setText(matrizL.get(0, 0) + "", matrizL.get(0, 0) < 0 ? 7 : 6));
-//					textFieldK21.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
-//					textFieldK22.setText(setText(matrizL.get(1, 0) + "", matrizL.get(1, 0) < 0 ? 7 : 6));
+					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
+					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
+					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
 					//TODO
 				}
 			}
@@ -1734,23 +1738,16 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void insereCamposMatrizK(){
-		JLabel lblKIgual = new JLabel("K = ");
-		lblKIgual.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		lblKIgual.setBounds(227, 55, 23, 14);
-		painelSeguidorReferencia.add(lblKIgual);
-		
-		JLabel lblColchete3 = new JLabel("[");
-		lblColchete3.setToolTipText("");
-		lblColchete3.setForeground(Color.GRAY);
-		lblColchete3.setFont(new Font("Calibri Light", Font.BOLD, 58));
-		lblColchete3.setBounds(241, 25, 35, 75);
-		painelSeguidorReferencia.add(lblColchete3);
+		JLabel lblK21Igual = new JLabel("K21:");
+		lblK21Igual.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblK21Igual.setBounds(265, 64, 24, 14);
+		painelSeguidorReferencia.add(lblK21Igual);
 		
 		textFieldK1 = new JTextFieldAlterado(6, false);
 		textFieldK1.setToolTipText("valor de K1");
 		textFieldK1.setEnabled(false);
 		textFieldK1.setColumns(10);
-		textFieldK1.setBounds(255, 54, 46, 16);
+		textFieldK1.setBounds(258, 24, 46, 16);
 		textFieldK1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1798,7 +1795,7 @@ public class Tela extends TelaGeral{
 		textFieldK21.setToolTipText("valor de K21");
 		textFieldK21.setEnabled(false);
 		textFieldK21.setColumns(10);
-		textFieldK21.setBounds(306, 54, 46, 16);
+		textFieldK21.setBounds(287, 63, 46, 16);
 		textFieldK21.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1840,13 +1837,20 @@ public class Tela extends TelaGeral{
 				}
 			}
 		});
+		
+		JLabel lblColchete3 = new JLabel("[");
+		lblColchete3.setToolTipText("");
+		lblColchete3.setForeground(Color.GRAY);
+		lblColchete3.setFont(new Font("Calibri Light", Font.BOLD, 47));
+		lblColchete3.setBounds(253, 35, 35, 75);
+		painelSeguidorReferencia.add(lblColchete3);
 		painelSeguidorReferencia.add(textFieldK21);
 		
 		textFieldK22 = new JTextFieldAlterado(6, false);
 		textFieldK22.setToolTipText("valor de K22");
 		textFieldK22.setEnabled(false);
 		textFieldK22.setColumns(10);
-		textFieldK22.setBounds(358, 54, 46, 16);
+		textFieldK22.setBounds(370, 63, 46, 16);
 		textFieldK22.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1892,16 +1896,31 @@ public class Tela extends TelaGeral{
 		
 		JLabel lblColchete4 = new JLabel("]");
 		lblColchete4.setForeground(Color.GRAY);
-		lblColchete4.setFont(new Font("Calibri Light", Font.BOLD, 58));
-		lblColchete4.setBounds(399, 25, 35, 75);
+		lblColchete4.setFont(new Font("Calibri Light", Font.BOLD, 47));
+		lblColchete4.setBounds(413, 35, 35, 75);
 		painelSeguidorReferencia.add(lblColchete4);
+		
+		JLabel lblK1Igual = new JLabel("K1 = ");
+		lblK1Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblK1Igual.setBounds(230, 25, 26, 14);
+		painelSeguidorReferencia.add(lblK1Igual);
+		
+		JLabel lblK22Igual = new JLabel("K22:");
+		lblK22Igual.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lblK22Igual.setBounds(345, 64, 24, 14);
+		painelSeguidorReferencia.add(lblK22Igual);
+		
+		JLabel lblK2Igual = new JLabel("K2 = ");
+		lblK2Igual.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblK2Igual.setBounds(230, 64, 26, 14);
+		painelSeguidorReferencia.add(lblK2Igual);
 	}
 	
 	private void inicializarPainelSeguidorReferencia(){
 		painelSeguidorReferencia = new JPanel();
 		painelSeguidorReferencia.setLayout(null);
 		painelSeguidorReferencia.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Seguidor de Refer\u00EAncia", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		painelSeguidorReferencia.setBounds(714, 598, 424, 100);
+		painelSeguidorReferencia.setBounds(708, 598, 432, 100);
 		frame.getContentPane().add(painelSeguidorReferencia);
 		
 		insereCamposPolosSeguidor();
@@ -1909,7 +1928,7 @@ public class Tela extends TelaGeral{
 		lblCalculaPolosMatrizK = new JLabel("");
 		lblCalculaPolosMatrizK.setToolTipText("Sentido da \u00FAltima transforma\u00E7\u00E3o");
 		lblCalculaPolosMatrizK.setIcon(iconSentidoConversao);
-		lblCalculaPolosMatrizK.setBounds(174, 48, 32, 32);
+		lblCalculaPolosMatrizK.setBounds(170, 48, 32, 32);
 		painelSeguidorReferencia.add(lblCalculaPolosMatrizK);
 		
 		insereCamposMatrizK();
@@ -1983,12 +2002,12 @@ public class Tela extends TelaGeral{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarComboTipoOnda(){
 		JLabel lblTipoOnda = new JLabel("Tipo de Onda:");
-		lblTipoOnda.setBounds(47, 57, 78, 18);
+		lblTipoOnda.setBounds(47, 65, 78, 18);
 		abaOpcoesEntrada.add(lblTipoOnda);
 		
 		comboTipoOnda = new JComboBox(TipoOnda.getItensComboTiposOnda());
 		comboTipoOnda.setEnabled(false);
-		comboTipoOnda.setBounds(126, 57, 151, 18);
+		comboTipoOnda.setBounds(126, 65, 151, 18);
 		comboTipoOnda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboTipoOnda.getSelectedItem().equals(TipoOnda.SELECIONE.getDescricao())){
@@ -2062,7 +2081,7 @@ public class Tela extends TelaGeral{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void inicializarComboTipoControle(){
 		JLabel lblTipoDeControle = new JLabel("Tipo de Controle:");
-		lblTipoDeControle.setBounds(47, 188, 91, 18);
+		lblTipoDeControle.setBounds(47, 215, 91, 18);
 		abaOpcoesEntrada.add(lblTipoDeControle);
 		
 		comboTipoControle = new JComboBox(TipoControle.getItensComboTiposControle());
@@ -2174,12 +2193,12 @@ public class Tela extends TelaGeral{
 			}
 		});
 		comboTipoControle.setEnabled(false);
-		comboTipoControle.setBounds(148, 188, 151, 18);
+		comboTipoControle.setBounds(148, 215, 151, 18);
 	}
 		
 	private void inicializarPainelTiposMalha(){
 		panelTipoMalha = new JPanel();
-		panelTipoMalha.setBounds(5, 2, 153, 51);
+		panelTipoMalha.setBounds(5, 2, 160, 55);
 		panelTipoMalha.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tipo de Malha", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 		panelTipoMalha.setLayout(null);	
 				
@@ -2245,57 +2264,57 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelDadosSinal(){
 		panelDadosSinal = new JPanel();
-		panelDadosSinal.setBounds(5, 82, 314, 97);		
+		panelDadosSinal.setBounds(5, 92, 325, 113);		
 		panelDadosSinal.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Sinal", TitledBorder.RIGHT, TitledBorder.TOP, null, Color.GRAY));
 		panelDadosSinal.setLayout(null);
 		
 		lblAmplitude = new JLabel("Amplitude:");
-		lblAmplitude.setBounds(11, 11, 84, 20);
+		lblAmplitude.setBounds(11, 17, 84, 20);
 		panelDadosSinal.add(lblAmplitude);
 		
 		amplitude = new JSpinner();
 		amplitude.setEnabled(false);
-		amplitude.setBounds(92, 11, 51, 20);
+		amplitude.setBounds(92, 17, 51, 20);
 		//amplitude.setModel(new SpinnerNumberModel(0.0, -4.0, 4.0, 0.0));
 		amplitude.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 		panelDadosSinal.add(amplitude);
 		
 		JLabel lblAmplitudeMin = new JLabel("Amplitude (M\u00EDn):");
-		lblAmplitudeMin.setBounds(169, 40, 85, 20);
+		lblAmplitudeMin.setBounds(177, 46, 85, 20);
 		panelDadosSinal.add(lblAmplitudeMin);
 		
 		amplitudeMin = new JSpinner();
 		amplitudeMin.setEnabled(false);
 		amplitudeMin.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
-		amplitudeMin.setBounds(256, 40, 51, 20);
+		amplitudeMin.setBounds(264, 46, 51, 20);
 		panelDadosSinal.add(amplitudeMin);
 		
 		lblPeriodo = new JLabel("Per\u00EDodo:");
-		lblPeriodo.setBounds(10, 40, 85, 20);
+		lblPeriodo.setBounds(11, 46, 85, 20);
 		panelDadosSinal.add(lblPeriodo);
 		
 		periodo = new JSpinner();
 		periodo.setEnabled(false);
 		periodo.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
-		periodo.setBounds(92, 40, 51, 20);
+		periodo.setBounds(93, 46, 51, 20);
 		panelDadosSinal.add(periodo);
 		
 		JLabel lblPeriodoMin = new JLabel("Per\u00EDodo (M\u00EDn):");
-		lblPeriodoMin.setBounds(169, 69, 85, 20);
+		lblPeriodoMin.setBounds(177, 80, 85, 20);
 		panelDadosSinal.add(lblPeriodoMin);
 		
 		periodoMin = new JSpinner();
 		periodoMin.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 		periodoMin.setEnabled(false);
-		periodoMin.setBounds(256, 69, 51, 20);
+		periodoMin.setBounds(264, 80, 51, 20);
 		panelDadosSinal.add(periodoMin);
 		
 		JLabel lblOffSet = new JLabel("Off-Set:");
-		lblOffSet.setBounds(10, 69, 67, 20);
+		lblOffSet.setBounds(11, 80, 67, 20);
 		panelDadosSinal.add(lblOffSet);
 		
 		offSet = new JSpinner();
-		offSet.setBounds(92, 69, 51, 20);
+		offSet.setBounds(93, 80, 51, 20);
 		offSet.setEnabled(false);
 		offSet.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 		panelDadosSinal.add(offSet);		
@@ -2303,7 +2322,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelParamsControlador(){
 		panelParamsControladorMestre = new JPanel();
-		panelParamsControladorMestre.setBounds(5, 215, 314, 125);
+		panelParamsControladorMestre.setBounds(5, 244, 325, 135);
 		panelParamsControladorMestre.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Controlador Mestre", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 128, 128)));
 		panelParamsControladorMestre.setLayout(null);
 		inicializarPainelParamsMestre();
@@ -2311,7 +2330,7 @@ public class Tela extends TelaGeral{
 	
 		panelParamsControladorEscravo = new JPanel();
 		panelParamsControladorEscravo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Par\u00E2metros do Controlador Escravo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 128, 128)));
-		panelParamsControladorEscravo.setBounds(5, 342, 314, 125);
+		panelParamsControladorEscravo.setBounds(5, 385, 325, 135);
 		panelParamsControladorEscravo.setLayout(null);
 		inicializarPainelParamsEscravo();
 		abaOpcoesEntrada.add(panelParamsControladorEscravo);
@@ -2365,37 +2384,37 @@ public class Tela extends TelaGeral{
 		panelParamsControladorMestre.add(labelKpMestre);		
 		
 		JLabel lblKi = new JLabel("Ki:");
-		lblKi.setBounds(10, 75, 22, 15);
+		lblKi.setBounds(10, 78, 22, 15);
 		panelParamsControladorMestre.add(lblKi);
 		
 		labelKiMestre = new JLabel();		
-		labelKiMestre.setBounds(36, 75, 66, 15);	
+		labelKiMestre.setBounds(36, 78, 66, 15);	
 		panelParamsControladorMestre.add(labelKiMestre);
 		
 		JLabel lblTali = new JLabel("\u03C4i:");
 		lblTali.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 13));
-		lblTali.setBounds(112, 75, 23, 15);
+		lblTali.setBounds(112, 78, 23, 15);
 		panelParamsControladorMestre.add(lblTali);
 		
 		labelTaliMestre = new JLabel();		
-		labelTaliMestre.setBounds(145, 75, 66, 15);		
+		labelTaliMestre.setBounds(145, 78, 66, 15);		
 		panelParamsControladorMestre.add(labelTaliMestre);
 		
 		JLabel lblKd = new JLabel("Kd:");
-		lblKd.setBounds(10, 101, 22, 15);
+		lblKd.setBounds(10, 108, 22, 15);
 		panelParamsControladorMestre.add(lblKd);
 		
 		labelKdMestre = new JLabel();
-		labelKdMestre.setBounds(36, 101, 66, 15);
+		labelKdMestre.setBounds(36, 108, 66, 15);
 		panelParamsControladorMestre.add(labelKdMestre);
 		
 		JLabel lblTald = new JLabel("\u03C4d:");
 		lblTald.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 13));
-		lblTald.setBounds(112, 101, 23, 15);
+		lblTald.setBounds(112, 108, 23, 15);
 		panelParamsControladorMestre.add(lblTald);
 		
 		labelTaldMestre = new JLabel();
-		labelTaldMestre.setBounds(145, 101, 66, 15);
+		labelTaldMestre.setBounds(145, 108, 66, 15);
 		panelParamsControladorMestre.add(labelTaldMestre);
 		
 		JLabel lblTalt = new JLabel("Tt:");
@@ -2416,11 +2435,11 @@ public class Tela extends TelaGeral{
 		});
 		labelChamaConfiguracaoMestre.setToolTipText("Clique para atualizar os par\u00E2metros");
 		labelChamaConfiguracaoMestre.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1444113669_Pinion.png")));
-		labelChamaConfiguracaoMestre.setBounds(274, 11, 32, 32);
+		labelChamaConfiguracaoMestre.setBounds(283, 11, 32, 32);
 		panelParamsControladorMestre.add(labelChamaConfiguracaoMestre);
 		
 		chckbxWindUpMestre = new JCheckBox("Wind Up");
-		chckbxWindUpMestre.setBounds(231, 89, 75, 23);
+		chckbxWindUpMestre.setBounds(240, 104, 75, 23);
 		chckbxWindUpMestre.setToolTipText("Acionar Wind Up");
 		chckbxWindUpMestre.setEnabled(false);
 		panelParamsControladorMestre.add(chckbxWindUpMestre);
@@ -2473,37 +2492,37 @@ public class Tela extends TelaGeral{
 		panelParamsControladorEscravo.add(labelKpEscravo);
 		
 		JLabel lblKiEscravo = new JLabel("Ki:");
-		lblKiEscravo.setBounds(10, 73, 22, 15);
+		lblKiEscravo.setBounds(10, 78, 22, 15);
 		panelParamsControladorEscravo.add(lblKiEscravo);
 		
 		labelKiEscravo = new JLabel();
-		labelKiEscravo.setBounds(36, 73, 66, 15);
+		labelKiEscravo.setBounds(36, 78, 66, 15);
 		panelParamsControladorEscravo.add(labelKiEscravo);
 		
 		JLabel lblTaliEscravo = new JLabel("\u03C4i:");
 		lblTaliEscravo.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 13));
-		lblTaliEscravo.setBounds(112, 73, 23, 15);
+		lblTaliEscravo.setBounds(112, 78, 23, 15);
 		panelParamsControladorEscravo.add(lblTaliEscravo);
 		
 		labelTaliEscravo = new JLabel();
-		labelTaliEscravo.setBounds(145, 73, 66, 15);
+		labelTaliEscravo.setBounds(145, 78, 66, 15);
 		panelParamsControladorEscravo.add(labelTaliEscravo);
 		
 		JLabel lblKdEscravo = new JLabel("Kd:");
-		lblKdEscravo.setBounds(10, 99, 22, 15);
+		lblKdEscravo.setBounds(10, 108, 22, 15);
 		panelParamsControladorEscravo.add(lblKdEscravo);
 		
 		labelKdEscravo = new JLabel();
-		labelKdEscravo.setBounds(36, 99, 66, 15);
+		labelKdEscravo.setBounds(36, 108, 66, 15);
 		panelParamsControladorEscravo.add(labelKdEscravo);
 		
 		JLabel lblTaldEscravo = new JLabel("\u03C4d:");
 		lblTaldEscravo.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 13));
-		lblTaldEscravo.setBounds(112, 99, 23, 15);
+		lblTaldEscravo.setBounds(112, 108, 23, 15);
 		panelParamsControladorEscravo.add(lblTaldEscravo);
 		
 		labelTaldEscravo = new JLabel();
-		labelTaldEscravo.setBounds(145, 99, 66, 15);
+		labelTaldEscravo.setBounds(145, 108, 66, 15);
 		panelParamsControladorEscravo.add(labelTaldEscravo);
 		
 		JLabel lblTaltEscravo = new JLabel("Tt:");
@@ -2524,13 +2543,13 @@ public class Tela extends TelaGeral{
 		});
 		labelChamaConfiguracaoEscravo.setToolTipText("Clique para atualizar os par\u00E2metros");
 		labelChamaConfiguracaoEscravo.setIcon(new ImageIcon(Tela.class.getResource("/Icons/1444113669_Pinion.png")));
-		labelChamaConfiguracaoEscravo.setBounds(274, 11, 32, 32);
+		labelChamaConfiguracaoEscravo.setBounds(283, 11, 32, 32);
 		panelParamsControladorEscravo.add(labelChamaConfiguracaoEscravo);
 		
 		chckbxWindUpEscravo = new JCheckBox("Wind Up");
 		chckbxWindUpEscravo.setToolTipText("Acionar Wind Up");
 		chckbxWindUpEscravo.setEnabled(false);
-		chckbxWindUpEscravo.setBounds(231, 87, 75, 23);
+		chckbxWindUpEscravo.setBounds(240, 104, 75, 23);
 		panelParamsControladorEscravo.add(chckbxWindUpEscravo);
 	}
 	
@@ -2765,7 +2784,7 @@ public class Tela extends TelaGeral{
 	private void inicializaPainelGrafico2(){
 		panelGrafico2 = new JLayeredPane();
 		panelGrafico2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panelGrafico2.setBounds(8, 313, 656, 255);
+		panelGrafico2.setBounds(8, 270, 656, 255);
 	}
 	
 	public void mudarPropriedadesBotoes(String acao){
@@ -3029,7 +3048,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializaCheckSinaisGrafico1(){
 		chckbxTensaoSat = new JCheckBox("Tens\u00E3o Sat. ");
-		chckbxTensaoSat.setBounds(674, 236, 79, 13);		
+		chckbxTensaoSat.setBounds(670, 217, 79, 13);		
 		chckbxTensaoSat.setBackground(SystemColor.menu);
 		chckbxTensaoSat.setVisible(false);
 		chckbxTensaoSat.setEnabled(false);
@@ -3045,7 +3064,7 @@ public class Tela extends TelaGeral{
 		panelGraficos.add(chckbxTensaoSat);
 		
 		chckbxTensCalc = new JCheckBox("Tens\u00E3o Calc.");
-		chckbxTensCalc.setBounds(674, 220, 79, 13);
+		chckbxTensCalc.setBounds(670, 201, 79, 13);
 		chckbxTensCalc.setBackground(SystemColor.menu);
 		chckbxTensCalc.setEnabled(false);
 		chckbxTensCalc.setVisible(false);
@@ -3062,7 +3081,7 @@ public class Tela extends TelaGeral{
 		//novos pos mudanca de chk box para esse grafico do grafico de baixo		
 		chckbxP = new JCheckBox("Ação P");
 		chckbxP.setEnabled(false);
-		chckbxP.setBounds(674, 172, 102, 13);
+		chckbxP.setBounds(670, 153, 102, 13);
 		chckbxP.setBackground(SystemColor.menu);
 		chckbxP.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxP.setVisible(false);
@@ -3079,7 +3098,7 @@ public class Tela extends TelaGeral{
 		
 		chckbxI = new JCheckBox("Ação I");
 		chckbxI.setEnabled(false);
-		chckbxI.setBounds(674, 188, 102, 13);
+		chckbxI.setBounds(670, 169, 102, 13);
 		chckbxI.setBackground(SystemColor.menu);
 		chckbxI.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxI.setVisible(false);
@@ -3096,7 +3115,7 @@ public class Tela extends TelaGeral{
 		
 		chckbxD = new JCheckBox("Ação D");
 		chckbxD.setEnabled(false);
-		chckbxD.setBounds(674, 204, 102, 13);
+		chckbxD.setBounds(670, 185, 102, 13);
 		chckbxD.setBackground(SystemColor.menu);
 		chckbxD.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxD.setVisible(false);
@@ -3116,7 +3135,7 @@ public class Tela extends TelaGeral{
 		chckbxAcaoP.setVisible(false);
 		chckbxAcaoP.setForeground(new Color(0, 191, 255));
 		chckbxAcaoP.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAcaoP.setBounds(674, 124, 97, 13);
+		chckbxAcaoP.setBounds(670, 105, 97, 13);
 		chckbxAcaoP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setProporcional_c2(chckbxAcaoP.isSelected());
@@ -3129,7 +3148,7 @@ public class Tela extends TelaGeral{
 		chckbxAcaoI.setEnabled(false);
 		chckbxAcaoI.setVisible(false);
 		chckbxAcaoI.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAcaoI.setBounds(674, 140, 97, 13);
+		chckbxAcaoI.setBounds(670, 121, 97, 13);
 		chckbxAcaoI.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setIntegral_c2(chckbxAcaoI.isSelected());
@@ -3143,7 +3162,7 @@ public class Tela extends TelaGeral{
 		chckbxAcaoD.setVisible(false);
 		chckbxAcaoD.setForeground(new Color(50, 205, 50));
 		chckbxAcaoD.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxAcaoD.setBounds(674, 156, 97, 13);
+		chckbxAcaoD.setBounds(670, 137, 97, 13);
 		chckbxAcaoD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setDerivativo_c2(chckbxAcaoD.isSelected());
@@ -3157,7 +3176,7 @@ public class Tela extends TelaGeral{
 		chckbxControleMestre.setVisible(false);
 		chckbxControleMestre.setForeground(Color.PINK);
 		chckbxControleMestre.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxControleMestre.setBounds(674, 108, 97, 13);
+		chckbxControleMestre.setBounds(670, 89, 97, 13);
 		chckbxControleMestre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setSinalCascata(chckbxControleMestre.isSelected());
@@ -3171,7 +3190,7 @@ public class Tela extends TelaGeral{
 		chckbxControleCSeguidor.setEnabled(false);
 		chckbxControleCSeguidor.setVisible(false);
 		chckbxControleCSeguidor.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxControleCSeguidor.setBounds(674, 92, 113, 13);
+		chckbxControleCSeguidor.setBounds(670, 73, 113, 13);
 		chckbxControleCSeguidor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setControleCSeguidor(chckbxControleCSeguidor.isSelected());
@@ -3183,7 +3202,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializaCheckSinaisGrafico2(){				
 		chckbxNivTanque1 = new JCheckBox("N\u00EDvel do Tanque 1");
-		chckbxNivTanque1.setBounds(670, 418, 102, 13);
+		chckbxNivTanque1.setBounds(670, 391, 102, 13);
 		chckbxNivTanque1.setBackground(SystemColor.menu);
 		chckbxNivTanque1.setHorizontalAlignment(SwingConstants.RIGHT);
 		chckbxNivTanque1.setVisible(false);
@@ -3200,7 +3219,7 @@ public class Tela extends TelaGeral{
 		panelGraficos.add(chckbxNivTanque1);
 		
 		chckbxNivTanque2 = new JCheckBox("N\u00EDvel do Tanque 2");
-		chckbxNivTanque2.setBounds(670, 435, 102, 13);
+		chckbxNivTanque2.setBounds(670, 408, 102, 13);
 		chckbxNivTanque2.setBackground(SystemColor.menu);
 		chckbxNivTanque2.setVisible(false);
 		chckbxNivTanque2.setEnabled(false);
@@ -3216,7 +3235,7 @@ public class Tela extends TelaGeral{
 		panelGraficos.add(chckbxNivTanque2);
 		
 		chckbxErro = new JCheckBox("Erro");
-		chckbxErro.setBounds(670, 402, 102, 13);
+		chckbxErro.setBounds(670, 375, 102, 13);
 		chckbxErro.setBackground(SystemColor.menu);
 		chckbxErro.setVisible(false);
 		chckbxErro.setEnabled(false);
@@ -3232,7 +3251,7 @@ public class Tela extends TelaGeral{
 		panelGraficos.add(chckbxErro);
 		
 		chckbxSetPoint = new JCheckBox("Set-Point");
-		chckbxSetPoint.setBounds(670, 386, 102, 13);		
+		chckbxSetPoint.setBounds(670, 359, 102, 13);		
 		chckbxSetPoint.setBackground(SystemColor.menu);
 		chckbxSetPoint.setVisible(false);
 		chckbxSetPoint.setEnabled(false);
@@ -3252,7 +3271,7 @@ public class Tela extends TelaGeral{
 		chckbxErroMestre.setVisible(false);
 		chckbxErroMestre.setForeground(new Color(255, 165, 0));
 		chckbxErroMestre.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		chckbxErroMestre.setBounds(670, 369, 102, 13);
+		chckbxErroMestre.setBounds(670, 342, 102, 13);
 		chckbxErroMestre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dados.setErro_c1(chckbxErroMestre.isSelected());
@@ -3265,7 +3284,7 @@ public class Tela extends TelaGeral{
 		chckbxNivel1Estimado.setEnabled(false);
 		chckbxNivel1Estimado.setVisible(false);
 		chckbxNivel1Estimado.setForeground(new Color(0, 128, 0));
-		chckbxNivel1Estimado.setBounds(670, 451, 97, 13);
+		chckbxNivel1Estimado.setBounds(670, 424, 97, 13);
 		chckbxNivel1Estimado.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxNivel1Estimado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -3279,7 +3298,7 @@ public class Tela extends TelaGeral{
 		chckbxNivel2Estimado.setEnabled(false);
 		chckbxNivel2Estimado.setVisible(false);
 		chckbxNivel2Estimado.setForeground(Color.MAGENTA);
-		chckbxNivel2Estimado.setBounds(670, 467, 97, 13);
+		chckbxNivel2Estimado.setBounds(670, 440, 97, 13);
 		chckbxNivel2Estimado.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxNivel2Estimado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -3294,7 +3313,7 @@ public class Tela extends TelaGeral{
 		chckbxErroEstNivel1.setVisible(false);
 		chckbxErroEstNivel1.setForeground(Color.GRAY);
 		chckbxErroEstNivel1.setToolTipText("Erro de Estima\u00E7\u00E3o do N\u00EDvel 1");
-		chckbxErroEstNivel1.setBounds(670, 483, 120, 13);
+		chckbxErroEstNivel1.setBounds(670, 456, 120, 13);
 		chckbxErroEstNivel1.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxErroEstNivel1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -3308,7 +3327,7 @@ public class Tela extends TelaGeral{
 		chckbxErroEstNivel2.setEnabled(false);
 		chckbxErroEstNivel2.setVisible(false);
 		chckbxErroEstNivel2.setForeground(new Color(128, 0, 128));
-		chckbxErroEstNivel2.setBounds(670, 499, 120, 13);
+		chckbxErroEstNivel2.setBounds(670, 472, 120, 13);
 		chckbxErroEstNivel2.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		chckbxErroEstNivel2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -3321,7 +3340,7 @@ public class Tela extends TelaGeral{
 	
 	private void inicializarPainelCheckSinaisGraficos(){		
 		lblExibirCheckSinalGrafico1 = new JLabel("");
-		lblExibirCheckSinalGrafico1.setBounds(755, 244, 32, 43);
+		lblExibirCheckSinalGrafico1.setBounds(753, 225, 32, 43);
 		lblExibirCheckSinalGrafico1.setToolTipText("Exibir Sinal");
 		lblExibirCheckSinalGrafico1.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));		
 		lblExibirCheckSinalGrafico1.addMouseListener(new MouseAdapter() {
@@ -3363,7 +3382,7 @@ public class Tela extends TelaGeral{
 		inicializaCheckSinaisGrafico1();
 		
 		lblExibirCheckSinalGrafico2 = new JLabel("");
-		lblExibirCheckSinalGrafico2.setBounds(751, 512, 32, 43);
+		lblExibirCheckSinalGrafico2.setBounds(753, 485, 32, 43);
 		lblExibirCheckSinalGrafico2.setIcon(new ImageIcon(Tela.class.getResource("/Icons/Chart-Curve-Add-32.png")));
 		lblExibirCheckSinalGrafico2.setToolTipText("Exibir Sinal");
 		lblExibirCheckSinalGrafico2.addMouseListener(new MouseAdapter() {

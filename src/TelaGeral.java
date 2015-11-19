@@ -43,30 +43,101 @@ public class TelaGeral extends JFrame{
 	protected boolean setaAzulIconObservadorParaDireita = true;
 	protected boolean setaAzulIconSeguidorParaDireita = true;	
 	
-	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
-	//private double AElevadoADois[][] = {{0.000043, 0.0000}, {-0.000086, 0.000043}};	
+	//Atributos utilizados para os cálculos do observador
+	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};	
 	private double C[][] = {{0,1}};
-	private double I[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
-	//private double V[][] = {{0.0000, 1.0000}, {0.00656, -0.00656}};
+	private double I2x2[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
 	private double Wo[][] = {{0.0000, 1.0000}, {0.00656, 0.9935}};
-	//private double InvV[][] = {{2.0/3.0, 1.0/3.0}, {1.0/3.0, -1.0/3.0}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
 	
-	//private Matrix AMatriz = new Matrix(A);
 	private Matrix GMatriz = new Matrix(G);
-	//private Matrix AElevadoADoisMatriz = new Matrix(AElevadoADois);
 	private Matrix CMatriz = new Matrix(C);
-	private Matrix IMatriz = new Matrix(I);
+	private Matrix I2x2Matriz = new Matrix(I2x2);
 	private Matrix WoMatriz = new Matrix(Wo);
 	private Matrix InvWoMatriz = new Matrix(WoMatriz.inverse().getArray());
 	private Matrix TranspMatriz = new Matrix(Transp);
+	
+	//Atributos utilizados para os cálculos do seguidor
+	private double GChapeu[][] = {{0.9935, 0, 0.0295}, {0.0061, 0.9935, 0.0000967}, {0, 0, 0}};
+	private double HChapeu[][] = {{0}, {0}, {1}};
+	private double WcInversa[][] = {{0, 0, 1}, {51.9902, -5519.2524, 0}, {-18.2154, 5556.9265, 0}};
+	private double I3x3[][] = {{1.0000, 0.0000, 0.0000}, {0.0000, 1.0000, 0.0000}, {0.0000, 0.0000, 1.0000}};
+	private double TranspChapeu[][] = {{0, 0, 1}};
+	private double GHCI[][] = {{-0.0065, 0, 0.0295}, {0.0061, -0.0065, 0.0000967}, {0.0061, 0.9935, 0.0000967}};
+	
+	private Matrix GChapeuMatriz = new Matrix(GChapeu);
+	private Matrix HChapeuMatriz = new Matrix(HChapeu);
+	private Matrix WcInversaMatriz = new Matrix(WcInversa);
+	private Matrix I3x3Matriz = new Matrix(I3x3);
+	private Matrix TranspChapeuMatriz = new Matrix(TranspChapeu);
+	private Matrix GHCIInvMatriz = new Matrix(GHCI);
+	
 	
 	public TelaGeral(){
 	
 	}
 	
-	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP, JTextField textFieldReP2,JTextField textFieldImP2 ) {
+	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3) {		
+		double [][] K = new double[1][3];
+		double [][] q = new double [3][3];
 		
+		double soma1 = 0, soma2 = 0, produto = 0;
+		
+		double parteReP1 = textFieldP1.getText().equals("") ? 0 : Double.parseDouble(textFieldP1.getText());
+		double parteReP2 = textFieldReP2.getText().equals("") ? 0 : Double.parseDouble(textFieldReP2.getText());
+		double parteReP3 = textFieldReP3.getText().equals("") ? 0 : Double.parseDouble(textFieldReP3.getText());
+		double parteIm = textFieldImP2.getText().equals("") ? 0 : Double.parseDouble(textFieldImP2.getText());
+		
+		if(parteIm == 0){
+			soma1 = parteReP1 + parteReP2 + parteReP3;
+			soma2 = parteReP2*parteReP3 + parteReP1*(parteReP2 + parteReP3);
+			
+			produto = parteReP1*parteReP2*parteReP3;
+		}else{
+			double moduloPAoQuadrado = Math.pow(Math.sqrt(Math.pow(parteReP2, 2) + Math.pow(parteIm, 2)), 2);
+						
+			soma1 = 2*parteReP2 + parteReP1;
+			soma2 = moduloPAoQuadrado + parteReP1*(2*parteReP2);
+			
+			produto = parteReP1*moduloPAoQuadrado;
+		}
+				
+		Matrix qCMatrix = new Matrix(q);		
+		qCMatrix = (GChapeuMatriz.times(GChapeuMatriz)).times(GChapeuMatriz);
+		qCMatrix = qCMatrix.plus((GChapeuMatriz.times(GChapeuMatriz)).times(soma1*(-1)));
+		qCMatrix = qCMatrix.plus(GChapeuMatriz.times(soma2));
+		qCMatrix = qCMatrix.plus(I3x3Matriz.times(produto*(-1)));
+		
+		Matrix KChapeuMatrix = new Matrix(K);
+		KChapeuMatrix = (TranspChapeuMatriz.times(WcInversaMatriz)).times(qCMatrix);
+		
+		Matrix KMatrix = new Matrix(K);
+		KMatrix = KChapeuMatrix.plus(TranspChapeuMatriz);
+		KMatrix = KMatrix.times(GHCIInvMatriz);
+		
+		return KMatrix;
+	}
+	
+	protected EigenvalueDecomposition calculaPolosSeguidorReferencia(JTextField textFieldK1, JTextField textFieldK21, JTextField textFieldK22) {
+		double k1 = textFieldK1.getText().equals("") ? 0 : Double.parseDouble(textFieldK1.getText());
+		double k21 = textFieldK21.getText().equals("") ? 0 : Double.parseDouble(textFieldK21.getText());
+		double k22 = textFieldK22.getText().equals("") ? 0 : Double.parseDouble(textFieldK22.getText());
+		
+		double K[][] = {{k21, k22, k1}};
+		Matrix KMatrix = new Matrix(K);
+		
+		Matrix KChapeuMatrix = new Matrix(3, 3);
+		KChapeuMatrix = KMatrix.times(HChapeuMatriz);
+		KChapeuMatrix = KChapeuMatrix.plus(TranspChapeuMatriz.times(-1));
+		
+		Matrix GChapeuMenosHKChapeuMatriz = GChapeuMatriz.plus((HChapeuMatriz.times(KChapeuMatrix)).times(-1));
+		
+		EigenvalueDecomposition polos = GChapeuMenosHKChapeuMatriz.eig();
+		
+		return polos;
+	}
+	
+	protected Matrix calculaMatrizL(JTextField textFieldReP, JTextField textFieldImP, JTextField textFieldReP2,JTextField textFieldImP2 ) {
 		double [][] L_calculado = new double[2][1];
 		
 		Matrix L_calc_matrix = new Matrix (L_calculado);
@@ -88,7 +159,7 @@ public class TelaGeral extends JFrame{
 		
 		soma_de_polos = Double.parseDouble(textFieldReP.getText()) + Double.parseDouble(textFieldReP2.getText());
 		
-		ql_G_matrix = (GMatriz.times(GMatriz)).plus(GMatriz.times(soma_de_polos)).plus((IMatriz.times(produto_de_polos)));
+		ql_G_matrix = (GMatriz.times(GMatriz)).plus(GMatriz.times(soma_de_polos)).plus((I2x2Matriz.times(produto_de_polos)));
 		
 		L_calc_matrix = (ql_G_matrix.times(InvWoMatriz)).times(TranspMatriz);
 		
@@ -107,14 +178,6 @@ public class TelaGeral extends JFrame{
 		EigenvalueDecomposition polos = GMatrizMenosLCMatriz.eig();
 		
 		return polos;
-	}
-	
-	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3, JTextField textFieldImP3) {
-		return null;
-	}
-	
-	protected EigenvalueDecomposition calculaPolosSeguidorReferencia(JTextField textFieldK1, JTextField textFieldL21, JTextField textFieldL22) {
-		return null;
 	}
 	
 	protected String setText(String textoAntigo, int maxCaracteres) {

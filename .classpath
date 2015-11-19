@@ -16,6 +16,6 @@
 	<classpathentry kind="lib" path="lib/QuanserClient.jar"/>
 	<classpathentry kind="lib" path="lib/servlet.jar"/>
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ruteee/Downloads/Jama-1.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/gusttavohenrique/OneDrive/GusttavoNB/Downloads/Jama-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

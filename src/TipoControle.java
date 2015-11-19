@@ -30,10 +30,10 @@ public enum TipoControle {
 	public static String[] getItensComboTiposControle() {
 		String[] tiposControle = {
 				SELECIONE.getDescricao(),
+				SEGUIDOR_REFERENCIA.getDescricao(),
 				SEM_CONTROLE.getDescricao(),
 				SIMPLES.getDescricao(), 
-				CASCATA.getDescricao(),
-				SEGUIDOR_REFERENCIA.getDescricao()
+				CASCATA.getDescricao()
 				};
 		
 		return tiposControle;
