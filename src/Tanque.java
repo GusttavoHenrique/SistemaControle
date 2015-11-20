@@ -144,8 +144,8 @@ public class Tanque extends Thread{
 		try {
 				
 		
-				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+			//	dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+			//	dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
 				nivel_tanque_um = 6.25*dados.getPV();
 				nivel_tanque_dois = 6.25*dados.getPV_two();
@@ -451,10 +451,10 @@ public class Tanque extends Thread{
 				
 				//para calculo de windUP
 			
-				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
+			} catch (/*QuanserClientException |*/ InterruptedException e) {e.printStackTrace();}
 		}
 	}
 

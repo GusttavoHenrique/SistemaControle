@@ -75,7 +75,7 @@ public class TelaGeral extends JFrame{
 	private Matrix GChapeuMatriz = new Matrix(GChapeu);
 	private Matrix HChapeuMatriz = new Matrix(HChapeu);
 	private Matrix WcMatriz = new Matrix(Wc);
-	private Matrix WcInversaMatriz = new Matrix(WcInversa);
+	private Matrix WcInversaMatriz = new Matrix(WcMatriz.inverse().getArray());
 	private Matrix I3x3Matriz = new Matrix(I3x3);
 	private Matrix TranspChapeuMatriz = new Matrix(TranspChapeu);
 	private Matrix GHCIMatriz = new Matrix(GHCI);
@@ -104,7 +104,7 @@ public class TelaGeral extends JFrame{
 		
 		if(parteIm == 0){
 			soma1 = parteReP1 + parteReP2 + parteReP3;
-			soma2 = parteReP1*parteReP2 + parteReP3*(parteReP1 + parteReP2);
+			soma2 = parteReP2*parteReP3 + parteReP1*(parteReP2 + parteReP3);
 			
 			produto = parteReP1*parteReP2*parteReP3;
 		}else{
@@ -127,7 +127,7 @@ public class TelaGeral extends JFrame{
 		
 		Matrix KMatrix = new Matrix(K);
 		KMatrix = KChapeuMatrix.plus(TranspChapeuMatriz);
-		KMatrix = KMatrix.times(GHCIInvMatriz.inverse());
+		KMatrix = KMatrix.times(GHCIInvMatriz);
 		
 		return KMatrix;
 	}
@@ -143,7 +143,7 @@ public class TelaGeral extends JFrame{
 		Matrix KMatrix = new Matrix(K);
 		
 		Matrix KChapeuMatrix = new Matrix(KChapeu);
-		KChapeuMatrix = KMatrix.times(GHCIInvMatriz);
+		KChapeuMatrix = KMatrix.times(GHCIMatriz);
 		KChapeuMatrix = KChapeuMatrix.plus(TranspChapeuMatriz.times(-1));
 		
 		Matrix GChapeuMenosHKChapeuMatriz = GChapeuMatriz.plus((HChapeuMatriz.times(KChapeuMatrix)).times(-1));

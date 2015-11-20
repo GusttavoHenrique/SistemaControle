@@ -1798,11 +1798,11 @@ public class Tela extends TelaGeral{
 					double[] imagEigenvalues = polos.getImagEigenvalues();
 					double[] realEigenvalues = polos.getRealEigenvalues();
 					
-					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2] + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldReP2Seg.setText(setText(realEigenvalues[0] + "", realEigenvalues[0] < 0 ? 7 : 6));
 					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
-					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1] + "", realEigenvalues[1] < 0 ? 7 : 6));
 					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
 					
 					if(!validaPolosSeguidor(textFieldK1, null, null)){
 						textFieldP1Seg.setText("");
@@ -1846,11 +1846,11 @@ public class Tela extends TelaGeral{
 					double[] imagEigenvalues = polos.getImagEigenvalues();
 					double[] realEigenvalues = polos.getRealEigenvalues();
 					
-					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldReP2Seg.setText(setText(realEigenvalues[0] + "", realEigenvalues[0] < 0 ? 7 : 6));
 					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
-					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1] + "", realEigenvalues[1] < 0 ? 7 : 6));
 					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2] + "", realEigenvalues[0] < 0 ? 7 : 6));
 					
 					if(!validaPolosSeguidor(null, textFieldK21, null)){
 						textFieldP1Seg.setText("");
@@ -1894,11 +1894,11 @@ public class Tela extends TelaGeral{
 					double[] imagEigenvalues = polos.getImagEigenvalues();
 					double[] realEigenvalues = polos.getRealEigenvalues();
 					
-					textFieldReP2Seg.setText(setText(realEigenvalues[0]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldReP2Seg.setText(setText(realEigenvalues[0] + "", realEigenvalues[0] < 0 ? 7 : 6));
 					textFieldImP2Seg.setText(setText(Math.abs(imagEigenvalues[0]) + "", 6));
-					textFieldReP3Seg.setText(setText(realEigenvalues[1]*(-1) + "", realEigenvalues[1] < 0 ? 7 : 6));
+					textFieldReP3Seg.setText(setText(realEigenvalues[1] + "", realEigenvalues[1] < 0 ? 7 : 6));
 					textFieldImP3Seg.setText(setText(Math.abs(imagEigenvalues[1]) + "", 6));
-					textFieldP1Seg.setText(setText(realEigenvalues[2]*(-1) + "", realEigenvalues[0] < 0 ? 7 : 6));
+					textFieldP1Seg.setText(setText(realEigenvalues[2] + "", realEigenvalues[0] < 0 ? 7 : 6));
 					
 					if(!validaPolosSeguidor(null, null, textFieldK22)){
 						textFieldP1Seg.setText("");
