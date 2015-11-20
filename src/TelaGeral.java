@@ -44,13 +44,15 @@ public class TelaGeral extends JFrame{
 	protected boolean setaAzulIconSeguidorParaDireita = true;	
 	
 	//Atributos utilizados para os cálculos do observador
-	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};	
+	private double G[][] = {{0.9935, 0}, {0.00656, 0.9935}};
+	static double H[][] = {{2.96/Math.pow(10, 2)}, {9.63/Math.pow(10, 5)}};
 	private double C[][] = {{0,1}};
 	private double I2x2[][] = {{1.0000, 0.0000}, {0.0000, 1.0000}};
 	private double Wo[][] = {{0.0000, 1.0000}, {0.00656, 0.9935}};
 	private double Transp[][] = {{0.0000}, {1.0000}};
 	
 	private Matrix GMatriz = new Matrix(G);
+	private Matrix HMatriz = new Matrix(H);
 	private Matrix CMatriz = new Matrix(C);
 	private Matrix I2x2Matriz = new Matrix(I2x2);
 	private Matrix WoMatriz = new Matrix(Wo);
@@ -58,27 +60,38 @@ public class TelaGeral extends JFrame{
 	private Matrix TranspMatriz = new Matrix(Transp);
 	
 	//Atributos utilizados para os cálculos do seguidor
-	private double GChapeu[][] = {{0.9935, 0, 0.0295}, {0.0061, 0.9935, 0.0000967}, {0, 0, 0}};
+	private double GChapeu[][] = {{0.9935, 0, 0.0296}, {0.00656, 0.9935, 0.0000967}, {0, 0, 0}};
 	private double HChapeu[][] = {{0}, {0}, {1}};
-	private double WcInversa[][] = {{0, 0, 1}, {51.9902, -5519.2524, 0}, {-18.2154, 5556.9265, 0}};
+	private double Wc[][] = {{0, 0.02960, 0.02941}, {0, 0.0000967, 0.0002902}, {1, 0, 0}};
+	private double WcInversa[][] = {{0, 0, 1}, {50.5049, -5118.3672, 0}, {-16.8292, 5151.4339, 0}};
+	
+//	private double WcInversa[][] = {{0, 0, 1}, {51.9902, -5519.2524, 0}, {-18.2154, 5556.9265, 0}};
+	
 	private double I3x3[][] = {{1.0000, 0.0000, 0.0000}, {0.0000, 1.0000, 0.0000}, {0.0000, 0.0000, 1.0000}};
 	private double TranspChapeu[][] = {{0, 0, 1}};
-	private double GHCI[][] = {{-0.0065, 0, 0.0295}, {0.0061, -0.0065, 0.0000967}, {0.9935, 0, 0.0295}};
+	private double GHCI[][] = {{-0.0065, 0, 0.0296}, {0.00656, -0.0065, 0.0000963}, {0.00656, 0.9935, 0.0000963}};
+//	private double GHCI[][] = {{-0.0065, 0, 0.0295}, {0.0061, -0.0065, 0.0000967}, {0.9935, 0, 0.0295}};
 	
 	private Matrix GChapeuMatriz = new Matrix(GChapeu);
 	private Matrix HChapeuMatriz = new Matrix(HChapeu);
+	private Matrix WcMatriz = new Matrix(Wc);
 	private Matrix WcInversaMatriz = new Matrix(WcInversa);
 	private Matrix I3x3Matriz = new Matrix(I3x3);
 	private Matrix TranspChapeuMatriz = new Matrix(TranspChapeu);
 	private Matrix GHCIMatriz = new Matrix(GHCI);
 	private Matrix GHCIInvMatriz = new Matrix(GHCIMatriz.inverse().getArray());
 	
-	
 	public TelaGeral(){
 	
 	}
 	
 	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3) {
+		
+//		GMatriz.plus(I2x2Matriz.times(-1)).print(7, 7);
+//		HMatriz.print(7, 7);
+//		CMatriz.times(GMatriz).print(7, 7);
+//		CMatriz.times(HMatriz).print(7, 7);
+		
 		double [][] K = new double[1][3];
 		double [][] q = new double [3][3];
 		
