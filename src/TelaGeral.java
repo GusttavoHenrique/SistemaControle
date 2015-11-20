@@ -63,21 +63,22 @@ public class TelaGeral extends JFrame{
 	private double WcInversa[][] = {{0, 0, 1}, {51.9902, -5519.2524, 0}, {-18.2154, 5556.9265, 0}};
 	private double I3x3[][] = {{1.0000, 0.0000, 0.0000}, {0.0000, 1.0000, 0.0000}, {0.0000, 0.0000, 1.0000}};
 	private double TranspChapeu[][] = {{0, 0, 1}};
-	private double GHCI[][] = {{-0.0065, 0, 0.0295}, {0.0061, -0.0065, 0.0000967}, {0.0061, 0.9935, 0.0000967}};
+	private double GHCI[][] = {{-0.0065, 0, 0.0295}, {0.0061, -0.0065, 0.0000967}, {0.9935, 0, 0.0295}};
 	
 	private Matrix GChapeuMatriz = new Matrix(GChapeu);
 	private Matrix HChapeuMatriz = new Matrix(HChapeu);
 	private Matrix WcInversaMatriz = new Matrix(WcInversa);
 	private Matrix I3x3Matriz = new Matrix(I3x3);
 	private Matrix TranspChapeuMatriz = new Matrix(TranspChapeu);
-	private Matrix GHCIInvMatriz = new Matrix(GHCI);
+	private Matrix GHCIMatriz = new Matrix(GHCI);
+	private Matrix GHCIInvMatriz = new Matrix(GHCIMatriz.inverse().getArray());
 	
 	
 	public TelaGeral(){
 	
 	}
 	
-	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3) {		
+	protected Matrix calculaMatrizK(JTextField textFieldP1, JTextField textFieldReP2, JTextField textFieldImP2, JTextField textFieldReP3) {
 		double [][] K = new double[1][3];
 		double [][] q = new double [3][3];
 		
@@ -90,16 +91,16 @@ public class TelaGeral extends JFrame{
 		
 		if(parteIm == 0){
 			soma1 = parteReP1 + parteReP2 + parteReP3;
-			soma2 = parteReP2*parteReP3 + parteReP1*(parteReP2 + parteReP3);
+			soma2 = parteReP1*parteReP2 + parteReP3*(parteReP1 + parteReP2);
 			
 			produto = parteReP1*parteReP2*parteReP3;
 		}else{
-			double moduloPAoQuadrado = Math.pow(Math.sqrt(Math.pow(parteReP2, 2) + Math.pow(parteIm, 2)), 2);
+			double moduloP = Math.pow(parteReP2, 2) + Math.pow(parteIm, 2);
 						
 			soma1 = 2*parteReP2 + parteReP1;
-			soma2 = moduloPAoQuadrado + parteReP1*(2*parteReP2);
+			soma2 = moduloP + parteReP1*(2*parteReP2);
 			
-			produto = parteReP1*moduloPAoQuadrado;
+			produto = parteReP1*moduloP;
 		}
 				
 		Matrix qCMatrix = new Matrix(q);		
@@ -113,7 +114,7 @@ public class TelaGeral extends JFrame{
 		
 		Matrix KMatrix = new Matrix(K);
 		KMatrix = KChapeuMatrix.plus(TranspChapeuMatriz);
-		KMatrix = KMatrix.times(GHCIInvMatriz);
+		KMatrix = KMatrix.times(GHCIInvMatriz.inverse());
 		
 		return KMatrix;
 	}

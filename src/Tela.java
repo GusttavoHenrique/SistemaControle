@@ -672,7 +672,7 @@ public class Tela extends TelaGeral{
 			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2.getText()), 2);
 		}else{
 			somaDosQuadradosP1 = Math.pow(Double.parseDouble(textFieldReP1.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP1.getText()), 2);
-			somaDosQuadradosP2 = somaDosQuadradosP1;
+			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP2.getText()), 2);
 		}
 		
 		boolean instavel = (Math.sqrt(somaDosQuadradosP1) >= 1) || (Math.sqrt(somaDosQuadradosP2) >= 1);
@@ -699,7 +699,7 @@ public class Tela extends TelaGeral{
 			somaDosQuadradosP3 = Math.pow(Double.parseDouble(textFieldReP3Seg.getText()), 2);
 		}else{
 			somaDosQuadradosP2 = Math.pow(Double.parseDouble(textFieldReP2Seg.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP2Seg.getText()), 2);
-			somaDosQuadradosP3 = somaDosQuadradosP2;
+			somaDosQuadradosP3 = Math.pow(Double.parseDouble(textFieldReP3Seg.getText()), 2) + Math.pow(Double.parseDouble(textFieldImP3Seg.getText()), 2);
 		}
 		
 		boolean instavel = (Math.sqrt(somaDosQuadradosP1) >= 1) || (Math.sqrt(somaDosQuadradosP2) >= 1 || (Math.sqrt(somaDosQuadradosP3) >= 1));
@@ -1502,7 +1502,7 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(textFieldP1Seg, null, null)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
@@ -1576,7 +1576,7 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldReP2Seg, textFieldReP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
@@ -1651,11 +1651,11 @@ public class Tela extends TelaGeral{
 		textFieldReP3Seg.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
-				if(textFieldReP3Seg.getText().equals("") && !textFieldImP3Seg.getText().equals("")){
-					textFieldReP2Seg.setText(textFieldReP3Seg.getText());
-				}
+//				if(textFieldReP3Seg.getText().equals("") && !textFieldImP3Seg.getText().equals("")){
+//					textFieldReP2Seg.setText(textFieldReP3Seg.getText());
+//				}
 				
-				if(!textFieldReP3Seg.getText().equals(textFieldReP2Seg.getText()) && 
+				if((!textFieldReP3Seg.getText().equals(textFieldReP2Seg.getText()) && !textFieldReP3Seg.getText().equals("")) && 
 						textFieldImP3Seg.getText().equals("") && textFieldImP2Seg.getText().equals("")){
 					
 					if(!textFieldReP2Seg.getText().equals("")){
@@ -1702,7 +1702,7 @@ public class Tela extends TelaGeral{
 				}
 				
 				if(allCamposPolosSeguidorPreenchidos(false) && allCamposMatrizKVazios() && validaPolosSeguidor(null, textFieldReP2Seg, textFieldReP3Seg)){
-					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP3Seg, textFieldImP2Seg, textFieldReP3Seg);
+					Matrix matrizK = calculaMatrizK(textFieldP1Seg, textFieldReP2Seg, textFieldImP2Seg, textFieldReP3Seg);
 					
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
