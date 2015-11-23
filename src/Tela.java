@@ -465,10 +465,7 @@ public class Tela extends TelaGeral{
 			public void actionPerformed(ActionEvent arg0) {
 				dados = new Dados();					
 				
-				if(validaPoupulaTudoNaDados()){			
-					
-					// Seta na classe dados o tipo de controle
-					//populaTipoControleNaDados();
+				if(validaPoupulaTudoNaDados()){
 					
 					// Seta na classe dados os checkBox dos gráficos que serão exibidos
 					populaCheckDosGraficosNaDados();
@@ -719,12 +716,13 @@ public class Tela extends TelaGeral{
 	}
 	
 	private boolean validaTipoControle(){
-		if(comboTipoControle.equals(TipoControle.SELECIONE.getDescricao())){
+		if(comboTipoControle.getSelectedItem().equals(TipoControle.SELECIONE.getDescricao())){
 			JOptionPane.showMessageDialog(frame, "Informe o tipo de controle.");
 		
 			return false;
 		}else{
-			dados.setTipoDeControle(comboTipoControle.getSelectedItem().toString());
+			// Seta na classe dados o tipo de controle
+			populaTipoControleNaDados();
 		}
 		
 		return true;
@@ -1141,9 +1139,8 @@ public class Tela extends TelaGeral{
 					textFieldReP2Anterior = textFieldReP2.getText();
 				}
 				
-				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconObservadorParaDireita){
-					setaAzulIconObservadorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizL, setaAzulIconObservadorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaObservador();
 				
 				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
@@ -1185,9 +1182,8 @@ public class Tela extends TelaGeral{
 					textFieldImP2Anterior = textFieldImP2.getText();
 				}
 
-				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconObservadorParaDireita){
-					setaAzulIconObservadorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizL, setaAzulIconObservadorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaObservador();
 								
 				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
@@ -1262,9 +1258,8 @@ public class Tela extends TelaGeral{
 					textFieldReP2Anterior = textFieldReP2.getText();
 				}
 				
-				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconObservadorParaDireita){
-					setaAzulIconObservadorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizL, setaAzulIconObservadorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaObservador();
 				
 				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
@@ -1306,9 +1301,8 @@ public class Tela extends TelaGeral{
 					textFieldImP2Anterior = textFieldImP2.getText();
 				}
 
-				if(allCamposPolosObservadorPreenchidos(false) && !setaAzulIconObservadorParaDireita){
-					setaAzulIconObservadorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizL, setaAzulIconObservadorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaObservador();
 				
 				if(allCamposPolosObservadorPreenchidos(false) && allCamposMatrizLVazios()){
 					Matrix matrizL = calculaMatrizL(textFieldReP1, textFieldImP1, textFieldReP2, textFieldImP2);
@@ -1840,13 +1834,17 @@ public class Tela extends TelaGeral{
 	}
 	
 	private void mudarSentidoSetaSeguidor(){
-		if(allCamposPolosSeguidorPreenchidos(false) && !setaAzulIconSeguidorParaDireita){
+		if((allCamposPolosSeguidorPreenchidos(false) && !setaAzulIconSeguidorParaDireita)
+				|| (allCamposMatrizKPreenchidos() && setaAzulIconSeguidorParaDireita)){
+			
 			setaAzulIconSeguidorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizK, setaAzulIconSeguidorParaDireita);
 		}
 	}
 	
 	private void mudarSentidoSetaObservador(){
-		if(allCamposMatrizLPreenchidos() && setaAzulIconObservadorParaDireita){
+		if((allCamposMatrizLPreenchidos() && setaAzulIconObservadorParaDireita)
+				|| (allCamposPolosObservadorPreenchidos(false) && !setaAzulIconObservadorParaDireita)){
+			
 			setaAzulIconObservadorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizL, setaAzulIconObservadorParaDireita);
 		}
 	}
@@ -1877,9 +1875,8 @@ public class Tela extends TelaGeral{
 					textFieldK22Anterior = textFieldK22.getText();
 				}
 				
-				if(allCamposMatrizKPreenchidos() && setaAzulIconSeguidorParaDireita){
-					setaAzulIconSeguidorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizK, setaAzulIconSeguidorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaSeguidor();
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
 					populaPolosSeguidor();
@@ -1916,9 +1913,8 @@ public class Tela extends TelaGeral{
 					textFieldK22Anterior = textFieldK22.getText();
 				}
 				
-				if(allCamposMatrizKPreenchidos() && setaAzulIconSeguidorParaDireita){
-					setaAzulIconSeguidorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizK, setaAzulIconSeguidorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaSeguidor();
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
 					populaPolosSeguidor();
@@ -1955,9 +1951,8 @@ public class Tela extends TelaGeral{
 					textFieldK22Anterior = textFieldK22.getText();
 				}
 				
-				if(allCamposMatrizKPreenchidos() && setaAzulIconSeguidorParaDireita){
-					setaAzulIconSeguidorParaDireita = rotacionarIcon(iconSentidoConversao, lblCalculaPolosMatrizK, setaAzulIconSeguidorParaDireita);
-				}
+				// Rotaciona a seta de indicação do último sentido de conversão dos campos
+				mudarSentidoSetaSeguidor();
 				
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
 					populaPolosSeguidor();
@@ -2179,8 +2174,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
-					
-					dados.setTipoDeControle(TipoControle.CASCATA.getDescricao());
 				}else if(comboTipoControle.getSelectedItem() != null && comboTipoControle.getSelectedItem().equals(TipoControle.SIMPLES.getDescricao())){					
 					comboTipoControladorMestre.setEnabled(true);
 					comboTipoControladorEscravo.setEnabled(false);
@@ -2210,8 +2203,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
-					
-					dados.setTipoDeControle(TipoControle.SIMPLES.getDescricao());
 				}else if(comboTipoControle.getSelectedItem() != null && comboTipoControle.getSelectedItem().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){					
 					comboTipoControladorMestre.setEnabled(false);
 					comboTipoControladorEscravo.setEnabled(false);
@@ -2235,8 +2226,6 @@ public class Tela extends TelaGeral{
 					textFieldK1.setEnabled(true);
 					textFieldK21.setEnabled(true);
 					textFieldK22.setEnabled(true);
-					
-					dados.setTipoDeControle(TipoControle.SEGUIDOR_REFERENCIA.getDescricao());
 				}else{
 					comboTipoControladorMestre.setEnabled(false);
 					comboTipoControladorMestre.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
@@ -2267,8 +2256,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText("");
 					textFieldK22.setEnabled(false);
 					textFieldK22.setText("");
-					
-					dados.setTipoDeControle(TipoControle.SEM_CONTROLE.getDescricao());
 				}
 			}
 		});
@@ -2288,6 +2275,11 @@ public class Tela extends TelaGeral{
 		rdbtnAberta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnFechada.setSelected(false);
+				
+				amplitude.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
+				
+				comboTipoControle.setSelectedItem(TipoControle.SELECIONE.getDescricao());
+				comboTipoControle.setEnabled(false);
 				
 				comboTipoControladorMestre.setEnabled(false);
 				comboTipoControladorMestre.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
@@ -2331,6 +2323,10 @@ public class Tela extends TelaGeral{
 		rdbtnFechada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnAberta.setSelected(false);
+				
+				amplitude.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
+				
+				comboTipoControle.setEnabled(true);
 			
 //				chckbxWindUpMestre.setEnabled(true);
 //				chckbxWindUpEscravo.setEnabled(true);
@@ -2355,7 +2351,6 @@ public class Tela extends TelaGeral{
 		amplitude = new JSpinner();
 		amplitude.setEnabled(false);
 		amplitude.setBounds(92, 17, 51, 20);
-		//amplitude.setModel(new SpinnerNumberModel(0.0, -4.0, 4.0, 0.0));
 		amplitude.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 		panelDadosSinal.add(amplitude);
 		
@@ -3519,7 +3514,6 @@ public class Tela extends TelaGeral{
 		}
 	}
 	
-	@SuppressWarnings("unused")
 	private void populaTipoControleNaDados(){
 		if(comboTipoControle.getSelectedItem().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
 			dados.setTipoDeControle(TipoControle.SEGUIDOR_REFERENCIA.getDescricao());
