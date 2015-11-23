@@ -142,10 +142,10 @@ public class Tanque extends Thread{
 		while(true){
 
 		try {
-				
+				System.out.println(dados.getTipoDeControle());
 		
-			//	dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-			//	dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
 				nivel_tanque_um = 6.25*dados.getPV();
 				nivel_tanque_dois = 6.25*dados.getPV_two();
@@ -385,11 +385,13 @@ public class Tanque extends Thread{
 						
 						controladorDois.setControleAnteriorSaturado(dados.getVP());
 						
-					}else if(dados.getTipoDeControle().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+					}
+					if(dados.getTipoDeControle().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
 						
-						seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois);
+						//seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois, dados.getAmplitude());
 						Ponto pto_vp_seguidor = new Ponto();
-						pto_vp_seguidor.setY(Seguidor.seguidor[2][0]);
+						//pto_vp_seguidor.setY(Seguidor.seguidor[2][0]);
+						pto_vp_seguidor.setY(seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois, dados.getAmplitude()));
 						pto_vp_seguidor.setX(sinal.getTempo());
 						
 						grafico_controle.atualizarFilaDeVP(pto_vp_seguidor);
@@ -451,10 +453,10 @@ public class Tanque extends Thread{
 				
 				//para calculo de windUP
 			
-				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (/*QuanserClientException |*/ InterruptedException e) {e.printStackTrace();}
+			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
 		}
 	}
 

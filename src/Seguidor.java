@@ -7,6 +7,9 @@ public class Seguidor {
 		static double H[][] = {{2.96/Math.pow(10, 2)}, {9.63/Math.pow(10, 5)}};
 		static double C[][] = {{0, 1}};
 		static double k1, k21, k22;
+		static double vk, ek;
+		static double uk;
+		static double vk_anterior =0;
 		static double seguidor[][] = {{0}, {0}, {0}};
 		
 		
@@ -23,12 +26,13 @@ public class Seguidor {
 		Seguidor.k21 = k21;
 		Seguidor.k22 = k22;
 		
-		}
+	}
 	
 	public Matrix calcularRef(){
 		
-		double k2[][]= {{k21}, {k22}};
+		double k2[][]= {{k21, k22}};
 		Matrix k2_mat = new Matrix(k2);
+		System.out.println(k2);
 		
 		
 		double elemento_ref_l2_col0 = 
@@ -47,13 +51,24 @@ public class Seguidor {
 		
 		return ref_mat;
 	}
-	public void calcularSeguidor(double PV, double PV_two){
+	public double calcularSeguidor(double PV, double PV_two, double setPoint){
+
+		/*seguidor[0][0] = PV;
+		seguidor[1][0] = PV_two;
+		
+		seguidor_mat = new Matrix(seguidor);
 		
 		seguidor_mat = calcularRef().times(seguidor_mat);		
-		seguidor = seguidor_mat.getArray();
+		seguidor = seguidor_mat.getArray();*/
 		
-		seguidor[0][0] = PV;
-		seguidor[0][1] = PV_two;
+		ek = setPoint - PV_two;
+		vk = vk_anterior + ek;
+		vk_anterior = vk;
+		
+		uk = vk*k1 - (k21*PV + k22*PV_two);
+	
+		return uk;
+		
 		
 	}
 	
