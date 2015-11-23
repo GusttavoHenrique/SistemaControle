@@ -42,8 +42,9 @@ public class Tsunami {
 			ponto.setX(tempo);
 			tempo = tempo + 0.1;
 		}else if(tipoDeOnda.equals(TipoOnda.ALEATORIA.getDescricao())){
-			if(contadorDePeriodo <= randomPeriodo)
+			if(contadorDePeriodo <= randomPeriodo){
 				ponto.setY(randomAmplitude + offset);
+			}
 			else if (contadorDePeriodo > randomPeriodo){
 				
 				contadorDePeriodo = 0;
@@ -55,8 +56,9 @@ public class Tsunami {
 			ponto.setX(tempo);
 			tempo = tempo + 0.1;
 		}else if(tipoDeOnda.equals(TipoOnda.QUADRADA.getDescricao())){
-			if (contadorDePeriodo <= periodo/2)
+			if (contadorDePeriodo <= periodo/2){
 				ponto.setY(amplitude + offset);
+			}
 			else if( contadorDePeriodo >= periodo/2){
 				ponto.setY(-amplitude + offset);
 				if(contadorDePeriodo > periodo){contadorDePeriodo = 0;}

@@ -137,18 +137,20 @@ public class Tanque extends Thread{
 		//setServer("10.13.99.69", 20081);
 		//test();
 
-		getConexao();
+		//getConexao();
 		
 		while(true){
 
 		try {
 				System.out.println(dados.getTipoDeControle());
 		
-				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+				//dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+				//dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
-				nivel_tanque_um = 6.25*dados.getPV();
-				nivel_tanque_dois = 6.25*dados.getPV_two();
+				//nivel_tanque_um = 6.25*dados.getPV();
+				//nivel_tanque_dois = 6.25*dados.getPV_two();
+				
+				nivel_tanque_um = 2;
 					
 				/*nivel_tanque_um = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
 				nivel_tanque_dois = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));*/
@@ -157,7 +159,7 @@ public class Tanque extends Thread{
 				nivel_tanque_um = nivel_tanque_um*15;*/
 				
 				
-				//dados.setPV_two(nivel_tanque_dois);
+				
 				if(dados.isTanque1()){
 					nivel_coringa = nivel_tanque_um;
 				}else{
@@ -165,6 +167,10 @@ public class Tanque extends Thread{
 				}
 				
 				if(dados.getTipoMalha().equals(TipoMalha.MALHA_ABERTA.getDescricao())){
+					
+					grafico_nivel.filaDeSetPoint.clear();
+					grafico_nivel.filaDeErroMesmo.clear();
+					
 					
 					dados.setVP(sinal.gerarPonto().getY());
 					Ponto pto_nivel_tanque_um = new Ponto();
@@ -243,6 +249,12 @@ public class Tanque extends Thread{
 						pto_sem_controle.setY(dados.getVP());
 						pto_sem_controle.setX(sinal.getTempo() - 0.1);
 						grafico_controle.atualizarFilaDeVP(pto_sem_controle);	
+						
+						Ponto pto_erro_sem_controle = new Ponto();
+						pto_erro_sem_controle.setY(erro);
+						pto_erro_sem_controle.setX(sinal.getTempo() -0.1);
+						grafico_nivel.atualizarFilaDeErroMesmo(pto_erro_sem_controle);
+						
 						
 						verificarRegras();
 						Ponto pto_vp_sat = new Ponto();
@@ -446,17 +458,19 @@ public class Tanque extends Thread{
 					
 				}
 				
-				grafico_nivel.atualizarGrafico();
-				grafico_controle.atualizarGrafico();
-				painelAltura.validate();
-				painelTensao.validate();
+				if(!dados.getTipoDeControle().equals(TipoControle.SELECIONE.getDescricao()) ||dados.getTipoMalha().equals(TipoMalha.MALHA_ABERTA.getDescricao())){
+					grafico_nivel.atualizarGrafico();
+					grafico_controle.atualizarGrafico();
+					painelAltura.validate();
+					painelTensao.validate();
+				}
 				
 				//para calculo de windUP
 			
-				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
+			} catch (/*QuanserClientException | */InterruptedException e) {e.printStackTrace();}
 		}
 	}
 
