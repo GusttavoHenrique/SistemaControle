@@ -98,12 +98,12 @@ public class TelaGeral extends JFrame{
 			
 			produto = parteReP1*parteReP2*parteReP3;
 		}else{
-			double moduloP = Math.pow(parteReP2, 2) + Math.pow(parteIm, 2);
+			double somaQuadradosPartesP = Math.pow(parteReP2, 2) + Math.pow(parteIm, 2);
 						
 			soma1 = 2*parteReP2 + parteReP1;
-			soma2 = moduloP + parteReP1*(2*parteReP2);
+			soma2 = somaQuadradosPartesP + parteReP1*(2*parteReP2);
 			
-			produto = parteReP1*moduloP;
+			produto = parteReP1*somaQuadradosPartesP;
 		}
 				
 		Matrix qCMatrix = new Matrix(q);		

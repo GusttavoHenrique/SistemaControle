@@ -1440,30 +1440,49 @@ public class Tela extends TelaGeral{
 		double[] imagEigenvalues = polos.getImagEigenvalues();
 		double[] realEigenvalues = polos.getRealEigenvalues();
 		
-		String imgP2 = ""; 
-		String imgP3 = "";
+		String realP1 = realEigenvalues[2] == 0 ? "" : setText(realEigenvalues[2] + "", realEigenvalues[2] < 0 ? 7 : 6);
+		String realP2 = realEigenvalues[0] == 0 ? "" : setText(realEigenvalues[0] + "", realEigenvalues[0] < 0 ? 7 : 6); 
+		String realP3 = realEigenvalues[1] == 0 ? "" : setText(realEigenvalues[1] + "", realEigenvalues[1] < 0 ? 7 : 6);
 		
-		if(Math.abs(imagEigenvalues[0]) == 0){
-			imgP2 = "";
+		String imgP1 = imagEigenvalues[2] == 0 ? "" : setText(Math.abs(imagEigenvalues[2]) + "", 7);
+		String imgP2 = imagEigenvalues[0] == 0 ? "" : setText(Math.abs(imagEigenvalues[0]) + "", 7);
+		String imgP3 = imagEigenvalues[1] == 0 ? "" : setText(Math.abs(imagEigenvalues[1]) + "", 7); 
+		
+		if(imgP1.equals("") && imgP2.equals("") && imgP3.equals("")){
+			textFieldP1Seg.setText(realP1);
+			textFieldReP2Seg.setText(realP2);
+			textFieldReP3Seg.setText(realP3);
+			
+			textFieldImP2Seg.setText(imgP2);
 			textFieldImP2Seg.setEnabled(false);
-		}else{
-			textFieldImP2Seg.setEnabled(true);
-			imgP2 = setText(Math.abs(imagEigenvalues[0]) + "", 6);
-		}
-		
-		if(Math.abs(imagEigenvalues[1]) == 0){
-			imgP3 = "";
+			
+			textFieldImP3Seg.setText(imgP3);
 			textFieldImP3Seg.setEnabled(false);
 		}else{
+			
+			textFieldImP2Seg.setEnabled(true);
 			textFieldImP3Seg.setEnabled(true);
-			imgP3 = setText(Math.abs(imagEigenvalues[1]) + "", 6);
+			
+			if(imgP1.equals("")){
+				textFieldP1Seg.setText(realP1);
+				textFieldReP2Seg.setText(realP2);
+				textFieldImP2Seg.setText(imgP2);
+				textFieldReP3Seg.setText(realP3);
+				textFieldImP3Seg.setText(imgP3);
+			}else if(imgP2.equals("")){
+				textFieldP1Seg.setText(realP2);
+				textFieldReP2Seg.setText(realP1);
+				textFieldImP2Seg.setText(imgP1);
+				textFieldReP3Seg.setText(realP3);
+				textFieldImP3Seg.setText(imgP3);
+			}else if(imgP3.equals("")){
+				textFieldP1Seg.setText(realP3);
+				textFieldReP2Seg.setText(realP2);
+				textFieldImP2Seg.setText(imgP2);
+				textFieldReP3Seg.setText(realP1);
+				textFieldImP3Seg.setText(imgP1);
+			}
 		}
-		
-		textFieldP1Seg.setText(setText(realEigenvalues[2] + "", realEigenvalues[0] < 0 ? 7 : 6));
-		textFieldReP2Seg.setText(setText(realEigenvalues[0] + "", realEigenvalues[0] < 0 ? 7 : 6));
-		textFieldImP2Seg.setText(imgP2);
-		textFieldReP3Seg.setText(setText(realEigenvalues[1] + "", realEigenvalues[1] < 0 ? 7 : 6));
-		textFieldImP3Seg.setText(imgP3);
 	}
 	
 	private void insereCheckNoPainel(){
@@ -1567,7 +1586,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
 					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
-					//TODO
 				}
 			}
 		});
@@ -1644,7 +1662,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
 					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
-					//TODO
 				}
 			}
 		});
@@ -1693,7 +1710,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
 					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
-					//TODO
 				}
 			}
 		});
@@ -1775,7 +1791,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
 					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
-					//TODO
 				}
 			}
 		});
@@ -1821,7 +1836,6 @@ public class Tela extends TelaGeral{
 					textFieldK21.setText(setText(matrizK.get(0, 0) + "", matrizK.get(0, 0) < 0 ? 7 : 6));
 					textFieldK22.setText(setText(matrizK.get(0, 1) + "", matrizK.get(0, 1) < 0 ? 7 : 6));
 					textFieldK1.setText(setText(matrizK.get(0, 2) + "", matrizK.get(0, 2) < 0 ? 7 : 6));
-					//TODO
 				}
 			}
 		});
