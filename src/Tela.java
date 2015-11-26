@@ -716,7 +716,7 @@ public class Tela extends TelaGeral{
 	}
 	
 	private boolean validaTipoControle(){
-		if(comboTipoControle.getSelectedItem().equals(TipoControle.SELECIONE.getDescricao())){
+		if(comboTipoControle.getSelectedItem().equals(TipoControle.SELECIONE.getDescricao()) && !rdbtnAberta.isSelected()){
 			JOptionPane.showMessageDialog(frame, "Informe o tipo de controle.");
 		
 			return false;
@@ -1515,11 +1515,14 @@ public class Tela extends TelaGeral{
 			
 			textFieldL1.setEnabled(true);
 			textFieldL2.setEnabled(true);
-	
-			if(comboTipoControle.getItemCount() == 5){
-				comboTipoControle.removeItem(TipoControle.SIMPLES.getDescricao());
-				comboTipoControle.removeItem(TipoControle.CASCATA.getDescricao());
-			}
+			
+//			if((comboTipoControle.getItemAt(2) == null || comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())) 
+//					&& (comboTipoControle.getItemAt(3) == null || comboTipoControle.getItemAt(3).equals(TipoControle.CASCATA.getDescricao()))){
+//				
+//				comboTipoControle.removeItemAt(TipoControle.SIMPLES.getId());
+//				comboTipoControle.removeItemAt(TipoControle.CASCATA.getId() - 1);
+//			}
+			
 		}else{
 			textFieldReP1.setEnabled(false);
 			textFieldReP1.setText("");
@@ -1539,10 +1542,12 @@ public class Tela extends TelaGeral{
 			textFieldL2.setEnabled(false);
 			textFieldL2.setText("");	
 			
-			if(comboTipoControle.getItemCount() != 5){
-				comboTipoControle.addItem(TipoControle.SIMPLES.getDescricao());
-				comboTipoControle.addItem(TipoControle.CASCATA.getDescricao());
-			}
+//			if(!comboTipoControle.getItemAt(TipoControle.SIMPLES.getId()).equals(TipoControle.SIMPLES.getDescricao()) 
+//					&& !comboTipoControle.getItemAt(TipoControle.CASCATA.getId()).equals(TipoControle.CASCATA.getDescricao())){
+//			
+//				comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), TipoControle.SEM_CONTROLE.getId());
+//				comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), TipoControle.SEM_CONTROLE.getId()+1);
+//			}
 			
 			textFieldImP1.setToolTipText("Parte imaginária do polo 1");
 			textFieldImP2.setToolTipText("Parte imaginária do polo 2");
@@ -2290,8 +2295,6 @@ public class Tela extends TelaGeral{
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnFechada.setSelected(false);
 				
-				amplitude.setModel(new SpinnerNumberModel(new Double(0), new Double(0), null, new Double(1)));
-				
 				comboTipoControle.setSelectedItem(TipoControle.SELECIONE.getDescricao());
 				comboTipoControle.setEnabled(false);
 				
@@ -2337,8 +2340,6 @@ public class Tela extends TelaGeral{
 		rdbtnFechada.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnAberta.setSelected(false);
-				
-				amplitude.setModel(new SpinnerNumberModel(new Double(0), null, null, new Double(1)));
 				
 				comboTipoControle.setEnabled(true);
 			
