@@ -50,6 +50,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 @SuppressWarnings("serial")
 public class Tela extends TelaGeral{
@@ -1353,6 +1355,21 @@ public class Tela extends TelaGeral{
 		painelObservadorEstados.add(lblLIgual);
 		
 		textFieldL1 = new JTextFieldAlterado(6, false);
+		textFieldL1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
+					populaPolosObservador();
+					
+					if(!validaPolosObservador(textFieldL1, null)){
+						textFieldReP1.setText("");
+						textFieldImP1.setText("");
+						textFieldReP2.setText("");
+						textFieldImP2.setText("");
+					}
+				}
+			}
+		});
 		textFieldL1.setToolTipText("valor de L1");
 		textFieldL1.setEnabled(false);
 		textFieldL1.setColumns(10);
@@ -1369,14 +1386,21 @@ public class Tela extends TelaGeral{
 					textFieldL1Anterior = textFieldL1.getText();
 					textFieldL2Anterior = textFieldL2.getText();
 				}
-				
+
 				// Rotaciona a seta de indicação do último sentido de conversão dos campos 
 				mudarSentidoSetaObservador();
-				
+			}
+		});
+		painelObservadorEstados.add(textFieldL1);
+		
+		textFieldL2 = new JTextFieldAlterado(6, false);
+		textFieldL2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
 				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
 					populaPolosObservador();
 					
-					if(!validaPolosObservador(textFieldL1, null)){
+					if(!validaPolosObservador(null, textFieldL2)){
 						textFieldReP1.setText("");
 						textFieldImP1.setText("");
 						textFieldReP2.setText("");
@@ -1385,9 +1409,6 @@ public class Tela extends TelaGeral{
 				}
 			}
 		});
-		painelObservadorEstados.add(textFieldL1);
-		
-		textFieldL2 = new JTextFieldAlterado(6, false);
 		textFieldL2.setToolTipText("valor de L2");
 		textFieldL2.setEnabled(false);
 		textFieldL2.setColumns(10);
@@ -1404,20 +1425,9 @@ public class Tela extends TelaGeral{
 					textFieldL1Anterior = textFieldL1.getText();
 					textFieldL2Anterior = textFieldL2.getText();
 				}
-
+				
 				// Rotaciona a seta de indicação do último sentido de conversão dos campos 
 				mudarSentidoSetaObservador();
-				
-				if(allCamposPolosObservadorVazios() && allCamposMatrizLPreenchidos()){
-					populaPolosObservador();
-					
-					if(!validaPolosObservador(null, textFieldL2)){
-						textFieldReP1.setText("");
-						textFieldImP1.setText("");
-						textFieldReP2.setText("");
-						textFieldImP2.setText("");
-					}
-				}
 			}
 		});
 		
@@ -1903,6 +1913,22 @@ public class Tela extends TelaGeral{
 		painelSeguidorReferencia.add(lblK21Igual);
 		
 		textFieldK1 = new JTextFieldAlterado(6, false);
+		textFieldK1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {				
+				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
+					populaPolosSeguidor();
+					
+					if(!validaPolosSeguidor(textFieldK1, null, null)){
+						textFieldP1Seg.setText("");
+						textFieldReP2Seg.setText("");
+						textFieldImP2Seg.setText("");
+						textFieldReP3Seg.setText("");
+						textFieldImP3Seg.setText("");
+					}
+				}
+			}
+		});
 		textFieldK1.setToolTipText("valor de K1");
 		textFieldK1.setEnabled(false);
 		textFieldK1.setColumns(10);
@@ -1924,11 +1950,18 @@ public class Tela extends TelaGeral{
 				
 				// Rotaciona a seta de indicação do último sentido de conversão dos campos
 				mudarSentidoSetaSeguidor();
-				
+			}
+		});
+		painelSeguidorReferencia.add(textFieldK1);
+		
+		textFieldK21 = new JTextFieldAlterado(6, false);
+		textFieldK21.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
 					populaPolosSeguidor();
 					
-					if(!validaPolosSeguidor(textFieldK1, null, null)){
+					if(!validaPolosSeguidor(null, textFieldK21, null)){
 						textFieldP1Seg.setText("");
 						textFieldReP2Seg.setText("");
 						textFieldImP2Seg.setText("");
@@ -1938,9 +1971,6 @@ public class Tela extends TelaGeral{
 				}
 			}
 		});
-		painelSeguidorReferencia.add(textFieldK1);
-		
-		textFieldK21 = new JTextFieldAlterado(6, false);
 		textFieldK21.setToolTipText("valor de K21");
 		textFieldK21.setEnabled(false);
 		textFieldK21.setColumns(10);
@@ -1962,11 +1992,18 @@ public class Tela extends TelaGeral{
 				
 				// Rotaciona a seta de indicação do último sentido de conversão dos campos
 				mudarSentidoSetaSeguidor();
-				
+			}
+		});
+		painelSeguidorReferencia.add(textFieldK21);
+		
+		textFieldK22 = new JTextFieldAlterado(6, false);
+		textFieldK22.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {		
 				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
 					populaPolosSeguidor();
 					
-					if(!validaPolosSeguidor(null, textFieldK21, null)){
+					if(!validaPolosSeguidor(null, null, textFieldK22)){
 						textFieldP1Seg.setText("");
 						textFieldReP2Seg.setText("");
 						textFieldImP2Seg.setText("");
@@ -1976,9 +2013,6 @@ public class Tela extends TelaGeral{
 				}
 			}
 		});
-		painelSeguidorReferencia.add(textFieldK21);
-		
-		textFieldK22 = new JTextFieldAlterado(6, false);
 		textFieldK22.setToolTipText("valor de K22");
 		textFieldK22.setEnabled(false);
 		textFieldK22.setColumns(10);
@@ -2000,18 +2034,6 @@ public class Tela extends TelaGeral{
 				
 				// Rotaciona a seta de indicação do último sentido de conversão dos campos
 				mudarSentidoSetaSeguidor();
-				
-				if(allCamposPolosSeguidorVazios() && allCamposMatrizKPreenchidos()){
-					populaPolosSeguidor();
-					
-					if(!validaPolosSeguidor(null, null, textFieldK22)){
-						textFieldP1Seg.setText("");
-						textFieldReP2Seg.setText("");
-						textFieldImP2Seg.setText("");
-						textFieldReP3Seg.setText("");
-						textFieldImP3Seg.setText("");
-					}
-				}
 			}
 		});
 		painelSeguidorReferencia.add(textFieldK22);
