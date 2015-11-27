@@ -7,9 +7,12 @@ public class Seguidor {
 		static double H[][] = {{2.96/Math.pow(10, 2)}, {9.63/Math.pow(10, 5)}};
 		static double C[][] = {{0, 1}};
 		static double k1, k21, k22;
-		static double vk, ek;
+		static double vk  = 0;
+		static double ek;
 		static double uk;
 		static double vk_anterior =0;
+		static double setPoint_anterior = 0;
+		
 		static double seguidor[][] = {{0}, {0}, {0}};
 		
 		
@@ -62,8 +65,14 @@ public class Seguidor {
 		seguidor = seguidor_mat.getArray();*/
 		
 		ek = setPoint - PV_two;
-		vk = vk_anterior + ek;
-		vk_anterior = vk;
+		//vk = vk_anterior + ek;
+		//vk_anterior = vk;
+		if(setPoint != setPoint_anterior){
+			vk = 0;
+			setPoint_anterior = setPoint;
+		}
+			
+		vk += ek;
 		
 		uk = vk*k1 - (k21*PV + k22*PV_two);
 	

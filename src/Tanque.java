@@ -134,23 +134,20 @@ public class Tanque extends Thread{
 	public void run(){
 		
 		
-		//setServer("10.13.99.69", 20081);
-		//test();
-
-		//getConexao();
+		getConexao();
 		
 		while(true){
 
 		try {
-				System.out.println(dados.getTipoDeControle());
+				
 		
-				//dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
-				//dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
+				dados.setPV(quanserclient.read(dados.getPinoDeLeitura1()));
+				dados.setPV_two(quanserclient.read(dados.getPinoDeLeitura2()));
 				
-				//nivel_tanque_um = 6.25*dados.getPV();
-				//nivel_tanque_dois = 6.25*dados.getPV_two();
+				nivel_tanque_um = 6.25*dados.getPV();
+				nivel_tanque_dois = 6.25*dados.getPV_two();
 				
-				nivel_tanque_um = 2;
+				
 					
 				/*nivel_tanque_um = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));
 				nivel_tanque_dois = 1 - (1/Math.exp((sinal.getTempo()- 0.1)))*(Math.cos(sinal.getTempo()- 0.1) - Math.sin(sinal.getTempo() -0.1));*/
@@ -400,16 +397,27 @@ public class Tanque extends Thread{
 					}
 					if(dados.getTipoDeControle().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
 						
-						//seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois, dados.getAmplitude());
 						Ponto pto_vp_seguidor = new Ponto();
-						//pto_vp_seguidor.setY(Seguidor.seguidor[2][0]);
-						pto_vp_seguidor.setY(seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois, dados.getAmplitude()));
+						pto_vp_seguidor.setY(seguidor.calcularSeguidor(nivel_tanque_um, nivel_tanque_dois, pto_setPoint.getY()));
 						pto_vp_seguidor.setX(sinal.getTempo());
 						
 						grafico_controle.atualizarFilaDeVP(pto_vp_seguidor);
 						
+						
+						
 						dados.setVP(pto_vp_seguidor.getY());
 						verificarRegras();
+						
+						Ponto pto_vp_seguidor_sat = new Ponto();
+						pto_vp_seguidor_sat.setY(dados.getVP());
+						pto_vp_seguidor_sat.setX(sinal.getTempo() - 0.1);
+						
+						Ponto pto_erro_seg = new Ponto();
+						pto_erro_seg.setY(erro);
+						pto_erro_seg.setX(sinal.getTempo());
+						grafico_nivel.atualizarFilaDeErroMesmo(pto_erro_seg);
+						
+						grafico_controle.atualizarDeVPSaturado(pto_vp_seguidor_sat);
 					}
 					
 					if(dados.isObservando()){
@@ -417,15 +425,15 @@ public class Tanque extends Thread{
 				
 						
 						observador.calcularObservador(nivel_tanque_um, nivel_tanque_dois, dados.getVP());
-						System.out.println("Nivel dois" + nivel_tanque_dois);
-						System.out.println("Nivel um" + nivel_tanque_um);
+						//System.out.println("Nivel dois" + nivel_tanque_dois);
+					//	System.out.println("Nivel um" + nivel_tanque_um);
 						
 						
 						Ponto pto_nvl_um_estimado = new Ponto();
 						pto_nvl_um_estimado.setY(Observador.x_chapeu_anterior[0][0]);
 						pto_nvl_um_estimado.setX(sinal.getTempo() - 0.1);
 						
-						System.out.println(Observador.x_chapeu_anterior[0][0]);
+						//System.out.println(Observador.x_chapeu_anterior[0][0]);
 						
 						grafico_nivel.atualizar_fila_nvl_um_estimado(pto_nvl_um_estimado);
 						
@@ -450,27 +458,27 @@ public class Tanque extends Thread{
 						pto_nvl_dois_erro.setX(sinal.getTempo() - 0.1);
 						
 						grafico_nivel.atualizar_fila_estimacao_dois(pto_nvl_dois_erro);
-						System.out.println(pto_nvl_um_erro.getY());
-						System.out.println(pto_nvl_dois_erro.getY());
+						//System.out.println(pto_nvl_um_erro.getY());
+					//	System.out.println(pto_nvl_dois_erro.getY());
 						
 						
 					}
 					
 				}
 				
-				if(!dados.getTipoDeControle().equals(TipoControle.SELECIONE.getDescricao()) ||dados.getTipoMalha().equals(TipoMalha.MALHA_ABERTA.getDescricao())){
+				//if(!dados.getTipoDeControle().equals(TipoControle.SELECIONE.getDescricao()) ||dados.getTipoMalha().equals(TipoMalha.MALHA_ABERTA.getDescricao())){
 					grafico_nivel.atualizarGrafico();
 					grafico_controle.atualizarGrafico();
 					painelAltura.validate();
 					painelTensao.validate();
-				}
+				//}
 				
 				//para calculo de windUP
 			
-				//quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
+				quanserclient.write(dados.getPinoDeEscrita(), dados.getVP());
 				
 				sleep(100);
-			} catch (/*QuanserClientException | */InterruptedException e) {e.printStackTrace();}
+			} catch (QuanserClientException | InterruptedException e) {e.printStackTrace();}
 		}
 	}
 
