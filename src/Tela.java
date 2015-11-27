@@ -2313,6 +2313,7 @@ public class Tela extends TelaGeral{
 		rdbtnAberta.setEnabled(false);
 		rdbtnAberta.setBounds(6, 24, 67, 18);		
 		rdbtnAberta.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnFechada.setSelected(false);
 				
@@ -2351,6 +2352,18 @@ public class Tela extends TelaGeral{
 				
 				textFieldL2.setEnabled(false);
 				textFieldL2.setText("");
+				
+				if(comboTipoControle.getItemAt(2).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+					
+					comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
+					comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
+					
+				}else if(comboTipoControle.getItemAt(3).equals(TipoControle.CASCATA.getDescricao())
+						&& comboTipoControle.getItemAt(4) == null){
+					
+					comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
+					
+				}
 			}
 		});
 		panelTipoMalha.add(rdbtnAberta);
@@ -2924,6 +2937,13 @@ public class Tela extends TelaGeral{
 			chckbxAcaoI.setEnabled(true);
 			chckbxControleMestre.setEnabled(true);
 			chckbxControleCSeguidor.setEnabled(true);
+			
+			if(comboTipoControle.getItemAt(1) == null){
+				comboTipoControle.insertItemAt(TipoControle.SEM_CONTROLE.getDescricao(), 1);
+				comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
+				comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
+				comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
+			}
 		}else{			
 			rdbtnAberta.setEnabled(false);			
 			rdbtnFechada.setEnabled(false);
@@ -3078,7 +3098,11 @@ public class Tela extends TelaGeral{
 			labelTs.setText("");
 			labelMp.setText("");
 			
-			comboTipoControle = new JComboBox(TipoControle.getItensComboTiposControle());
+			
+			comboTipoControle.removeItemAt(1);
+			comboTipoControle.removeItemAt(2);
+			comboTipoControle.removeItemAt(3);
+			comboTipoControle.removeItemAt(4);
 		}
 	}
 	
