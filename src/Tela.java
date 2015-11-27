@@ -994,6 +994,10 @@ public class Tela extends TelaGeral{
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTanque2.setSelected(false);
 				
+				if(comboTipoControle.getSelectedItem().equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+					comboTipoControle.setSelectedItem(TipoControle.SELECIONE.getDescricao());
+				}
+				
 				realizarObservacaoEstados.setEnabled(false);
 				realizarObservacaoEstados.setSelected(false);
 				
@@ -1042,7 +1046,10 @@ public class Tela extends TelaGeral{
 				
 				if(comboTipoControle.getItemAt(2) == null){
 					comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 2);
-				}else if(comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())){
+					
+				}else if(comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())
+						&& comboTipoControle.getItemAt(4) == null){
+					
 					comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
 				}
 			}
@@ -2899,8 +2906,8 @@ public class Tela extends TelaGeral{
 		panelGrafico2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelGrafico2.setBounds(8, 270, 656, 255);
 	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+		
+	@SuppressWarnings("unchecked")
 	public void mudarPropriedadesBotoes(String acao){
 		if(acao.equals("Conectar")){			
 			habilitarComponentesPainelTipoMalha(true);
@@ -2937,13 +2944,6 @@ public class Tela extends TelaGeral{
 			chckbxAcaoI.setEnabled(true);
 			chckbxControleMestre.setEnabled(true);
 			chckbxControleCSeguidor.setEnabled(true);
-			
-			if(comboTipoControle.getItemAt(1) == null){
-				comboTipoControle.insertItemAt(TipoControle.SEM_CONTROLE.getDescricao(), 1);
-				comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
-				comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
-				comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
-			}
 		}else{			
 			rdbtnAberta.setEnabled(false);			
 			rdbtnFechada.setEnabled(false);
@@ -3098,11 +3098,23 @@ public class Tela extends TelaGeral{
 			labelTs.setText("");
 			labelMp.setText("");
 			
+			if(comboTipoControle.getItemAt(2) == null || 
+					!comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())){
+				
+				comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
+			}
 			
-			comboTipoControle.removeItemAt(1);
-			comboTipoControle.removeItemAt(2);
-			comboTipoControle.removeItemAt(3);
-			comboTipoControle.removeItemAt(4);
+			if(comboTipoControle.getItemAt(3) == null || 
+					!comboTipoControle.getItemAt(3).equals(TipoControle.CASCATA.getDescricao())){
+				
+				comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
+			}
+			
+			if(comboTipoControle.getItemAt(4) == null || 
+					!comboTipoControle.getItemAt(4).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+				
+				comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
+			}
 		}
 	}
 	
@@ -3587,14 +3599,5 @@ public class Tela extends TelaGeral{
 		}else{
 			dados.setTipoDeControle(TipoControle.SEM_CONTROLE.getDescricao());
 		}
-	}
-	
-	@SuppressWarnings({ "unchecked", "unused" })
-	private void recarregaComboTipoControle(){
-		for(TipoControle tc : TipoControle.values()){
-			comboTipoControle.addItem(tc.getDescricao());
-		}
-		
-		comboTipoControladorMestre.setSelectedItem(TipoControlador.SELECIONE.getDescricao());
 	}
 }
