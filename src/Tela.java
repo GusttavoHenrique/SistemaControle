@@ -990,6 +990,7 @@ public class Tela extends TelaGeral{
 		
 		rdbtnTanque1 = new JRadioButton("Tanque 1");
 		rdbtnTanque1.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTanque2.setSelected(false);
 				
@@ -1013,6 +1014,17 @@ public class Tela extends TelaGeral{
 				
 				textFieldL2.setEnabled(false);
 				textFieldL2.setText("");
+				
+				if(comboTipoControle.getItemAt(2) == null || 
+					comboTipoControle.getItemAt(2).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+					
+					comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
+					comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
+				}
+				
+				if(comboTipoControle.getItemAt(4).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+					comboTipoControle.removeItemAt(4);
+				}
 			}
 		});
 		rdbtnTanque1.setEnabled(false);
@@ -1021,11 +1033,18 @@ public class Tela extends TelaGeral{
 		
 		rdbtnTanque2 = new JRadioButton("Tanque 2");
 		rdbtnTanque2.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent arg0) {
 				rdbtnTanque1.setSelected(false);
 				
 				if(rdbtnFechada.isSelected())
 					realizarObservacaoEstados.setEnabled(true);
+				
+				if(comboTipoControle.getItemAt(2) == null){
+					comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 2);
+				}else if(comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())){
+					comboTipoControle.insertItemAt(TipoControle.SEGUIDOR_REFERENCIA.getDescricao(), 4);
+				}
 			}
 		});
 		rdbtnTanque2.setEnabled(false);
@@ -1495,6 +1514,24 @@ public class Tela extends TelaGeral{
 				mudarEstadoCamposObservador();
 			}
 		});
+		realizarObservacaoEstados.addMouseListener(new MouseAdapter() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(realizarObservacaoEstados.isSelected() && comboTipoControle.getItemAt(2) != null && 
+						!comboTipoControle.getItemAt(2).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao())){
+						
+					comboTipoControle.removeItemAt(2);
+					comboTipoControle.removeItemAt(2);
+				
+				}else if(!realizarObservacaoEstados.isSelected() && (comboTipoControle.getItemAt(2) == null || 
+						comboTipoControle.getItemAt(2).equals(TipoControle.SEGUIDOR_REFERENCIA.getDescricao()))){
+						
+					comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), 2);
+					comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), 3);
+				}
+			}
+		});
 		painelObservadorEstados.add(realizarObservacaoEstados);
 		
 		JLabel lblColchete2 = new JLabel("]");
@@ -1504,8 +1541,7 @@ public class Tela extends TelaGeral{
 		painelObservadorEstados.add(lblColchete2);		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void mudarEstadoCamposObservador(){
+	private void mudarEstadoCamposObservador(){		
 		if(realizarObservacaoEstados.isSelected()){
 			textFieldReP1.setEnabled(true);
 			textFieldReP2.setEnabled(true);
@@ -1515,14 +1551,6 @@ public class Tela extends TelaGeral{
 			
 			textFieldL1.setEnabled(true);
 			textFieldL2.setEnabled(true);
-			
-//			if((comboTipoControle.getItemAt(2) == null || comboTipoControle.getItemAt(2).equals(TipoControle.SIMPLES.getDescricao())) 
-//					&& (comboTipoControle.getItemAt(3) == null || comboTipoControle.getItemAt(3).equals(TipoControle.CASCATA.getDescricao()))){
-//				
-//				comboTipoControle.removeItemAt(TipoControle.SIMPLES.getId());
-//				comboTipoControle.removeItemAt(TipoControle.CASCATA.getId() - 1);
-//			}
-			
 		}else{
 			textFieldReP1.setEnabled(false);
 			textFieldReP1.setText("");
@@ -1541,13 +1569,6 @@ public class Tela extends TelaGeral{
 			
 			textFieldL2.setEnabled(false);
 			textFieldL2.setText("");	
-			
-//			if(!comboTipoControle.getItemAt(TipoControle.SIMPLES.getId()).equals(TipoControle.SIMPLES.getDescricao()) 
-//					&& !comboTipoControle.getItemAt(TipoControle.CASCATA.getId()).equals(TipoControle.CASCATA.getDescricao())){
-//			
-//				comboTipoControle.insertItemAt(TipoControle.SIMPLES.getDescricao(), TipoControle.SEM_CONTROLE.getId());
-//				comboTipoControle.insertItemAt(TipoControle.CASCATA.getDescricao(), TipoControle.SEM_CONTROLE.getId()+1);
-//			}
 			
 			textFieldImP1.setToolTipText("Parte imaginária do polo 1");
 			textFieldImP2.setToolTipText("Parte imaginária do polo 2");
@@ -2866,6 +2887,7 @@ public class Tela extends TelaGeral{
 		panelGrafico2.setBounds(8, 270, 656, 255);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void mudarPropriedadesBotoes(String acao){
 		if(acao.equals("Conectar")){			
 			habilitarComponentesPainelTipoMalha(true);
@@ -3055,6 +3077,8 @@ public class Tela extends TelaGeral{
 			labelTr.setText("");
 			labelTs.setText("");
 			labelMp.setText("");
+			
+			comboTipoControle = new JComboBox(TipoControle.getItensComboTiposControle());
 		}
 	}
 	
